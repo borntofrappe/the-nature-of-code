@@ -6,18 +6,34 @@ The notes which follow are my own, and try to formalize what I learn from the bo
 
 ## Randomness
 
-Randomness is used to introduce the book, object oriented programming and a few of the possible ways with which it is possible to simulate real life phenomena (the movement of a particle)
+Randomness is used to introduce the book, object oriented programming and a few of the possible ways with which it is possible to simulate real life phenomena (the movement of a particle).
 
 ### Random
 
-A purely random function returns a number in a range with the same probability as any number in the same range.
+A random function returns a number in a range with the same probability as any number in the same range.
 The output isn't truly random, but pseudo-random, whereby the function creates a series of numbers and returns one of them. The sequence repeats itself, but over a long stretch of time.
 
-In code:
+To move a particle at random, it is possible to modify its position in several ways:
 
-- Math.random(4) with a chain of if statements to move in either of the four directions
-- Math.random(3) - 1 to move horizontally/vertically or stand still
-- Math.random() to move by the measure of a floating point number
+- `math.random(4)` with a chain of if statements to move in either of the four directions
+
+- `math.random(3)` to move horizontally/vertically or stand still
+
+- `math.random()` to move by the measure of a floating point number
+
+Please note that Lua is 1-indexed. In light of this, `math.random(4)` returns a number in the `[1,4]`. Similarly, `math.random(3)` returns a number in the `[1,3]` range.
+
+Please also note that `math.random()` returns the same sequence of random numbers unless you first set a random seed.
+
+```lua
+function love.load()
+  math.randomseed(os.time())
+end
+```
+
+It is possible to use `love.math.random`, a function which is automatically seeded by Love2D, but I chose the non-seeded version to stress how the random function returns pseudo-random numbers.
+
+Finally, please note that, while I implemented the `randomWalk` function for every possibility in the bulleted list above, each function definition overrides the previous one. Comment out the methods to see one specific option.
 
 ### Probability
 
