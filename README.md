@@ -21,48 +21,59 @@ To move a particle at random, it is possible to modify its position in several w
 
 - `math.random()` to move by the measure of a floating point number
 
-Please note that Lua is 1-indexed. In light of this, `math.random(4)` returns a number in the `[1,4]`. Similarly, `math.random(3)` returns a number in the `[1,3]` range.
+_Please note:_
 
-Please also note that `math.random()` returns the same sequence of random numbers unless you first set a random seed.
+- Lua is 1-indexed. In light of this, `math.random(4)` returns a number in the `[1,4]`. Similarly, `math.random(3)` returns a number in the `[1,3]` range
 
-```lua
-function love.load()
-  math.randomseed(os.time())
-end
-```
+- `math.random()` returns the same sequence of random numbers unless you first set a random seed
 
-It is possible to use `love.math.random`, a function which is automatically seeded by Love2D, but I chose the non-seeded version to stress how the random function returns pseudo-random numbers.
+  ```lua
+  function love.load()
+    math.randomseed(os.time())
+  end
+  ```
 
-Finally, please note that, while I implemented the `randomWalk` function for every possibility in the bulleted list above, each function definition overrides the previous one. Comment out the methods to see one specific option.
+  It is possible to use `love.math.random`, a function which is automatically seeded by Love2D, but I chose the non-seeded version to stress how the random function returns pseudo-random numbers.
 
 ### Probability
 
-The probability of a single event is given by the number of outcomes representing the event divided by the number of possible outcomes
-The probability of multiple events occurring in sequence is obtained by multiplying the single events
+The probability of a single event is given by the number of outcomes representing the event divided by the number of possible outcomes. The probability of multiple events occurring in sequence is obtained by multiplying the single events
 
 This is handy not only to describe the random functions, but the distribution of other functions.
 
-With the random function, you can obtain a certain probability by having a bucket, a container describe a set of options, and picking at random from the set. Or, you can ask for a random number and validate the choice afterwards, asking for a different random if need be.
+With the random function, you can obtain a certain probability with at least two methods:
 
-if random < probability
-do something
+- initialize a bucket, a container with a set of options and pick at random from the set
+
+- ask for a random number in the `(0, 1)` and use the value to execute an option with the cumulative probability
 
 ### Normal distribution
 
 A normal distribution (or Gaussian) returns a random number starting from two values: a mean and a standard variation. The idea of the distribution is that numbers are more likely to approach the mean than deviate from it. How often they distance themselves from the mean is described by the standard deviation. With a small deviation, the numbers gather around the mean. Opposedly and with a large deviation, the numbers scatter away from the central value.
 
-Visually, the distribution creates a bell curve.
+#### 68,98,99.7
 
-_68,98,99.7_
 Given a population and a normal distribution, 68% of the observations fall in the range of the standard deviation, 98% in the range of two and 99.7% in the range of three
 
-_Standard deviation_
-To compute the standard deviation with a mean and a set of observations. Take each observation, subtract the mean and square the result. Sum the result for all observations to gather the _variance_. The standard deviation is the square root of the variance.
+#### Standard deviation
 
-_Nornal distribution_
-A function f(x) returns a number y in a normal distribution with mean mu and standard deviation sigma with the following formula
+This is beyond the scope of the project, but to compute the standard deviation with a mean and a set of observations: take each observation, subtract the mean and square the result. Sum the result for all observations to gather the _variance_. The standard deviation is the square root of the variance.
 
-Insert formula here
+#### Normnal distribution
+
+A function `f(x)` returns a number `y` in a normal distribution with mean `mu` and standard deviation `sigma` with the following formula.
+
+```lua
+f(x) = 1 / (sigma * (2 * math.pi) ^ 0.5) * e ^ (- 1 / 2 * ((x - mu) / sigma) ^ 2)
+```
+
+_Please note:_
+
+- `e` is initialized at the top of the script to describe the [_Euler's number_](<https://en.wikipedia.org/wiki/E_(mathematical_constant)>), and is approximated to `2.71828`
+
+- `maxHeight` describes an upper boundary for the vertical dimension of the bell's curve. This is used to avoid cropping the line at the top of the window
+
+- the mapping function works similarly to the method available in the [processing library](https://github.com/processing/p5.js/blob/main/src/math/calculation.js#L450), adapting a value from an input to an output range
 
 ### Custom distribution
 
