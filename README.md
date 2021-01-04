@@ -86,3 +86,37 @@ Pick two numbers, consider the first one only if it is less than the second. Con
 The Perlin noise function allows to create a sequence of numbers connected to each other, with the goal of providing smooth random values. You pick numbers from the sequence, and the distance between the numbers dictates the difference between the two. The greater the distance, the more likely the numbers will differ. The smaller the offset, the more likely the numbers will resemble one another.
 
 The function actually accepts one, two or three arguments, to create noise in multiple dimensions. In one dimension, each number is related to the one coming before and after it. In two, it is connected to the numbers representing the possible neighbors in the (x,y) plane. In three, the neighbors considering a third dimension (z) as well. It returns a sequence of numbers in the (0,1) range.
+
+## Vectors
+
+Euclidean/geometric vector, an entity with magnitude and direction. Here they are introduced in the context of a plane with two dimensions, x and y, but fundamentally, they work in the same manner with additional dimensions.
+You can think of a vector with two components (again x and y) as an arrow. The length of the arrow describe its distance, the angle relative to an axis its direction. A vector describing the position of a particle details where to position the object from the origin. A vector describing the velocity dictates how to move the same particle.
+
+### Vector Math
+
+Some libraries provide a functionality to perform mathematical operations on vectors (addition, subtraction, multiplication..). Here, however, I am interested in the underlying math.
+
+- add vectors; sum the components of the vectors involved. position.x += velocity.x; position.y += velocity.y;
+- subtract vectors; subtract the components of the first vector by the components of the second; position.x -= velocity.x; position.y -= velocity.y;
+- multiply by a scalar; multiply each component by the scalar. position.x _= s; position.y _= s; this is useful to scale the vector
+- divide by a scalar; divide each component, scaling down the vector. position.x /= s; position.y /= s; here you scale down the vector, you reduce the strength of its components. Be sure that the scalar is different from 0.
+- compute the vector magnitude; using pythagorean theorem a^2 + b^2 = c^2, compute the magnitude as the length, the distance between two points considering the x and y component. m = (vector.x^2 + vector.y^2)^2
+- normalize vector; divide the vector by its magnitude, obtaining a vector with length 1, a unit vector. This is helpful to have a unit vector with the same direction as the first vector. From this point you can scale the vector to any arbitrary length (by multiplying the unit vector by yet another magnitude)
+- limit a vector to a given magnitude; compute the magnitude, and if greater proceed to scale down the vector. Obtain the unit vector, scale the components with the given scalar.
+
+### Velocity
+
+With two vectors describing the position and velocity it is possible to move an object at a constant rate.
+
+position.x += velocity.x; position.y += velocity.y;
+
+### Acceleration
+
+With three vectors, including acceleration, it is possible to move an object with an accelerated rate. Speeding up and slowing down.
+
+velocity.x += acceleration.x; velocity.y += acceleration.x;
+position.x += velocity.x; position.y += velocity.y;
+
+To compute the acceleration, there exist different algorithms. With a constant acceleration, you obtain uniform acceleration. With a variable acceleration, you start to have a more varied movement, whereby the object constantly shifts its direction.
+Be sure to consider the magnitude of the vector, scaling/limiting the vector to fit the project needs.
+By affecting the acceleration, by modifying the magnitude it is possible to emulate more realistic movement.
