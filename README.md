@@ -1,3 +1,7 @@
+<!-- ADD REPL HERE
+FIX NAMING CONVENTION for normal distribution randomNumbers -> normalNumbers
+ -->
+
 [_The Nature of Code_](https://natureofcode.com/book/) introduces many concepts to simulate real-world phenomena with code. Here, I follow the book to learn about these concepts.
 
 The notes which follow are my own. The demos are written in [Lua](https://www.lua.org/) and showcased with [Love2D](https://love2d.org/).
@@ -44,7 +48,7 @@ With the random function, you can obtain a certain probability with at least two
 
 - ask for a random number in the `(0, 1)` range and use the value to execute an option with the given probability
 
-_Please note_:
+_Please note:_
 
 - the method using probabilities computes the _cumulative_ probability of each option, so that effectively, the for loop is a convenience from a series of `if` statements
 
@@ -55,10 +59,6 @@ _Please note_:
   elseif random < 1
   end
   ```
-
-<!-- ADD REPL HERE
-FIX NAMING CONVENTION randomNumbers -> normalNumbers
- -->
 
 ### Normal distribution
 
@@ -108,7 +108,7 @@ This approach means that values with a greater probability are more likely to be
 
 It helps to consider the probability as the `y` value for a function in an `(x, y)` plane. When the probability is equal to the random value, as in the demo, the relationship is linear. When the probability is instead equal to the value squared, the relationship is squared.
 
-_Please note_:
+_Please note:_
 
 - in the demo, the value is picked in the `(0, 1)` range, with a tendency for higher numbers. The value is finally updated to change the direction at random.
 
@@ -125,7 +125,30 @@ _Please note_:
 
 The Perlin noise function allows to create a sequence of numbers connected to each other, with the goal of providing smooth random values. You pick numbers from the sequence, and the distance between the numbers dictates the difference between the two. The greater the distance, the more likely the numbers will differ. The smaller the offset, the more likely the numbers will resemble one another.
 
-The function actually accepts one, two or three arguments, to create noise in multiple dimensions. In one dimension, each number is related to the one coming before and after it. In two, it is connected to the numbers representing the possible neighbors in the (x,y) plane. In three, the neighbors considering a third dimension (z) as well. It returns a sequence of numbers in the (0,1) range.
+While it is possible to create a function similar to the Perlin one, Love2D provides a similar functionality with [`love.math.noise`](https://love2d.org/wiki/love.math.noise)
+
+The function returns a sequence of numbers in the `(0,1)` range and accepts multiple arguments, to create noise in multiple dimensions. In one dimension, each number is related to the one coming before and after it. In two, it is connected to the numbers representing the possible neighbors in the `(x,y)` plane. In three, the neighbors considering a third dimension `(z)` as well.
+
+_Please note:_
+
+- the demo works similarly to `Normal distribution`, by plotting the numbers with a line. Unlike the mentioned project, however, the `Mover` entity moves alongside the coordinates provided by the noise function
+
+- using the same offset returns the same noise value. This explains why the for loop begins at an arbitrary offset, chosen at random
+
+  ```lua
+  local offset = math.random(OFFSET_INITIAL_MAX)
+  for i = offset -- continues -- do
+
+  end
+  ```
+
+- `OFFSET_INCREMENT` describes the distance between successive points.
+
+  ```lua
+  OFFSET_INCREMENT = 0.02
+  ```
+
+  The smaller the value, the smoother the line.
 
 ## Vectors
 
