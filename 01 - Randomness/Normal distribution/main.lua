@@ -1,3 +1,5 @@
+require "Mover"
+
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 500
 
@@ -8,33 +10,57 @@ MEAN = 0
 STANDARD_DEVIATION = 1
 MAX_HEIGHT = 1 / ((2 * math.pi) ^ 0.5 * STANDARD_DEVIATION)
 POINTS = 100
+RADIUS = 5
 
 function love.load()
   love.window.setTitle("Randomness - Normal distribution")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
-  points = getPoints()
+  math.randomseed(os.time())
 
-  line = {}
-  for i = 1, #points do
-    local x = (i - 1) * WINDOW_WIDTH / #points
-    local y = map(points[i], 0, MAX_HEIGHT, WINDOW_HEIGHT, WINDOW_HEIGHT - WINDOW_MAX_HEIGHT)
-    table.insert(line, x)
-    table.insert(line, y)
+  randomNumbers = getRandomNumbers()
+
+  mover = Mover:new()
+
+  history = {
+    {
+      ["x"] = mover.x,
+      ["y"] = mover.y
+    }
+  }
+
+  points = {}
+  for i = 1, #randomNumbers do
+    local x = (i - 1) * WINDOW_WIDTH / #randomNumbers
+    local y = map(randomNumbers[i], 0, MAX_HEIGHT, WINDOW_HEIGHT, WINDOW_HEIGHT - WINDOW_MAX_HEIGHT)
+    table.insert(points, x)
+    table.insert(points, y)
   end
 end
 
--- function love.mousepressed(x, y, button)
---   mean = x
---   standardDeviation = map(y, 0, WINDOW_HEIGHT, WINDOW_WIDTH / 8, WINDOW_WIDTH / 2)
---   points = getPoints(mean, standardDeviation, maxHeight)
--- end
+function love.update(dt)
+  mover:randomWalk(randomNumbers)
+  table.insert(
+    history,
+    {
+      ["x"] = mover.x,
+      ["y"] = mover.y
+    }
+  )
+end
 
 function love.draw()
-  love.graphics.setColor(0.12, 0.12, 0.13, 1)
+  love.graphics.setColor(0.11, 0.11, 0.11, 1)
   love.graphics.setLineWidth(LINE_WIDTH)
-  love.graphics.line(line)
+  love.graphics.line(points)
+
+  mover:render()
+
+  for i, point in ipairs(history) do
+    love.graphics.setColor(0.11, 0.11, 0.11, 0.1)
+    love.graphics.circle("fill", point.x, point.y, 1)
+  end
 end
 
 function getNormalDistribution(x, mu, sigma)
@@ -45,12 +71,13 @@ function map(value, currentMin, currentMax, newMin, newMax)
   return (value - currentMin) / (currentMax - currentMin) * (newMax - newMin) + newMin
 end
 
-function getPoints()
-  local points = {}
+function getRandomNumbers()
+  local randomNumbers = {}
 
-  for x = -3, 3, 0.05 do
+  for x = -3 * STANDARD_DEVIATION, 3 * STANDARD_DEVIATION, STANDARD_DEVIATION * 6 / POINTS do
     local y = getNormalDistribution(x, MEAN, STANDARD_DEVIATION)
-    table.insert(points, y)
+    table.insert(randomNumbers, y)
   end
-  return points
+
+  return randomNumbers
 end

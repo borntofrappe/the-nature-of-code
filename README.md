@@ -68,7 +68,7 @@ Given a population and a normal distribution, 68% of the observations fall in th
 
 This is beyond the scope of the project, but to compute the standard deviation with a mean and a set of observations: take each observation, subtract the mean and square the result. Sum the result for all observations to gather the _variance_. The standard deviation is the square root of the variance.
 
-#### Normnal distribution
+#### Normal function
 
 A function `f(x)` returns a number `y` in a normal distribution with mean `mu` and standard deviation `sigma` with the following formula.
 
@@ -77,6 +77,8 @@ f(x) = 1 / (sigma * (2 * math.pi) ^ 0.5) * e ^ (- 1 / 2 * ((x - mu) / sigma) ^ 2
 ```
 
 _Please note:_
+
+- in the demo the normal function is used to generate an assortment of numbers with mean `0` and standard deviation `1`. These values are then used to draw a line, describing the associated bell curve, and move the `Mover` entity. Given the bell curve, however, the entity barely moves from the origin
 
 - `e` is initialized at the top of the script to describe the [_Euler's number_](<https://en.wikipedia.org/wiki/E_(mathematical_constant)>), and is approximated to `2.71828`
 
