@@ -1,14 +1,10 @@
-<!-- ADD REPL HERE
-FIX NAMING CONVENTION for normal distribution randomNumbers -> normalNumbers
- -->
-
 [_The Nature of Code_](https://natureofcode.com/book/) introduces many concepts to simulate real-world phenomena with code. Here, I follow the book to learn about these concepts.
 
 The notes which follow are my own. The demos are written in [Lua](https://www.lua.org/) and showcased with [Love2D](https://love2d.org/).
 
 [![github.com/borntofrappe/the-nature-of-code](https://github.com/borntofrappe/the-nature-of-code/blob/master/banner.svg)](https://github.com/borntofrappe/the-nature-of-code)
 
-## Randomness
+## 01 - Randomness
 
 Randomness is used to introduce the book, object oriented programming and a few of the possible ways with which it is possible to simulate real life phenomena.
 
@@ -60,7 +56,7 @@ _Please note:_
   end
   ```
 
-### Normal distribution
+### [Normal distribution](https://repl.it/@borntofrappe/Randomness-Normal-distribution)
 
 A normal distribution (or Gaussian) returns a random number starting from two values: a mean and a standard variation. The idea of the distribution is that numbers are more likely to approach the mean than deviate from it. How often they distance themselves from the mean is described by the standard deviation. With a small deviation, the numbers gather around the mean. Opposedly and with a large deviation, the numbers scatter away from the central value.
 
@@ -90,7 +86,7 @@ _Please note:_
 
 - the mapping function works similarly to the method available in the [processing library](https://github.com/processing/p5.js/blob/main/src/math/calculation.js#L450), adapting a value from an range to range
 
-### Custom distribution
+### [Custom distribution](https://repl.it/@borntofrappe/Randomness-Custom-distribution)
 
 To fit the needs of a simulation, you can customize a distribution in several ways. The `Probability` folder already introduces two possibilities, with the methods picking a number from a given set, or using the cumulative probability. Here, a custom distribution is built with the following algorithm:
 
@@ -121,7 +117,7 @@ _Please note:_
 
   This is to avoid having the `Mover` entity move outside of the window too rapidly.
 
-### Perlin noise
+### [Perlin noise](https://repl.it/@borntofrappe/Randomness-Perlin-noise)
 
 The Perlin noise function allows to create a sequence of numbers connected to each other, with the goal of providing smooth random values. You pick numbers from the sequence, and the distance between the numbers dictates the difference between the two. The greater the distance, the more likely the numbers will differ. The smaller the offset, the more likely the numbers will resemble one another.
 
@@ -131,7 +127,7 @@ The function returns a sequence of numbers in the `(0,1)` range and accepts mult
 
 _Please note:_
 
-- the demo works similarly to `Normal distribution`, by plotting the numbers with a line. Unlike the mentioned project, however, the `Mover` entity moves alongside the coordinates provided by the noise function
+- the demo works similarly to `Normal distribution`, by plotting the numbers with a line. Unlike the mentioned project, however, the `Mover` entity moves alongside the coordinates provided by the noise function. This explains why I also chose to remove the `history` table showing the movement of the entity
 
 - using the same offset returns the same noise value. This explains why the for loop begins at an arbitrary offset, chosen at random
 

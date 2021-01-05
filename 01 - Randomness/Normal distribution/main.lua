@@ -19,7 +19,7 @@ function love.load()
 
   math.randomseed(os.time())
 
-  randomNumbers = getRandomNumbers()
+  normalNumbers = getNormalNumbers()
 
   mover = Mover:new()
 
@@ -31,16 +31,16 @@ function love.load()
   }
 
   points = {}
-  for i = 1, #randomNumbers do
-    local x = (i - 1) * WINDOW_WIDTH / #randomNumbers
-    local y = map(randomNumbers[i], 0, MAX_HEIGHT, WINDOW_HEIGHT, WINDOW_HEIGHT - WINDOW_MAX_HEIGHT)
+  for i = 1, #normalNumbers do
+    local x = (i - 1) * WINDOW_WIDTH / #normalNumbers
+    local y = map(normalNumbers[i], 0, MAX_HEIGHT, WINDOW_HEIGHT, WINDOW_HEIGHT - WINDOW_MAX_HEIGHT)
     table.insert(points, x)
     table.insert(points, y)
   end
 end
 
 function love.update(dt)
-  mover:randomWalk(randomNumbers)
+  mover:randomWalk(normalNumbers)
   table.insert(
     history,
     {
@@ -71,13 +71,13 @@ function map(value, currentMin, currentMax, newMin, newMax)
   return (value - currentMin) / (currentMax - currentMin) * (newMax - newMin) + newMin
 end
 
-function getRandomNumbers()
-  local randomNumbers = {}
+function getNormalNumbers()
+  local normalNumbers = {}
 
   for x = -3 * STANDARD_DEVIATION, 3 * STANDARD_DEVIATION, STANDARD_DEVIATION * 6 / POINTS do
     local y = getNormalDistribution(x, MEAN, STANDARD_DEVIATION)
-    table.insert(randomNumbers, y)
+    table.insert(normalNumbers, y)
   end
 
-  return randomNumbers
+  return normalNumbers
 end
