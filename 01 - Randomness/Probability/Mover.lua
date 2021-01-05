@@ -1,6 +1,10 @@
 Mover = {}
 Mover.__index = Mover
 
+--[[ _Please note_
+  each randomWalk function overrides the previous one
+  comment out the methods to display the different options 
+]]
 function Mover:new()
   this = {
     ["x"] = WINDOW_WIDTH / 2,
@@ -77,6 +81,6 @@ function Mover:randomWalk()
 end
 
 function Mover:render()
-  love.graphics.setColor(0.12, 0.12, 0.13)
+  love.graphics.setColor(0.11, 0.11, 0.11, 1)
   love.graphics.circle("fill", self.x, self.y, self.r)
 end

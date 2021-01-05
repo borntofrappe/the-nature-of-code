@@ -1,29 +1,28 @@
-[_The Nature of Code_](https://natureofcode.com/book/) introduces many concepts to simulate real-world phenomena with code. Here, I try to create a few demos with [Lua](https://www.lua.org/) and [Love2D](https://love2d.org/) to learn about these concepts.
+[_The Nature of Code_](https://natureofcode.com/book/) introduces many concepts to simulate real-world phenomena with code. Here, I follow the book to learn about these concepts.
 
-The notes which follow are my own, and try to formalize what I learn from the book and from [the dedicated playlist](https://www.youtube.com/c/TheCodingTrain/playlists?view=50&sort=dd&shelf_id=9) on [The Coding Train YouTube channel](https://www.youtube.com/c/TheCodingTrain).
+The notes which follow are my own. The demos are written in [Lua](https://www.lua.org/) and showcased with [Love2D](https://love2d.org/).
 
 [![github.com/borntofrappe/the-nature-of-code](https://github.com/borntofrappe/the-nature-of-code/blob/master/banner.svg)](https://github.com/borntofrappe/the-nature-of-code)
 
 ## Randomness
 
-Randomness is used to introduce the book, object oriented programming and a few of the possible ways with which it is possible to simulate real life phenomena (the movement of a particle).
+Randomness is used to introduce the book, object oriented programming and a few of the possible ways with which it is possible to simulate real life phenomena.
 
-### Random
+### [Random](hhttps://repl.it/@borntofrappe/Randomness-Random)
 
-A random function returns a number in a range with the same probability as any number in the same range.
-The output isn't truly random, but pseudo-random, whereby the function creates a series of numbers and returns one of them. The sequence repeats itself, but over a long stretch of time.
+A random function returns a number in a range with the same probability as any number in the same range. The output isn't truly random, but pseudo-random, whereby the function creates a series of numbers and returns one of them. The sequence repeats itself, but over a long stretch of time.
 
 To move a particle at random, it is possible to modify its position in several ways:
 
 - `math.random(4)` with a chain of if statements to move in either of the four directions
 
-- `math.random(3)` to move horizontally/vertically or stand still
+- `math.random(3)` to move horizontally, vertically or stand still
 
 - `math.random()` to move by the measure of a floating point number
 
 _Please note:_
 
-- Lua is 1-indexed. In light of this, `math.random(4)` returns a number in the `[1,4]`. Similarly, `math.random(3)` returns a number in the `[1,3]` range
+- Lua is 1-indexed. In light of this, `math.random(4)` returns a number in the `[1,4]`, while `math.random(3)` returns a number in the `[1,3]` range
 
 - `math.random()` returns the same sequence of random numbers unless you first set a random seed
 
@@ -35,17 +34,27 @@ _Please note:_
 
   It is possible to use `love.math.random`, a function which is automatically seeded by Love2D, but I chose the non-seeded version to stress how the random function returns pseudo-random numbers.
 
-### Probability
+### [Probability](https://repl.it/@borntofrappe/Randomness-Probability)
 
-The probability of a single event is given by the number of outcomes representing the event divided by the number of possible outcomes. The probability of multiple events occurring in sequence is obtained by multiplying the single events
-
-This is handy not only to describe the random functions, but the distribution of other functions.
+The probability of a single event is given by the number of outcomes representing the event divided by the number of possible outcomes. The probability of multiple events occurring in sequence is obtained by multiplying the single events. The concept is useful to describe the random functions, but also the distribution of other functions.
 
 With the random function, you can obtain a certain probability with at least two methods:
 
 - initialize a bucket, a container with a set of options and pick at random from the set
 
-- ask for a random number in the `(0, 1)` and use the value to execute an option with the cumulative probability
+- ask for a random number in the `(0, 1)` range and use the value to execute an option with the given probability
+
+_Please note_:
+
+- the method using probabilities computes the _cumulative_ probability of each option, so that effectively, the for loop is a convenience from a series of `if` statements
+
+  ```lua
+  if random < 0.5
+  elseif random < 0.55
+  elseif random < 0.85
+  elseif random < 1
+  end
+  ```
 
 ### Normal distribution
 
@@ -53,7 +62,7 @@ A normal distribution (or Gaussian) returns a random number starting from two va
 
 #### 68,98,99.7
 
-Given a population and a normal distribution, 68% of the observations fall in the range of the standard deviation, 98% in the range of two and 99.7% in the range of three
+Given a population and a normal distribution, 68% of the observations fall in the range of the standard deviation, 98% in the range of twice the standard deviation and 99.7% in the range of thrice the same value.
 
 #### Standard deviation
 
@@ -73,7 +82,7 @@ _Please note:_
 
 - `maxHeight` describes an upper boundary for the vertical dimension of the bell's curve. This is used to avoid cropping the line at the top of the window
 
-- the mapping function works similarly to the method available in the [processing library](https://github.com/processing/p5.js/blob/main/src/math/calculation.js#L450), adapting a value from an input to an output range
+- the mapping function works similarly to the method available in the [processing library](https://github.com/processing/p5.js/blob/main/src/math/calculation.js#L450), adapting a value from an range to range
 
 ### Custom distribution
 
@@ -120,3 +129,9 @@ position.x += velocity.x; position.y += velocity.y;
 To compute the acceleration, there exist different algorithms. With a constant acceleration, you obtain uniform acceleration. With a variable acceleration, you start to have a more varied movement, whereby the object constantly shifts its direction.
 Be sure to consider the magnitude of the vector, scaling/limiting the vector to fit the project needs.
 By affecting the acceleration, by modifying the magnitude it is possible to emulate more realistic movement.
+
+## Resources
+
+- [The Nature of Code](https://natureofcode.com/)
+
+- [The Nature of Code playlist](https://www.youtube.com/c/TheCodingTrain/playlists?view=50&sort=dd&shelf_id=9) on [The Coding Train YouTube channel](https://www.youtube.com/c/TheCodingTrain)

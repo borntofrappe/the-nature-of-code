@@ -10,13 +10,33 @@ function love.load()
   love.graphics.setBackgroundColor(1, 1, 1)
 
   math.randomseed(os.time())
+
   mover = Mover:new()
+
+  history = {
+    {
+      ["x"] = mover.x,
+      ["y"] = mover.y
+    }
+  }
 end
 
 function love.update(dt)
   mover:randomWalk()
+  table.insert(
+    history,
+    {
+      ["x"] = mover.x,
+      ["y"] = mover.y
+    }
+  )
 end
 
 function love.draw()
   mover:render()
+
+  for i, point in ipairs(history) do
+    love.graphics.setColor(0.12, 0.12, 0.13, 0.2)
+    love.graphics.circle("fill", point.x, point.y, 1)
+  end
 end
