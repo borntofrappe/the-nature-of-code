@@ -56,6 +56,10 @@ _Please note_:
   end
   ```
 
+<!-- ADD REPL HERE
+FIX NAMING CONVENTION randomNumbers -> normalNumbers
+ -->
+
 ### Normal distribution
 
 A normal distribution (or Gaussian) returns a random number starting from two values: a mean and a standard variation. The idea of the distribution is that numbers are more likely to approach the mean than deviate from it. How often they distance themselves from the mean is described by the standard deviation. With a small deviation, the numbers gather around the mean. Opposedly and with a large deviation, the numbers scatter away from the central value.
@@ -88,9 +92,34 @@ _Please note:_
 
 ### Custom distribution
 
-One possible way to alter a distribution to fit a particular need comes from Lévi's flight, whereby you pick a position at random, and to avoid sampling the same observation repeatedly, you pick a far off position every once in a while.
-Here, the goal is to show a similar distribution, one that skews observations in a continuous range.
-Pick two numbers, consider the first one only if it is less than the second. Considering a range in the (0,1) interval, this ensures that the greater the number, the greater of it being picked, validated. The range also provides a quick reference in terms of probability. For instance 0.80 is 80% likely to be picked.
+To fit the needs of a simulation, you can customize a distribution in several ways. The `Probability` folder already introduces two possibilities, with the methods picking a number from a given set, or using the cumulative probability. Here, a custom distribution is built with the following algorithm:
+
+- pick a random value
+
+- assign a probability to the value
+
+- pick a second random value
+
+- if the second random value is less than the probability, accept the first pick
+
+- else, repeat the process
+
+This approach means that values with a greater probability are more likely to be accepted. The custom nature of the distribution comes from the way the probability is then computed.
+
+It helps to consider the probability as the `y` value for a function in an `(x, y)` plane. When the probability is equal to the random value, as in the demo, the relationship is linear. When the probability is instead equal to the value squared, the relationship is squared.
+
+_Please note_:
+
+- in the demo, the value is picked in the `(0, 1)` range, with a tendency for higher numbers. The value is finally updated to change the direction at random.
+
+  ```lua
+  if math.random() > 0.5 then
+    x = x * -1
+  end
+  -- repeat for the `y` coordinate
+  ```
+
+  This is to avoid having the `Mover` entity move outside of the window too rapidly.
 
 ### Perlin noise
 
