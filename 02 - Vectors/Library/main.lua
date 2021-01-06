@@ -1,4 +1,4 @@
-Library = require "Library"
+Vector = require "Vector"
 
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 500
@@ -14,7 +14,7 @@ function love.load()
 
   math.randomseed(os.time())
 
-  position = Library:newVector(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
+  position = Vector:new(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
 
   local vx = math.random(VELOCITY_MIN, VELOCITY_MAX)
   local vy = math.random(VELOCITY_MIN, VELOCITY_MAX)
@@ -24,7 +24,7 @@ function love.load()
   if math.random() > 0.5 then
     vy = vy * -1
   end
-  velocity = Library:newVector(vx, vy)
+  velocity = Vector:new(vx, vy)
 
   angle = math.atan(velocity.y / velocity.x)
   if velocity.x < 0 then
@@ -49,9 +49,6 @@ function love.draw()
   love.graphics.setLineWidth(LINE_WIDTH)
   love.graphics.setColor(0.11, 0.11, 0.11, 0.2)
   love.graphics.line(position.x, position.y, position.x + velocity.x, position.y + velocity.y)
-  love.graphics.setColor(0.11, 0.11, 0.11, 0.1)
-  love.graphics.line(position.x, position.y, position.x + velocity.x, position.y)
-  love.graphics.line(position.x + velocity.x, position.y, position.x + velocity.x, position.y + velocity.y)
 
   love.graphics.setColor(0.11, 0.11, 0.11, 1)
   love.graphics.circle("fill", position.x, position.y, RADIUS)

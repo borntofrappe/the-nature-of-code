@@ -1,14 +1,14 @@
-Library = {}
-Library.__index = Library
+Vector = {}
+Vector.__index = Vector
 
-function Library:new()
+function Vector:init()
   this = {}
 
   setmetatable(this, self)
   return this
 end
 
-function Library:newVector(x, y)
+function Vector:new(x, y)
   local vector = {
     ["x"] = x,
     ["y"] = y
@@ -17,4 +17,4 @@ function Library:newVector(x, y)
   return vector
 end
 
-return Library:new()
+return Vector:init()

@@ -158,7 +158,7 @@ Think of a vector with two components (again `x` and `y`) as an arrow. The lengt
 
 _Please note:_
 
-- `Library.lua` is used to introduce a helper script to create vectors and works as an extremely rudimentary version of the Processing library
+- `Vector.lua` is used to introduce a helper script to create vectors and works as an extremely rudimentary version of the Processing library
 
 - [the demo in the `Library` folder]() shows two vectors, a position vector centering a circle in the middle of the screen and a velocity vector radiating from the starting point. The velocity vector is finally updated using the coordinates of the mouse cursor
 
