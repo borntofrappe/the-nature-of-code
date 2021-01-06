@@ -150,8 +150,15 @@ _Please note:_
 
 ## Vectors
 
-Euclidean/geometric vector, an entity with magnitude and direction. Here they are introduced in the context of a plane with two dimensions, x and y, but fundamentally, they work in the same manner with additional dimensions.
-You can think of a vector with two components (again x and y) as an arrow. The length of the arrow describe its distance, the angle relative to an axis its direction. A vector describing the position of a particle details where to position the object from the origin. A vector describing the velocity dictates how to move the same particle.
+Vectors as introduced in the book are _euclidean_ vectors; entities with a magnitude and a direction. Here they are introduced in the context of a plane with two dimensions, `x` and `y`, but fundamentally, they work in the same manner with additional dimensions.
+
+Think of a vector with two components (again `x` and `y`) as an arrow. The length of the arrow describe its distance, while the angle relative to an axis its direction. A vector describing the position of a particle details where to position the object from the origin. A vector describing the velocity dictates how to move the same particle.
+
+_Please note:_
+
+- `Library.lua` is used to introduce a helper script to create vectors and works as an extremely rudimentary version of the Processing library
+
+- the `Library` folder shows a vector centered in the window, and with a random velocity. The velocity is finally updated using the coordinates of the mouse cursor
 
 ### Vector Math
 
