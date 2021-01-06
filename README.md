@@ -148,6 +148,8 @@ _Please note:_
 
 - `getNoiseNumbers` creates a series of numbers to plot the line and update the `Mover` entity. `getNoiseBackground` instead produces a grid of numbers to color the background with a makeshift texture; this last function is used to showcase how `love.math.noise` works with two arguments and dimensions
 
+<!-- TODO: add live demo for Vectors - Library -->
+
 ## Vectors
 
 Vectors as introduced in the book are _euclidean_ vectors; entities with a magnitude and a direction. Here they are introduced in the context of a plane with two dimensions, `x` and `y`, but fundamentally, they work in the same manner with additional dimensions.
@@ -158,19 +160,25 @@ _Please note:_
 
 - `Library.lua` is used to introduce a helper script to create vectors and works as an extremely rudimentary version of the Processing library
 
-- the `Library` folder shows a vector centered in the window, and with a random velocity. The velocity is finally updated using the coordinates of the mouse cursor
+- [the demo in the `Library` folder]() shows two vectors, a position vector centering a circle in the middle of the screen and a velocity vector radiating from the starting point. The velocity vector is finally updated using the coordinates of the mouse cursor
 
 ### Vector Math
 
-Some libraries provide a functionality to perform mathematical operations on vectors (addition, subtraction, multiplication..). Here, however, I am interested in the underlying math.
+The tentative library is updated to consider several mathematical operations for vectors.
 
-- add vectors; sum the components of the vectors involved. position.x += velocity.x; position.y += velocity.y;
-- subtract vectors; subtract the components of the first vector by the components of the second; position.x -= velocity.x; position.y -= velocity.y;
-- multiply by a scalar; multiply each component by the scalar. position.x _= s; position.y _= s; this is useful to scale the vector
-- divide by a scalar; divide each component, scaling down the vector. position.x /= s; position.y /= s; here you scale down the vector, you reduce the strength of its components. Be sure that the scalar is different from 0.
-- compute the vector magnitude; using pythagorean theorem a^2 + b^2 = c^2, compute the magnitude as the length, the distance between two points considering the x and y component. m = (vector.x^2 + vector.y^2)^2
-- normalize vector; divide the vector by its magnitude, obtaining a vector with length 1, a unit vector. This is helpful to have a unit vector with the same direction as the first vector. From this point you can scale the vector to any arbitrary length (by multiplying the unit vector by yet another magnitude)
-- limit a vector to a given magnitude; compute the magnitude, and if greater proceed to scale down the vector. Obtain the unit vector, scale the components with the given scalar.
+- add vectors; sum the components of the vectors involved
+
+- subtract vectors; subtract the components of the first vector by the components of the second
+
+- multiply by a scalar; multiply each component by the scalar; this operation is useful to scale the vector
+
+- divide by a scalar; divide each component, scaling down the vector; here you scale down the vector, you reduce the strength of its components. Be sure that the scalar is different from 0.
+
+- compute the vector's magnitude; using pythagorean theorem, `a^2 + b^2 = c^2`, the magnitude represents the length, the distance between two points considering the `x` and `y` component: `m = (vector.x^2 + vector.y^2)^2`
+
+- normalize vector; divide the vector by its magnitude, obtaining a vector with length 1, a unit vector. This is helpful to have a unit vector with the same direction as the first vector. From this point you can scale the vector to any arbitrary length (by multiplying the unit vector with the desired magnitude)
+
+- limit a vector to a given magnitude; compute the magnitude, and if greater proceed to scale down the vector. Obtain the unit vector, scale the components with the given scalar
 
 ### Velocity
 
