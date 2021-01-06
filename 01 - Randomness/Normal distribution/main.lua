@@ -9,8 +9,10 @@ WINDOW_MAX_HEIGHT = WINDOW_HEIGHT - LINE_WIDTH
 MEAN = 0
 STANDARD_DEVIATION = 1
 MAX_HEIGHT = 1 / ((2 * math.pi) ^ 0.5 * STANDARD_DEVIATION)
-POINTS = 100
+POINTS = 200
 RADIUS = 5
+UPPER_BOUNDARY = WINDOW_HEIGHT / 4
+LOWER_BOUNDARY = WINDOW_HEIGHT * 3 / 4
 
 function love.load()
   love.window.setTitle("Randomness - Normal distribution")
@@ -23,44 +25,30 @@ function love.load()
 
   mover = Mover:new()
 
-  history = {
-    {
-      ["x"] = mover.x,
-      ["y"] = mover.y
-    }
-  }
-
   points = {}
   for i = 1, #normalNumbers do
-    local x = (i - 1) * WINDOW_WIDTH / #normalNumbers
-    local y = map(normalNumbers[i], 0, MAX_HEIGHT, WINDOW_HEIGHT, WINDOW_HEIGHT - WINDOW_MAX_HEIGHT)
+    local x = (i - 1) * WINDOW_WIDTH / (#normalNumbers - 1)
+    local y = map(normalNumbers[i], 0, MAX_HEIGHT, LOWER_BOUNDARY, UPPER_BOUNDARY)
     table.insert(points, x)
     table.insert(points, y)
   end
+
+  -- update index to consider the coordinates in the points table
+  index = 1
 end
 
 function love.update(dt)
-  mover:randomWalk(normalNumbers)
-  table.insert(
-    history,
-    {
-      ["x"] = mover.x,
-      ["y"] = mover.y
-    }
-  )
+  mover.x = points[index]
+  mover.y = points[index + 1]
+  index = index + 1 >= #points and 1 or index + 2
 end
 
 function love.draw()
-  love.graphics.setColor(0.11, 0.11, 0.11, 1)
+  love.graphics.setColor(0.11, 0.11, 0.11, 0.2)
   love.graphics.setLineWidth(LINE_WIDTH)
   love.graphics.line(points)
 
   mover:render()
-
-  for i, point in ipairs(history) do
-    love.graphics.setColor(0.11, 0.11, 0.11, 0.1)
-    love.graphics.circle("fill", point.x, point.y, 1)
-  end
 end
 
 function getNormalDistribution(x, mu, sigma)

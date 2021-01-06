@@ -5,10 +5,14 @@ WINDOW_HEIGHT = 500
 
 e = 2.71828
 LINE_WIDTH = 2
-POINTS = 200
 OFFSET_INITIAL_MAX = 1000
 OFFSET_INCREMENT = 0.02
+POINTS = 200
 RADIUS = 5
+UPPER_BOUNDARY = WINDOW_HEIGHT / 4
+LOWER_BOUNDARY = WINDOW_HEIGHT * 3 / 4
+OPACITY_MAX = 0.25
+NOISE_BACKGROUND_SIZE = 5
 
 function love.load()
   love.window.setTitle("Randomness - Noise")
@@ -21,15 +25,18 @@ function love.load()
 
   mover = Mover:new()
 
-  index = 1
-
   points = {}
   for i = 1, #noiseNumbers do
-    local x = (i - 1) * WINDOW_WIDTH / #noiseNumbers
-    local y = map(noiseNumbers[i], 0, 1, WINDOW_HEIGHT * 3 / 4, WINDOW_HEIGHT / 4)
+    local x = (i - 1) * WINDOW_WIDTH / (#noiseNumbers - 1)
+    local y = map(noiseNumbers[i], 0, 1, LOWER_BOUNDARY, UPPER_BOUNDARY)
     table.insert(points, x)
     table.insert(points, y)
   end
+
+  -- update index to consider the coordinates in the points table
+  index = 1
+
+  noiseBackground = getNoiseBackground()
 end
 
 function love.update(dt)
@@ -39,6 +46,19 @@ function love.update(dt)
 end
 
 function love.draw()
+  for x = 1, #noiseBackground do
+    for y = 1, #noiseBackground[x] do
+      love.graphics.setColor(0.11, 0.11, 0.11, noiseBackground[x][y])
+      love.graphics.rectangle(
+        "fill",
+        (x - 1) * NOISE_BACKGROUND_SIZE,
+        (y - 1) * NOISE_BACKGROUND_SIZE,
+        NOISE_BACKGROUND_SIZE,
+        NOISE_BACKGROUND_SIZE
+      )
+    end
+  end
+
   love.graphics.setColor(0.11, 0.11, 0.11, 0.2)
   love.graphics.setLineWidth(LINE_WIDTH)
   love.graphics.line(points)
@@ -66,4 +86,29 @@ function getNoiseNumbers()
   end
 
   return noiseNumbers
+end
+
+function getNoiseBackground()
+  local offsetInitialX = math.random(OFFSET_INITIAL_MAX)
+  local offsetInitialY = math.random(OFFSET_INITIAL_MAX)
+  local offsetX = offsetInitialX
+  local offsetY = offsetInitialY
+
+  local noiseBackground = {}
+  for x = 1, math.floor(WINDOW_WIDTH / NOISE_BACKGROUND_SIZE) do
+    -- set offsetY back to the first value for every column
+    -- this to have the cell connected to the one in the previous row
+    offsetY = offsetInitialY
+    noiseBackground[x] = {}
+    table.insert(noiseBackground, {})
+    for y = 1, math.floor(WINDOW_HEIGHT / NOISE_BACKGROUND_SIZE) do
+      -- half the random numeber to produce numbers in the (0; OPACITY_MAX) range
+      -- the risk is an overly dark background
+      noiseBackground[x][y] = love.math.noise(offsetX, offsetY) * OPACITY_MAX
+      offsetY = offsetY + OFFSET_INCREMENT
+    end
+    offsetX = offsetX + OFFSET_INCREMENT
+  end
+
+  return noiseBackground
 end

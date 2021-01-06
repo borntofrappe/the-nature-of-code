@@ -78,7 +78,7 @@ f(x) = 1 / (sigma * (2 * math.pi) ^ 0.5) * e ^ (- 1 / 2 * ((x - mu) / sigma) ^ 2
 
 _Please note:_
 
-- in the demo the normal function is used to generate an assortment of numbers with mean `0` and standard deviation `1`. These values are then used to draw a line, describing the associated bell curve, and move the `Mover` entity. Given the bell curve, however, the entity barely moves from the origin
+- in the demo the normal function is used to generate an assortment of numbers with mean `0` and standard deviation `1`. These values are then used to draw a line, describing the associated bell curve, and move the `Mover` entity
 
 - `e` is initialized at the top of the script to describe the [_Euler's number_](<https://en.wikipedia.org/wiki/E_(mathematical_constant)>), and is approximated to `2.71828`
 
@@ -127,7 +127,7 @@ The function returns a sequence of numbers in the `(0,1)` range and accepts mult
 
 _Please note:_
 
-- the demo works similarly to `Normal distribution`, by plotting the numbers with a line. Unlike the mentioned project, however, the `Mover` entity moves alongside the coordinates provided by the noise function. This explains why I also chose to remove the `history` table showing the movement of the entity
+- the demo works similarly to `Normal distribution`, by plotting the numbers with a line and update the `Mover` entity to follow the line's coordinates
 
 - using the same offset returns the same noise value. This explains why the for loop begins at an arbitrary offset, chosen at random
 
@@ -145,6 +145,8 @@ _Please note:_
   ```
 
   The smaller the value, the smoother the line.
+
+- `getNoiseNumbers` creates a series of numbers to plot the line and update the `Mover` entity. `getNoiseBackground` instead produces a grid of numbers to color the background with a makeshift texture; this last function is used to showcase how `love.math.noise` works with two arguments and dimensions
 
 ## Vectors
 
