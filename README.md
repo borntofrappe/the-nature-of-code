@@ -204,14 +204,18 @@ _Please note:_
 
 ### Acceleration
 
-With three vectors, including acceleration, it is possible to move an object with an accelerated rate. Speeding up and slowing down.
+With three vectors, it is possible to move an object with an accelerated rate, speeding up or slowing down. The idea is to update the position with the velocity, and the velocity with the acceleration.
 
-velocity.x += acceleration.x; velocity.y += acceleration.x;
-position.x += velocity.x; position.y += velocity.y;
+```lua
+self.position:add(self.velocity)
+self.velocity:add(self.acceleration)
+```
 
-To compute the acceleration, there exist different algorithms. With a constant acceleration, you obtain uniform acceleration. With a variable acceleration, you start to have a more varied movement, whereby the object constantly shifts its direction.
-Be sure to consider the magnitude of the vector, scaling/limiting the vector to fit the project needs.
-By affecting the acceleration, by modifying the magnitude it is possible to emulate more realistic movement.
+With this setup, the goal of the simulation is to then set a particular acceleration. This value can be set arbitrarily, as with a constant or random value, or following actual physics, as with of gravity or wind strength.
+
+_Please note:_
+
+- in the `Acceleration` folder you find two demos: `Constant` setting a positive or negative acceleration with a particular key press, and `Mouse`, updating the acceleration to have the particles move toward the mouse cursor
 
 ## Resources
 
