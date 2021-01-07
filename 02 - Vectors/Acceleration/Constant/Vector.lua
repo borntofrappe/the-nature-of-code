@@ -30,9 +30,7 @@ function Vector:multiply(s)
 end
 
 function Vector:divide(s)
-  if s == 0 then
-    -- throw error
-  else
+  if s ~= 0 then
     for k, value in pairs(self) do
       self[k] = value / s
     end

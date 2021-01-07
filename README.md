@@ -1,5 +1,3 @@
-<!-- TODO ADD REPL FOR VECTOR -->
-
 [_The Nature of Code_](https://natureofcode.com/book/) introduces many concepts to simulate real-world phenomena with code. Here, I follow the book to learn about these concepts.
 
 The notes which follow are my own. The demos are written in [Lua](https://www.lua.org/) and showcased with [Love2D](https://love2d.org/).
@@ -162,9 +160,9 @@ _Please note:_
 
 - `Vector.lua` is used to introduce the vector entity with a table
 
-- [the demo in the `Vector` folder]() shows two vectors, a position vector centering a circle in the middle of the screen, and a velocity vector radiating from the starting point. The velocity vector is finally updated using the coordinates of the mouse cursor
+- [the demo in the `Vector` folder](https://repl.it/@borntofrappe/Vectors-Vector) shows two vectors, a position vector centering a circle in the middle of the screen, and a velocity vector radiating from the starting point. The velocity vector is finally updated using the coordinates of the mouse cursor
 
-### [Vector Math]()
+### [Vector Math](https://repl.it/@borntofrappe/Vectors-Vector-math)
 
 Vectors follow specific rules to compute mathematical operations.
 
@@ -188,7 +186,7 @@ _Please note:_
 
 - `LVector.lua` is introduced as a rudimentary version of the Processing library, and defines several methods to compute roughly the same mathematical operations. The key difference is that the methods do not modify the input vector(s), but return a new entity altogether
 
-### Velocity
+### [Velocity](https://repl.it/@borntofrappe/Vectors-Velocity)
 
 With two vectors describing the position and velocity, it is possible to move an object at a constant rate.
 
@@ -215,7 +213,7 @@ With this setup, the goal of the simulation is to then set a particular accelera
 
 _Please note:_
 
-- in the `Acceleration` folder you find two demos: `Constant` setting a positive or negative acceleration with a particular key press, and `Mouse`, updating the acceleration to have the particles move toward the mouse cursor
+- in the `Acceleration` folder you find two demos: [`Constant`](https://repl.it/@borntofrappe/Vectors-Acceleration-Constant) setting a positive or negative acceleration with a particular key press, and [`Mouse`](https://repl.it/@borntofrappe/Vectors-Acceleration-Mouse), updating the acceleration to have the particles move toward the mouse cursor
 
 ## Resources
 

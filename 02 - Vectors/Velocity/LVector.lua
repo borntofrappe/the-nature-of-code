@@ -47,7 +47,7 @@ end
 
 function LVector:divide(v, s)
   if s == 0 then
-    -- throw error
+    return v
   else
     local vector = Vector:new(0, 0)
 
