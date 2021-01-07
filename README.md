@@ -190,9 +190,17 @@ _Please note:_
 
 ### Velocity
 
-With two vectors describing the position and velocity it is possible to move an object at a constant rate.
+With two vectors describing the position and velocity, it is possible to move an object at a constant rate.
 
-position.x += velocity.x; position.y += velocity.y;
+_Please note:_
+
+- in the demo, the location is updated with the vector describing the velocity. The velocity is however and first scaled to consider `dt`, delta time.
+
+  ```lua
+  self.position:add(LVector:multiply(self.velocity, dt))
+  ```
+
+  This is specific to the engine Love2D, and allows to move the particles irrespective of the frame rate
 
 ### Acceleration
 
