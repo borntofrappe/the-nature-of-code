@@ -43,7 +43,7 @@ function Vector:getMagnitude()
   local total = 0
 
   for k, value in pairs(self) do
-    total = value ^ 2
+    total = total + value ^ 2
   end
 
   return total ^ 0.5

@@ -6,6 +6,7 @@ VELOCITY_MIN = 50
 VELOCITY_MAX = 150
 RADIUS = 5
 LINE_WIDTH = 1
+MAGNITUDE_LIMIT = 100
 
 function love.load()
   love.window.setTitle("Vectors - Vector math")
@@ -39,7 +40,7 @@ function love.update(dt)
   if x > 0 and y > 0 then
     local point = LVector:new(x, y)
     velocity = LVector:subtract(point, position)
-    velocity:limit(50)
+    velocity:limit(MAGNITUDE_LIMIT)
     angle = math.atan(velocity.y / velocity.x)
     if velocity.x < 0 then
       angle = angle + math.pi

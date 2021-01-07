@@ -1,3 +1,5 @@
+<!-- TODO ADD REPL FOR VECTOR -->
+
 [_The Nature of Code_](https://natureofcode.com/book/) introduces many concepts to simulate real-world phenomena with code. Here, I follow the book to learn about these concepts.
 
 The notes which follow are my own. The demos are written in [Lua](https://www.lua.org/) and showcased with [Love2D](https://love2d.org/).
@@ -152,33 +154,39 @@ _Please note:_
 
 ## Vectors
 
-Vectors as introduced in the book are _euclidean_ vectors; entities with a magnitude and a direction. Here they are introduced in the context of a plane with two dimensions, `x` and `y`, but fundamentally, they work in the same manner with additional dimensions.
+Vectors as introduced in the book are _euclidean_ vectors, entities with a magnitude and a direction. They are introduced in the context of a plane with two dimensions, `x` and `y`, but fundamentally, they work in the same manner with additional dimensions.
 
-Think of a vector with two components (again `x` and `y`) as an arrow. The length of the arrow describe its distance, while the angle relative to an axis its direction. A vector describing the position of a particle details where to position the object from the origin. A vector describing the velocity dictates how to move the same particle.
+Think of a vector with two components as an arrow. The length of the arrow describe its distance, while the angle relative to an axis its direction. A vector describing the position of a particle details where to position the object from the origin. A vector describing the velocity dictates how to move the same particle.
 
 _Please note:_
 
-- `Vector.lua` is used to introduce a helper script to create vectors and works as an extremely rudimentary version of the Processing library
+- `Vector.lua` is used to introduce the vector entity with a table
 
-- [the demo in the `Library` folder]() shows two vectors, a position vector centering a circle in the middle of the screen and a velocity vector radiating from the starting point. The velocity vector is finally updated using the coordinates of the mouse cursor
+- [the demo in the `Vector` folder]() shows two vectors, a position vector centering a circle in the middle of the screen, and a velocity vector radiating from the starting point. The velocity vector is finally updated using the coordinates of the mouse cursor
 
-### Vector Math
+### [Vector Math]()
 
-The tentative library is updated to consider several mathematical operations for vectors.
+Vectors follow specific rules to compute mathematical operations.
 
-- add vectors; sum the components of the vectors involved
+- addition: sum the components
 
-- subtract vectors; subtract the components of the first vector by the components of the second
+- subtract vectors: subtract the components of the first vector by the components of the second
 
-- multiply by a scalar; multiply each component by the scalar; this operation is useful to scale the vector
+- multiply by a scalar: multiply each component by the scalar; this operation is useful to scale the vector
 
-- divide by a scalar; divide each component, scaling down the vector; here you scale down the vector, you reduce the strength of its components. Be sure that the scalar is different from 0.
+- divide by a scalar: divide each component, scaling down the vector; here you scale down the vector, you reduce the strength of its components. Be sure that the scalar is different from 0
 
 - compute the vector's magnitude; using pythagorean theorem, `a^2 + b^2 = c^2`, the magnitude represents the length, the distance between two points considering the `x` and `y` component: `m = (vector.x^2 + vector.y^2)^2`
 
-- normalize vector; divide the vector by its magnitude, obtaining a vector with length 1, a unit vector. This is helpful to have a unit vector with the same direction as the first vector. From this point you can scale the vector to any arbitrary length (by multiplying the unit vector with the desired magnitude)
+- normalize vector: divide the vector by its magnitude, obtaining a vector with length 1, a unit vector. This is helpful to have a unit vector with the same direction as the first vector. From this point you can scale the vector to any arbitrary length, by further multiplying the unit vector with the desired magnitude
 
-- limit a vector to a given magnitude; compute the magnitude, and if greater proceed to scale down the vector. Obtain the unit vector, scale the components with the given scalar
+- limit a vector to a given magnitude; compute the magnitude, and if greater than the input value proceed to scale down the vector to said magnitude. In practice, this operation is achieved by normalizing the vector and scaling the same entity with the input magnitude
+
+_Please note:_
+
+- `Vector.lua` is updated to compute different mathematical operations on the vector itself. Be careful that these methods (add, subtract, multiply and divide) modify the original entity
+
+- `LVector.lua` is introduced as a rudimentary version of the Processing library, and defines several methods to compute roughly the same mathematical operations. The key difference is that the methods do not modify the input vector(s), but return a new entity altogether
 
 ### Velocity
 
