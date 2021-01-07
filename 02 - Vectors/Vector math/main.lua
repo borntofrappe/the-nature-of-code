@@ -1,4 +1,4 @@
-Vector = require "Vector"
+LVector = require "LVector"
 
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 500
@@ -14,7 +14,7 @@ function love.load()
 
   math.randomseed(os.time())
 
-  position = Vector:new(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
+  position = LVector:new(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
 
   local vx = math.random(VELOCITY_MIN, VELOCITY_MAX)
   local vy = math.random(VELOCITY_MIN, VELOCITY_MAX)
@@ -24,28 +24,28 @@ function love.load()
   if math.random() > 0.5 then
     vy = vy * -1
   end
-  velocity = Vector:new(vx, vy)
+  velocity = LVector:new(vx, vy)
 
   angle = math.atan(velocity.y / velocity.x)
   if velocity.x < 0 then
     angle = angle + math.pi
   end
 
-  destination = Vector:add(position, velocity)
+  destination = LVector:add(position, velocity)
 end
 
 function love.update(dt)
   local x, y = love.mouse:getPosition()
   if x > 0 and y > 0 then
-    local point = Vector:new(x, y)
-    velocity = Vector:subtract(position, point)
-
+    local point = LVector:new(x, y)
+    velocity = LVector:subtract(point, position)
+    velocity:limit(50)
     angle = math.atan(velocity.y / velocity.x)
     if velocity.x < 0 then
       angle = angle + math.pi
     end
 
-    destination = Vector:add(position, velocity)
+    destination = LVector:add(position, velocity)
   end
 end
 

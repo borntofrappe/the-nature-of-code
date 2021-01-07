@@ -1,73 +1,65 @@
 Vector = {}
 Vector.__index = Vector
 
-function Vector:init()
-  this = {}
+function Vector:new(x, y)
+  this = {
+    ["x"] = x,
+    ["y"] = y
+  }
 
   setmetatable(this, self)
   return this
 end
 
-function Vector:new(x, y)
-  local vector = {
-    ["x"] = x,
-    ["y"] = y
-  }
-
-  return vector
-end
-
-function Vector:add(v1, v2)
-  local vector = self:new(0, 0)
-
-  for k, value in pairs(vector) do
-    vector[k] = v1[k] + v2[k]
+function Vector:add(v)
+  for k, value in pairs(self) do
+    self[k] = value + v[k]
   end
-
-  return vector
 end
 
-function Vector:subtract(v1, v2)
-  local vector = self:new(0, 0)
-
-  for k, value in pairs(vector) do
-    vector[k] = v2[k] - v1[k]
+function Vector:subtract(v)
+  for k, value in pairs(self) do
+    self[k] = value - v[k]
   end
-
-  return vector
 end
 
-function Vector:multiply(v, s)
-  local vector = self:new(0, 0)
-
-  for k, value in pairs(vector) do
-    vector[k] = v[k] * s
+function Vector:multiply(s)
+  for k, value in pairs(self) do
+    self[k] = value * s
   end
-
-  return vector
 end
 
-function Vector:divide(v, s)
+function Vector:divide(s)
   if s == 0 then
-    return nil
+    -- throw error
   else
-    local vector = self:new(0, 0)
-    for k, value in pairs(vector) do
-      vector[k] = v[k] / s
+    for k, value in pairs(self) do
+      self[k] = value / s
     end
-
-    return vector
   end
 end
 
-function Vector:magnitude(v)
+function Vector:getMagnitude()
   local total = 0
 
-  for k, value in pairs(v) do
+  for k, value in pairs(self) do
     total = value ^ 2
   end
 
   return total ^ 0.5
 end
 
-return Vector:init()
+function Vector:normalize()
+  local magnitude = self:getMagnitude()
+
+  self:divide(magnitude)
+end
+
+function Vector:limit(m)
+  local magnitude = self:getMagnitude()
+
+  if magnitude > m then
+    self:normalize()
+    self:multiply(m)
+  end
+end

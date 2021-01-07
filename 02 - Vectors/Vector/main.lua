@@ -1,4 +1,4 @@
-Vector = require "Vector"
+require "Vector"
 
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 500
