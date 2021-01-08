@@ -259,16 +259,30 @@ _Please note:_
 The previous solution works, but only when a single force is applied. With multiple forces, only the last one is incorporated in the acceleration vector. The implementation is therefore modified to consider the effect of a force as cumulative (force accumulation)
 
 ```lua
-function applyForce()
-acceleration:add(force)
+function Mover:applyForce(force)
+  self.acceleration:add(force)
 end
 ```
 
 At every frame, however, it is necessary to reset the acceleration vector. In this manner, the object considers the forces available in the specific frame/instant only, and not the previous forces as well.
 
 ```lua
-acceleration:multiply(0)
+self.acceleration:multiply(0)
 ```
+
+_Please note:_
+
+- in the demo the ball is updated to move downwards as subject to a force of gravity. When the mouse is pressed then, another force is applied to move the entity horizontally as well
+
+  ```lua
+  local gravity = LVector:new(0, GRAVITY)
+  mover:applyForce(gravity)
+
+  if love.mouse.isDown(1) then
+    local wind = LVector:new(WIND, 0)
+    mover:applyForce(wind)
+  end
+  ```
 
 ### Mass
 
