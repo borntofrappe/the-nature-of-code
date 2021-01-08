@@ -150,7 +150,7 @@ _Please note:_
 
 <!-- TODO: add live demo for Vectors - Library -->
 
-## Vectors
+## 02 - Vectors
 
 Vectors as introduced in the book are _euclidean_ vectors, entities with a magnitude and a direction. They are introduced in the context of a plane with two dimensions, `x` and `y`, but fundamentally, they work in the same manner with additional dimensions.
 
@@ -214,6 +214,93 @@ With this setup, the goal of the simulation is to then set a particular accelera
 _Please note:_
 
 - in the `Acceleration` folder you find two demos: [`Constant`](https://repl.it/@borntofrappe/Vectors-Acceleration-Constant) setting a positive or negative acceleration with a particular key press, and [`Mouse`](https://repl.it/@borntofrappe/Vectors-Acceleration-Mouse), updating the acceleration to have the particles move toward the mouse cursor
+
+## 03 - Forces
+
+## Forces
+
+The goal is to adapt the concept of forces and Newtonian physics to the simplified environment introduced with vectors.
+
+### Newton's laws
+
+In the simplified environment, a force is described as a vector which causes an object with mass to accelerate.
+
+Newton's first law, arguing that an object at rest stays at rest and an object in motion stays in motion, is adapted by saying that the vector describing the velocity stays constant. The only way for an object to stop, to reach an equilibrium is for the velocity to be affected by a series of forces which cancel its magnitude.
+
+Newton's third law, detailing an action/reaction pair for any force, is partly incorporated in the environment by having a contrasting force applied to a force vector.
+
+Newton's second law, providing a formula to compute a force on the basis of mass and acceleration, is finally essential to the simulation.
+This law states that the force is equal to mass times acceleration.
+
+```lua
+->      ->
+F = m * a
+```
+
+In a first approximation, and assuming a mass equal to 1, you can therefore apply a force by directly modifying the acceleration.
+
+```lua
+function Mover:applyForce(force)
+  self.acceleration = force
+end
+```
+
+_Please note:_
+
+- in the demo for the `Newton's law` folder a ball is initialized without velocity, nor acceleration. The acceleration vector is then modified in `love.load` by applying a force
+
+  ```lua
+  local force = LVector:new(fx, fy)
+  mover:applyForce(force)
+  ```
+
+### Force accumulation
+
+The previous solution works, but only when a single force is applied. With multiple forces, only the last one is incorporated in the acceleration vector. The implementation is therefore modified to consider the effect of a force as cumulative (force accumulation)
+
+```lua
+function applyForce()
+acceleration:add(force)
+end
+```
+
+At every frame, however, it is necessary to reset the acceleration vector. In this manner, the object considers the forces available in the specific frame/instant only, and not the previous forces as well.
+
+```lua
+acceleration:multiply(0)
+```
+
+### Mass
+
+In a slightly more elaborated construct, the force is weighed by the object mass.
+
+```lua
+function applyForce()
+f = LVector:divide(force, mass)
+acceleration:add(f)
+end
+```
+
+Be careful not to modify the input force directly.
+
+### Creating forces
+
+In a simulation, a force can be applied following a particular event, consider mouse input generating a wind current, or in order to emulate real world physics. In this last scenario, consider a formula, and try to implement its logic even in a simplified manner. For instance and for a force of friction, you can apply a force opposite to the velocity vector.
+
+With a formula, the goal is to find the direction and magnitude of the force.
+
+#### Gravity
+
+Create a vector pointing downwards and apply the force to the object.
+
+gravity.x = 0
+gravity.y = 0.1
+
+applyForce(gravity)
+
+### Friction
+
+Create a vector based on the velocity, changing it's direction and magnitude according to the input vector.
 
 ## Resources
 
