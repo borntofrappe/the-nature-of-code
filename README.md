@@ -342,7 +342,29 @@ _Please note:_
 
 - `LVector` is updated to include a method which returns a copy of the input vector. This is useful to normalize a copy of the velocity vector, without modifying the velocity in the first place
 
-#### Drag
+#### [Drag]()
+
+Starting from the formula, the force of drag considers the density of the material through which the object is moving `rho`, the magnitude of the object's velocity `||v||`, the surface area subject to drag `A`, a coefficient of drag `C` and the velocity's unit vector `^v`
+
+```lua
+->                                   ^
+F = -1 / 2 * rho * ||v||^2 * A * C * v
+```
+
+Similarly to the `Friction` demo, however, the force can be simplified by considering direction and magnitude. For the direction, the force is again the opposite of the velocity vector.
+
+For the magnitude, the force is scaled according to the magnitude of the velocity, and a value summarising the other constants.
+
+```lua
+->          ^
+F = -1 * velocity * ||v||^2 * c
+```
+
+_Please note:_
+
+- the demo is updated to consider multiple entities with varying mass, as in the `Mass` demo. Notice how objects with a greater mass are subject to less drag, since the force is divided by the mass measure
+
+- each `Mover` entity is subject to different drag forces and according to the entity's own position. In the bottom half of the screen, the script simulates a more dense environment with a greater coefficient
 
 #### Gravitational force
 
