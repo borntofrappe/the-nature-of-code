@@ -217,11 +217,9 @@ _Please note:_
 
 ## 03 - Forces
 
-## Forces
-
 The goal is to adapt the concept of forces and Newtonian physics to the simplified environment introduced with vectors.
 
-### Newton's laws
+### [Newton's laws]()
 
 In the simplified environment, a force is described as a vector which causes an object with mass to accelerate.
 
@@ -254,7 +252,7 @@ _Please note:_
   mover:applyForce(force)
   ```
 
-### Force accumulation
+### [Force accumulation]()
 
 The previous solution works, but only when a single force is applied. With multiple forces, only the last one is incorporated in the acceleration vector. The implementation is therefore modified to consider the effect of a force as cumulative (force accumulation)
 
@@ -284,9 +282,9 @@ _Please note:_
   end
   ```
 
-### Mass
+### [Mass]()
 
-In a slightly more elaborated construct, the force is weighed by the object mass.
+In a slightly more elaborated construct, a force is weighed by the object mass.
 
 ```lua
 function Mover:applyForce(force)
@@ -294,7 +292,7 @@ function Mover:applyForce(force)
 end
 ```
 
-It is important to note, however, that forces like gravity are not affected by an object's mass. For these forces, it is necessary to remove the mass's influence.
+It is important to note, however, that forces like gravity are already incorporate the mass in their value. For these forces, it is necessary to remove the mass's influence.
 
 ```lua
 local gravity = LVector:new(0, GRAVITY)
@@ -309,22 +307,44 @@ _Please note:_
 
 ### Creating forces
 
-In a simulation, a force can be applied following a particular event, consider mouse input generating a wind current, or in order to emulate real world physics. In this last scenario, consider a formula, and try to implement its logic even in a simplified manner. For instance and for a force of friction, you can apply a force opposite to the velocity vector.
+In a simulation, a force can be applied following a particular event, consider the vector created following a mouse press, or in order to emulate real world physics, consider the vector roughly describing the gravity. In this last instance, the simulation needs to compute the magnitude and direction of the force vector, starting from actual formulae.
 
-With a formula, the goal is to find the direction and magnitude of the force.
+#### [Friction]()
 
-#### Gravity
+Friction is applied on a moving object to progressively reduce its velocity (hink of a marble sliding on a table). The real formula computes the vector by considering the unit vector describing the velocity (caret `^` velocity), a coefficient of friction (`mu`), and the magnitude of the normal force `N`.
 
-Create a vector pointing downwards and apply the force to the object.
+```lua
+->                       ^
+F = -1 * mu * ||N|| * velocity
+```
 
-gravity.x = 0
-gravity.y = 0.1
+In a first approximation, it is possible to simplify the force by considering its direction and magnitude. In terms of direction, friction has a direction opposite to the velocity vector. Notice that the vector is here the _unit_ vector, with a magnitude of 1.
 
-applyForce(gravity)
+```lua
+->          ^
+F = -1 * velocity
+```
 
-### Friction
+In terms of distance, the force is scaled with a constant value.
 
-Create a vector based on the velocity, changing it's direction and magnitude according to the input vector.
+```lua
+->          ^
+F = -1 * velocity * c
+```
+
+A more elaborate simulation would try to compute the normal vector, and its eventual magnitude, would incorporate the coefficient according to the surface creating the friction, but in the approximation, it is enough to consider the magnitude as 1, and have the constant describe the coefficient with greater, or smaller values.
+
+_Please note:_
+
+- the `Mover` entity is simplified to have a mass of 1 and move only horizontally
+
+- the demo is simplified to only show the force of friction. There is no gravity, nor wind, but a force increasing the velocity when the mouse is being pressed
+
+- `LVector` is updated to include a method which returns a copy of the input vector. This is useful to normalize a copy of the velocity vector, without modifying the velocity in the first place
+
+#### Drag
+
+#### Gravitational force
 
 ## Resources
 
