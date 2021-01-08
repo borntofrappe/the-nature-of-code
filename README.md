@@ -247,7 +247,7 @@ end
 
 _Please note:_
 
-- in the demo for the `Newton's law` folder a ball is initialized without velocity, nor acceleration. The acceleration vector is then modified in `love.load` by applying a force
+- in the demo for the `Newton's law` folder a `Mover` entity is initialized without velocity, nor acceleration. The acceleration vector is then modified in `love.load` by applying a force
 
   ```lua
   local force = LVector:new(fx, fy)
@@ -272,7 +272,7 @@ self.acceleration:multiply(0)
 
 _Please note:_
 
-- in the demo the ball is updated to move downwards as subject to a force of gravity. When the mouse is pressed then, another force is applied to move the entity horizontally as well
+- in the demo the `Mover` entity is updated to move downwards as subject to a force of gravity. When the mouse is pressed then, another force is applied to move the object horizontally as well
 
   ```lua
   local gravity = LVector:new(0, GRAVITY)
@@ -289,13 +289,23 @@ _Please note:_
 In a slightly more elaborated construct, the force is weighed by the object mass.
 
 ```lua
-function applyForce()
-f = LVector:divide(force, mass)
-acceleration:add(f)
+function Mover:applyForce(force)
+  self.acceleration:add(LVector:divide(force, self.mass))
 end
 ```
 
-Be careful not to modify the input force directly.
+It is important to note, however, that forces like gravity are not affected by an object's mass. For these forces, it is necessary to remove the mass's influence.
+
+```lua
+local gravity = LVector:new(0, GRAVITY)
+mover:applyForce(LVector:multiply(gravity, mover.mass))
+```
+
+_Please note:_
+
+- in the demo `love.load` initializes a series of `Mover` entities with a random mass. The mass is also used to change the radius of the circle
+
+- `LVector:divide(force, self.mass)` is used in place of `force:divide(self.mass)` to avoid modifying the input force. In the specific demo this precaution is however not necessary, as the force is computed every frame
 
 ### Creating forces
 
