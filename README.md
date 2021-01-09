@@ -219,7 +219,7 @@ _Please note:_
 
 The goal is to adapt the concept of forces and Newtonian physics to the simplified environment introduced with vectors.
 
-### [Newton's laws]()
+### [Newton's laws](https://repl.it/@borntofrappe/Forces-Newtons-law)
 
 In the simplified environment, a force is described as a vector which causes an object with mass to accelerate.
 
@@ -252,7 +252,7 @@ _Please note:_
   mover:applyForce(force)
   ```
 
-### [Force accumulation]()
+### [Force accumulation](https://repl.it/@borntofrappe/Forces-Force-accumulation)
 
 The previous solution works, but only when a single force is applied. With multiple forces, only the last one is incorporated in the acceleration vector. The implementation is therefore modified to consider the effect of a force as cumulative (force accumulation)
 
@@ -282,7 +282,7 @@ _Please note:_
   end
   ```
 
-### [Mass]()
+### [Mass](https://repl.it/@borntofrappe/Forces-Mass)
 
 In a slightly more elaborated construct, a force is weighed by the object mass.
 
@@ -309,7 +309,7 @@ _Please note:_
 
 In a simulation, a force can be applied following a particular event, consider the vector created following a mouse press, or in order to emulate real world physics, consider the vector roughly describing the gravity. In this last instance, the simulation needs to compute the magnitude and direction of the force vector, starting from actual formulae.
 
-#### [Friction]()
+#### [Friction](https://repl.it/@borntofrappe/Forces-Friction)
 
 Friction is applied on a moving object to progressively reduce its velocity (hink of a marble sliding on a table). The real formula computes the vector by considering the unit vector describing the velocity (caret `^` velocity), a coefficient of friction (`mu`), and the magnitude of the normal force `N`.
 
@@ -342,7 +342,7 @@ _Please note:_
 
 - `LVector` is updated to include a method which returns a copy of the input vector. This is useful to normalize a copy of the velocity vector, without modifying the velocity in the first place
 
-#### [Drag]()
+#### [Drag](https://repl.it/@borntofrappe/Forces-Drag)
 
 Starting from the formula, the force of drag considers the density of the material through which the object is moving `rho`, the magnitude of the object's velocity `||v||`, the surface area subject to drag `A`, a coefficient of drag `C` and the velocity's unit vector `^v`
 
@@ -366,7 +366,7 @@ _Please note:_
 
 - each `Mover` entity is subject to different drag forces and according to the entity's own position. In the bottom half of the screen, the script simulates a more dense environment with a greater coefficient
 
-#### [Gravitational attraction]()
+#### Gravitational attraction
 
 The force of gravity depends on the mass of the objects involved, `m1` and `m2`, the distance between said objects `d`, as well as a constant describing the gravitational force `G`. In terms of direction, the force depends on the direction of the vector connecting the two objects.
 
@@ -390,9 +390,7 @@ r:normalize() -- unit vector ^r
 
 _Please note:_
 
-- in the demo `Simple attraction` the simulation moves a `Mover` entity toward a fixed `Attractor`
-
-- in the demo `Complex attraction` the simulation is updated to consider multiple `Mover` entities and the objects' mass. The demo also includes a `pullIn` method so that when the mouse is pressed in the window, the multiple objects are attracted toward the center with considerable strength
+- in the `Gravitational attraction` folder you find two demos: [`Simple`](https://repl.it/@borntofrappe/Forces-Gravitational-attraction-Simple) updating a `Mover` entity toward a fixed `Attractor`, and [`Complex`](https://repl.it/@borntofrappe/Forces-Gravitational-attraction-Complex) updating multiple `Mover` entities and considering the objects' mass. The second demo also includes a `pullIn` method to have the `Mover` entities approach the center of the window following a mouse press
 
 - the attraction force is computed in a method of the `Attractor` entity
 
