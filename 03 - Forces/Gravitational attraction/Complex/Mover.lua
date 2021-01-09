@@ -2,16 +2,25 @@ Mover = {}
 Mover.__index = Mover
 
 function Mover:new(mass)
-  local position = LVector:new(WINDOW_WIDTH / 4, WINDOW_HEIGHT / 4)
-  local velocity = LVector:new(math.random(VELOCITY_MIN, VELOCITY_MAX), 0)
+  local r = RADIUS_MOVER * mass
+  local position = LVector:new(math.random(r, WINDOW_WIDTH - r), math.random(r, WINDOW_HEIGHT - r))
+  local vx = math.random(VELOCITY_MIN, VELOCITY_MAX)
+  local vy = math.random(VELOCITY_MIN, VELOCITY_MAX)
+  if math.random() > 0.5 then
+    vx = vx * -1
+  end
+  if math.random() > 0.5 then
+    vy = vy * -1
+  end
+  local velocity = LVector:new(vx, vy)
   local acceleration = LVector:new(0, 0)
 
   this = {
     ["position"] = position,
     ["velocity"] = velocity,
     ["acceleration"] = acceleration,
-    ["mass"] = 1,
-    ["r"] = RADIUS_MOVER
+    ["mass"] = mass,
+    ["r"] = r
   }
 
   setmetatable(this, self)

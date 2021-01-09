@@ -392,7 +392,7 @@ _Please note:_
 
 - in the demo `Simple attraction` the simulation moves a `Mover` entity toward a fixed `Attractor`
 
-- in the demo `Complex attraction` the simulation is updated to consider multiple `Mover` entities and the objects' mass
+- in the demo `Complex attraction` the simulation is updated to consider multiple `Mover` entities and the objects' mass. The demo also includes a `pullIn` method so that when the mouse is pressed in the window, the multiple objects are attracted toward the center with considerable strength
 
 - the attraction force is computed in a method of the `Attractor` entity
 
