@@ -366,7 +366,35 @@ _Please note:_
 
 - each `Mover` entity is subject to different drag forces and according to the entity's own position. In the bottom half of the screen, the script simulates a more dense environment with a greater coefficient
 
-#### Gravitational force
+#### [Gravitational attraction]()
+
+The force of gravity depends on the mass of the objects involved, `m1` and `m2`, the distance between said objects `d`, as well as a constant describing the gravitational force `G`. In terms of direction, the force depends on the direction of the vector connecting the two objects.
+
+```lua
+->                            ^
+F = G * ((m1 * m2) / d ^ 2) * r
+```
+
+Simplifying the formula in the simulation, the force computes the magnitude on the basis of the distance only. The masses are assumed to be `1` and the gravitational force is set arbitrarily at the top of the script.
+
+```lua
+F = G / (d ^ 2)
+```
+
+For the direction, the vector connecting the objects is obtained subtracting the position vectors.
+
+```lua
+r = LVector:subtract(attractor.position, mover.position)
+r:normalize() -- unit vector ^r
+```
+
+_Please note:_
+
+- in the demo `Simple attraction` the simulation moves a `Mover` entity toward a fixed `Attractor`
+
+- in the demo `Complex attraction` the simulation is updated to consider multiple `Mover` entities and the objects' mass
+
+- the attraction force is computed in a method of the `Attractor` entity
 
 ## Resources
 
