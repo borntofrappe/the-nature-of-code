@@ -1,12 +1,12 @@
 [_The Nature of Code_](https://natureofcode.com/book/) introduces many concepts to simulate real-world phenomena with code. Here, I follow the book to learn about these concepts.
 
-The notes which follow are my own. The demos are written in [Lua](https://www.lua.org/) and showcased with [Love2D](https://love2d.org/).
+The notes which follow are my own. The demos are written in [Lua](https://www.lua.org/) and [Love2D](https://love2d.org/).
 
 [![github.com/borntofrappe/the-nature-of-code](https://github.com/borntofrappe/the-nature-of-code/blob/master/banner.svg)](https://github.com/borntofrappe/the-nature-of-code)
 
 ## 01 - Randomness
 
-Randomness is used to introduce the book, object oriented programming and a few of the possible ways with which it is possible to simulate real life phenomena.
+Randomness is used to introduce the book, object oriented programming and a few of the possible ways with which it is possible to simulate real phenomena.
 
 ### [Random](hhttps://repl.it/@borntofrappe/Randomness-Random)
 
@@ -390,9 +390,15 @@ r:normalize() -- unit vector ^r
 
 _Please note:_
 
-- in the `Gravitational attraction` folder you find two demos: [`Simple`](https://repl.it/@borntofrappe/Forces-Gravitational-attraction-Simple) updating a `Mover` entity toward a fixed `Attractor`, and [`Complex`](https://repl.it/@borntofrappe/Forces-Gravitational-attraction-Complex) updating multiple `Mover` entities and considering the objects' mass. The second demo also includes a `pullIn` method to have the `Mover` entities approach the center of the window following a mouse press
+- the attraction force is computed in a method of an `Attractor` entity
 
-- the attraction force is computed in a method of the `Attractor` entity
+- in the `Gravitational attraction` folder you find three demos
+
+  1. with [`Simple`](https://repl.it/@borntofrappe/Forces-Gravitational-attraction-Simple) the idea is to update a `Mover` entity toward a fixed `Attractor`
+
+  2. in [`Complex`](https://repl.it/@borntofrappe/Forces-Gravitational-attraction-Complex) the simulation contemplates multiple `Mover` entities with varying mass. The demo has also a minor interaction in the form of the `pullIn` method; following a mouse click, the idea is to have the entities move rapidly toward the attractor
+
+  3. in [`Mouse`](https://repl.it/@borntofrappe/Forces-Gravitational-attraction-Mouse) the `Mover` entities gravitate toward the mouse cursor, and away from other entities
 
 ## Resources
 
