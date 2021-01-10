@@ -514,3 +514,13 @@ _Please note:_
   ```
 
   Use `math.tan` and the circle would immediately flip in the opposide end of the rectangle
+
+### Polar coordinats
+
+While Love2D, similarly to the Processing library, renders elements in an `(x, y)` plane, with _cartesian_ coordinates, it is useful to model the simulation in _polar_ coordinates, considering a distance and angle `(r, theta)`.
+
+The trigonometry introduced in the previous section is useful to move from one set to the other.
+
+_Please note:_
+
+- in the demo a `Mover` entity is updated increasing the angle and increasing or decreasing the distance from the center. The polar coordinates are then included in the trigonometric functions cosine and sine in order to position the entity with the cartesian counterpart
