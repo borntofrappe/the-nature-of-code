@@ -418,6 +418,7 @@ _Please note:_
   ```lua
   love.graphics.rectangle("fill", -self.width / 2, -self.height / 2, self.width, self.height)
   ```
+- comment out the lines drawing the visual debugging circle
  -->
 
 To discuss oscillating motion, it is first necessary to introduce angles, polar coordinates and trigonometry. _Trigonometry_ relates to the study of the angles and sides of right triangles, and is useful to model angles, angular velocity and angular acceleration.
@@ -475,3 +476,41 @@ _Please note:_
 - in the demo the angular acceleration is set at random, but is also and further modified using the `x` coordinate of the mouse cursor. The idea is to have the rectangles rotate in the direction indicated by the mouse
 
 - the angular velocity is limited in order to keep the value in the `(-0.1, 0.1)` range
+
+### Trigonometry
+
+As prefaced at the top of the section, trigonometry relates to the study of the angles and sides of right triangles. In this light, the mnemonic device _sohcahtoa_ is useful to remember the following formulae:
+
+```lua
+math.sin(theta) = opposite / hypothenuse
+math.cos(theta) = adjacent / hypothenuse
+math.tan(theta) = opposite / adjacent
+```
+
+To find the angle, the sine, cosine and tangent are used in their inverse form. For instance and knowing the sides of the right triangle, the angle can be computed as:
+
+```lua
+theta = math.atan(opposite / adjacent)
+```
+
+_Please note:_
+
+- `math.atan` doesn't consider the sign of the sides involved in the formula.
+
+  To fix this, either use a series of `if` statements, for the quadrants in which the sign is the opposite, or `math.atan2`. The function does consider the sign.
+
+  ```lua
+  local angle = math.atan(opposite / adjacent)
+  local angle = math.atan2(opposite, adjacent)
+  ```
+
+  Also note that, in Lua, the function accepts two arguments for the sides of the triangle, instead of one describing the ratio of the two.
+
+- the lines drawing a circle with an `x` offset are useful to show that `math.atan2` works to rotate the shape in the desired direction
+
+  ```lua
+  love.graphics.setColor(0.13, 0.86, 0.72)
+  love.graphics.circle("fill", self.width / 4, 0, 2)
+  ```
+
+  Use `math.tan` and the circle would immediately flip in the opposide end of the rectangle
