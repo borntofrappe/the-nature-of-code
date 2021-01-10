@@ -409,3 +409,55 @@ _Please note:_
   2. in `Complex` the simulation contemplates multiple `Mover` entities with varying mass. The demo has also a minor interaction in the form of the `pullIn` method; following a mouse click, the idea is to have the entities move rapidly toward the attractor
 
   3. in `Mouse` the `Mover` entities gravitate toward the mouse cursor, and away from other entities
+
+## 04 - Oscillation
+
+To discuss oscillating motion, it is first necessary to introduce angles, polar coordinates and trigonometry. _Trigonometry_ relates to the study of the angles and sides of right triangles, and is useful to model angles, angular velocity and angular acceleration.
+
+### Angles
+
+To rotate an entity, modify the coordinate system with translations and rotations.
+
+```lua
+love.graphics.translate(x, y)
+love.graphics.rotate(angle)
+--
+```
+
+In the snippet, the drawing operations following the two expressions will be rotated by amount described by `angle`.
+
+Love2D, like the Processing library used in the course, works with an angle in _radians_, not degrees. Radians describe the angle in terms of the ratio between the length of the arc of a circle and its radius, with `1` radian being the angle at which the arc has the same length as the radius. To convert between the two, use the following formula:
+
+```lua
+radians = 2 * math.pi * (degrees / 360)
+```
+
+Alternatively, Lua provides the `math.rad` to convert to radians, `math.deg` to convert to degrees.
+
+It is perhaps useful to note that _pi_ is the ratio between a circle's circumference and its diameter. It is roughly `3.14159` and is provided by Lua in the math library and `math.pi`.
+
+_Please note:_
+
+- in the demo, the script initializes a series of rectangles with varying angles. The `love.graphics` module provides several ways to achieve the same operation, as highlighted by the instruction drawing the rectangle commented out.
+
+  ```lua
+  -- love.graphics.rectangle("fill", -self.width / 2, -self.height / 2, self.width, self.height)
+  love.graphics.rectangle("fill", 0, 0, self.width, self.height, 0, 1, 1, self.width / 2, self.height / 2)
+  ```
+
+  The rotation occurs from the point described by the translation, and the two lines modify the offset of the rectangle so that the rotation happens from the center of the shape.
+
+- `.push` and `.pop` are useful to have the translation and rotation affect the single `Mover` entity. Without the instruction, additional shapes would be affected by previous transformations
+
+- `Mover:render()` includes two lines to draw a circle to highlight the coordinate system; consider it a small, visual way to consider how the translation and rotation modify the render logic
+
+### Angular motion
+
+With the same logic described in the update function of the `Mover` entity, modify the angle with a variable describing its velocity and a variable describing its acceleration. The only difference is that the angle is represented by a single variable, and not a vector.
+
+```lua
+angle = angle + angularVelocity
+angularVelocity = angularVelocity + angularAcceleration
+```
+
+To set the acceleration, similarly to the previous examples, use a hard-coded measure or consider the surrounding environment, the forces involved with actual formulas.
