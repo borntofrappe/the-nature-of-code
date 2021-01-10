@@ -412,6 +412,14 @@ _Please note:_
 
 ## 04 - Oscillation
 
+<!-- TODOS
+- add reference to replit folder
+- fix the code snippet describing the offset for the rectangle. Love2D doesn't support the same syntax used to offset images
+  ```lua
+  love.graphics.rectangle("fill", -self.width / 2, -self.height / 2, self.width, self.height)
+  ```
+ -->
+
 To discuss oscillating motion, it is first necessary to introduce angles, polar coordinates and trigonometry. _Trigonometry_ relates to the study of the angles and sides of right triangles, and is useful to model angles, angular velocity and angular acceleration.
 
 ### Angles
@@ -456,8 +464,14 @@ _Please note:_
 With the same logic described in the update function of the `Mover` entity, modify the angle with a variable describing its velocity and a variable describing its acceleration. The only difference is that the angle is represented by a single variable, and not a vector.
 
 ```lua
-angle = angle + angularVelocity
-angularVelocity = angularVelocity + angularAcceleration
+self.angle = self.angle + self.angularVelocity
+self.angularVelocity = self.angularVelocity + self.angularAcceleration
 ```
 
 To set the acceleration, similarly to the previous examples, use a hard-coded measure or consider the surrounding environment, the forces involved with actual formulas.
+
+_Please note:_
+
+- in the demo the angular acceleration is set at random, but is also and further modified using the `x` coordinate of the mouse cursor. The idea is to have the rectangles rotate in the direction indicated by the mouse
+
+- the angular velocity is limited in order to keep the value in the `(-0.1, 0.1)` range
