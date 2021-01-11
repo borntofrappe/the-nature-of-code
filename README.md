@@ -524,3 +524,23 @@ The trigonometry introduced in the previous section is useful to move from one s
 _Please note:_
 
 - in the demo a `Mover` entity is updated increasing the angle and increasing or decreasing the distance from the center. The polar coordinates are then included in the trigonometric functions cosine and sine in order to position the entity with the cartesian counterpart
+
+### Amplitude and period
+
+_Oscillation_, as the periodic movement between two points, can be defined in terms of _amplitude_ and _period_.
+
+- amplitude: the distance between the center and either of the two points
+
+- period: the time it takes to complete a full cycle
+
+Considering a sine or cosine function, the period is `math.pi * 2`, and the amplitude is `1`.
+
+Starting from the amplitude and period, it is possible to describe _simple harmonic motion_ by updating a variable as follows.
+
+```lua
+x = amplitude * math.cos(math.pi * 2 * (frameCount / period))
+```
+
+The value returned by `math.cos` doesn't exceed the `(-1, 1)` range, which means the variable is assigned a value in the `(-amplitude, amplitude)` interval. Inside of the parenthesis, dividing the incrementing variable `frameCount` by the period and multiplying the value by `math.pi * 2` means the function completes a cycle as the count reaches the value of the period.
+
+One other feature which defines oscillation is its _frequency_. This value describes the number of cycles per time unit, and is the inverse of the period. If an oscillation has a period of `math.pi * 2`, it completes a cycle in `math.pi * 2`, and has a frequency of `math.pi * 2 / frame`; it covers a certain distance in the span of a single frame.
