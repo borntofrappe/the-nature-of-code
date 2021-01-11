@@ -1,7 +1,7 @@
-Mover = {}
-Mover.__index = Mover
+Oscillator = {}
+Oscillator.__index = Oscillator
 
-function Mover:new()
+function Oscillator:new()
   local angle = LVector:new(0, 0)
 
   local vx = math.random(ANGULAR_VELOCITY_MIN, ANGULAR_VELOCITY_MAX)
@@ -31,14 +31,18 @@ function Mover:new()
   return this
 end
 
-function Mover:update(dt)
+function Oscillator:update(dt)
   self.angle:add(LVector:multiply(self.angularVelocity, dt))
 
   self.x = self.amplitude.x * math.sin(self.angle.x)
   self.y = self.amplitude.y * math.sin(self.angle.y)
 end
 
-function Mover:render()
+function Oscillator:render()
+  love.graphics.setColor(0.11, 0.11, 0.11, 0.5)
+  love.graphics.setLineWidth(1)
+  love.graphics.line(0, 0, self.x, self.y)
+
   love.graphics.setColor(0.11, 0.11, 0.11, 1)
   love.graphics.circle("fill", self.x, self.y, self.r)
 end

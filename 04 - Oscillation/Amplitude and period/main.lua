@@ -1,4 +1,4 @@
-require "Mover"
+require "Oscillator"
 
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 500
@@ -14,17 +14,14 @@ function love.load()
 
   math.randomseed(os.time())
 
-  mover = Mover:new()
+  oscillator = Oscillator:new()
 end
 
 function love.update(dt)
-  mover:update(dt)
+  oscillator:update(dt)
 end
 
 function love.draw()
   love.graphics.translate(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
-  mover:render()
-  love.graphics.setColor(0.11, 0.11, 0.11, 0.5)
-  love.graphics.setLineWidth(1)
-  love.graphics.line(0, 0, mover.x, mover.y)
+  oscillator:render()
 end

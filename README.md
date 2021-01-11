@@ -419,8 +419,6 @@ _Please note:_
   love.graphics.rectangle("fill", -self.width / 2, -self.height / 2, self.width, self.height)
   ```
 - comment out the lines drawing the visual debugging circle
-
-- consider adding an oscillator object in place of a mover entity
  -->
 
 To discuss oscillating motion, it is first necessary to introduce angles, polar coordinates and trigonometry. _Trigonometry_ relates to the study of the angles and sides of right triangles, and is useful to model angles, angular velocity and angular acceleration.
@@ -565,4 +563,4 @@ It is still possible to define the period, as the amount of time it takes for `a
 
 _Please note:_
 
-- the demo re-introduces vectors to update the angle of the `Mover` entity in the `x` and `y` dimension
+- the demo re-introduces vectors to update the angle of the `Oscillator` entity in the `x` and `y` dimension
