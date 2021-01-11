@@ -564,3 +564,15 @@ It is still possible to define the period, as the amount of time it takes for `a
 _Please note:_
 
 - the demo re-introduces vectors to update the angle of the `Oscillator` entity in the `x` and `y` dimension
+
+### Waves
+
+In order to create a wave, all that is necessary is to increment the angle for every entity, assigning the horizontal coordinate to a fraction of the total width and the vertical coordinate to the sine or cosine of the angle. The amplitude remains relevant, in describing the height of the line.
+
+_Please note:_
+
+- with `getPoints()`, the script produces an horizontal coordinate `x`, but also two coordinates for the `y` dimension, `y1` and `y2`. The idea is to use the opposite value returned by the cosine function to create a pattern inspired by a DNA sequence
+
+- with `love.update()`, the initial angle modifying the `y` coordinates of the points is incremented by an arbitrary value. The idea is to simulate the ondulating movement of a wave
+
+- with `CYCLES`, the script provides a way to include a shorter period (or higher frequency). The angular velocity is nevertheless scaled according to `math.pi * 2` to ensure that the first and last point have the same angle
