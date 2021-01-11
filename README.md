@@ -565,6 +565,10 @@ _Please note:_
 
 - the demo re-introduces vectors to update the angle of the `Oscillator` entity in the `x` and `y` dimension
 
+### Applying trigonometry
+
+With the knowledge accumulated in the chapter, and the chapters before it, the goal is to here apply the concepts in practical simulations.
+
 ### Waves
 
 In order to create a wave, all that is necessary is to increment the angle for every entity, assigning the horizontal coordinate to a fraction of the total width and the vertical coordinate to the sine or cosine of the angle. The amplitude remains relevant, in describing the height of the line.
@@ -576,3 +580,88 @@ _Please note:_
 - with `love.update()`, the initial angle modifying the `y` coordinates of the points is incremented by an arbitrary value. The idea is to simulate the ondulating movement of a wave
 
 - with `CYCLES`, the script provides a way to include a shorter period (or higher frequency). The angular velocity is nevertheless scaled according to `math.pi * 2` to ensure that the first and last point have the same angle
+
+### Pendulum
+
+In the simulation, a pendulum is composed of a pivot, an arm and a bob.
+
+```text
+ x  <-- pivot
+  \
+   \  <-- arm
+    \
+     o  <-- bob
+```
+
+The idea is to have the pivot function as the point around which the bob rotates, at a distance given by the inflexible arm.
+
+With this structure, the pendulum is subject to a force of gravity, pulling the bob downwards. The fact that the bob is attached to the immovable pivot, however, means that the force of gravity doesn't affect the round shape only in its `y` dimension.
+
+```text
+ x
+  \
+   \
+    \
+     o
+  ->/ |
+  F/  |
+  /90°|
+  \   |
+   \  |
+    \a|
+     \| gravity
+```
+
+Considering a right triangle whose hypothenuse describes the force of gravity, it is possible to decompose the vertical force in two different segments, and find the force `F` according to the angle `a` and the trigonometric functions introduced in the previous sections.
+
+```text
+     x
+     |a\
+     |  \
+     |   \
+          o
+opposite/ |
+       /  |
+      /   |
+      \   | hypothenuse
+       \  |
+        \a|
+         \|
+```
+
+The angle is updated with the same logic introduced in the force chapter.
+
+```lua
+self.angle = self.angle + self.angularVelocity * dt * UPDATE_SPEED
+self.angularVelocity = self.angularVelocity + self.angularAcceleration * dt * UPDATE_SPEED
+```
+
+Instead of a vector, here is the angle to be updated by the velocity, and the velocity by the acceleration.
+
+Velocity and acceleration are initialized to `0`. The acceleration value is then set with the trigonometric functions prefaced in this very chapter. The relevant function is the sine function, knowing the angle and the hypothenuse, and realizing the opposite segment describes the desired force (remember the _soh_ in _sohcahtoa_).
+
+```lua
+self.angularAcceleration = math.sin(self.angle) * GRAVITY * dt * -1
+```
+
+The value is multiplied by `-1` since in Love2D, the coordinate system works left to right, top to bottom.
+
+To create a more realistic simulation, the acceleration is also scaled according to the length of the arm.
+
+```lua
+self.angularAcceleration = math.sin(self.angle) * GRAVITY / ARM_LENGTH * dt * -1
+```
+
+Finally, and to have the pendulum slowly reduce its oscillation, the angular velocity is multiplied by a value slightly smaller than `1`.
+
+```lua
+self.angularVelocity = self.angularVelocity * 0.995
+```
+
+_Please note:_
+
+- the demo introduces multiple instances of the `Pendulum` entity create a grid of pendulums. Beside the different coordinates for the pivot, each successive instance is given a slightly different starting angle
+
+- following a mouse press, the demo increases the angular velocity to have the pendulums resume their oscillation
+
+<!-- ### Springs -->
