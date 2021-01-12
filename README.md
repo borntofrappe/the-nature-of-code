@@ -410,16 +410,7 @@ _Please note:_
 
   3. in `Mouse` the `Mover` entities gravitate toward the mouse cursor, and away from other entities
 
-## 04 - Oscillation
-
-<!-- TODOS
-- add reference to replit folder
-- fix the code snippet describing the offset for the rectangle. Love2D doesn't support the same syntax used to offset images
-  ```lua
-  love.graphics.rectangle("fill", -self.width / 2, -self.height / 2, self.width, self.height)
-  ```
-- comment out the lines drawing the visual debugging circle
- -->
+## [04 - Oscillation](https://repl.it/repls/folder/the-nature-of-code/04%20-%20Oscillation)
 
 To discuss oscillating motion, it is first necessary to introduce angles, polar coordinates and trigonometry. _Trigonometry_ relates to the study of the angles and sides of right triangles, and is useful to model angles, angular velocity and angular acceleration.
 
@@ -447,14 +438,11 @@ It is perhaps useful to note that _pi_ is the ratio between a circle's circumfer
 
 _Please note:_
 
-- in the demo, the script initializes a series of rectangles with varying angles. The `love.graphics` module provides several ways to achieve the same operation, as highlighted by the instruction drawing the rectangle commented out.
+- in the demo, the script initializes a series of rectangles with varying angles. To rotate the shapes from the center, the `x` and `y` coordinate offset the shape by half its width and height.
 
   ```lua
-  -- love.graphics.rectangle("fill", -self.width / 2, -self.height / 2, self.width, self.height)
-  love.graphics.rectangle("fill", 0, 0, self.width, self.height, 0, 1, 1, self.width / 2, self.height / 2)
+  love.graphics.rectangle("fill", -self.width / 2, -self.height / 2, self.width, self.height)
   ```
-
-  The rotation occurs from the point described by the translation, and the two lines modify the offset of the rectangle so that the rotation happens from the center of the shape.
 
 - `.push` and `.pop` are useful to have the translation and rotation affect the single `Mover` entity. Without the instruction, additional shapes would be affected by previous transformations
 

@@ -26,8 +26,7 @@ function Mover:render()
   love.graphics.translate(self.x, self.y)
   love.graphics.rotate(math.rad(self.angle))
 
-  -- love.graphics.rectangle("fill", -self.width / 2, -self.height / 2, self.width, self.height)
-  love.graphics.rectangle("fill", 0, 0, self.width, self.height, 0, 1, 1, self.width / 2, self.height / 2)
+  love.graphics.rectangle("fill", -self.width / 2, -self.height / 2, self.width, self.height)
 
   -- love.graphics.setColor(0.13, 0.86, 0.72)
   -- love.graphics.circle("fill", 0, 0, 2)

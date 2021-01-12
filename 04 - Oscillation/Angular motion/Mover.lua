@@ -44,7 +44,7 @@ function Mover:render()
 
   love.graphics.rectangle("fill", -self.width / 2, -self.height / 2, self.width, self.height)
 
-  love.graphics.setColor(0.13, 0.86, 0.72)
-  love.graphics.circle("fill", 0, 0, 2)
+  -- love.graphics.setColor(0.13, 0.86, 0.72)
+  -- love.graphics.circle("fill", 0, 0, 2)
   love.graphics.pop()
 end
