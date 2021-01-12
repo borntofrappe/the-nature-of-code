@@ -664,4 +664,62 @@ _Please note:_
 
 - following a mouse press, the demo increases the angular velocity to have the pendulums resume their oscillation
 
-<!-- ### Springs -->
+### Spring
+
+Instead of an inflexible arm, like the one introduced with the simulation of the pendulum, the idea is to have an elastic arm. Instead of using trigonometric functions to then describe the position of the bob and the length of the arm, the idea is to consider the force applied by the spring. In this manner, the influence of the spring can be paired with other forces, like gravity or wind.
+
+Starting with Hooke's law, the force applied by a spring is directly proportional to the extension of the spring. The farther the bob stretches the spring from its rest length, the greater the force.
+
+```lua
+->       ->
+F = -k * x
+```
+
+`k` describes a constant to describe how elastic is the spring. It scales the vector describing the displacement to have a stronger or weaker force.
+
+`x` describes the displacement from the spring's rest length.
+
+A spring tends to a state of equilibrium, described by the rest length. As the bob stretches the arm, the displacement causes an opposite force toward the original length.
+
+```text
+    x
+    |
+    |
+    | restLength
+    |
+  ->|
+  F | currentLength
+    o
+```
+
+Coming back to the formula, and with the logic introduced in the force chapter, it is necessary to evaluate the force's magnitude and direction. In terms of magnitude, it is possible to directly use the constant `k`. In terms of direction, the vector `x` is obtained by comparing the current length of the arm against the rest length.
+
+In code, the idea is to ultimately apply the force similarly to the force of gravity introduced in earlier demos.
+
+```lua
+bob:applyForce(spring)
+```
+
+The vector describing the force is then calculated as follows:
+
+- find the vector describing the difference between the bob's position and the spring's anchor
+
+  ```lua
+  local direction = LVector:subtract(bob.position, self.anchor)
+  ```
+
+  The magnitude of this vector provides the current length, to be compared against the rest length; the unit vector provides instead the direction at which to point the force.
+
+- compute the displacement, `x`, as the difference between current and rest length
+
+  ```lua
+  local currentLength = direction:getMagnitude()
+  local displacement = currentLength - self.restLength
+  ```
+
+- normalize the vector and describe the force as the vector, scaled by the Hooke's formula
+
+  ```lua
+  direction:normalize()
+  local spring = LVector:multiply(direction, K * -1 * displacement)
+  ```
