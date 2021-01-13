@@ -714,6 +714,10 @@ The vector describing the force is then calculated as follows:
 
 ## Particle System
 
+<!-- TODOS
+Particle system demo has a radius of 6, update to 5
+ -->
+
 Starting from a single particle, the idea is to manage multiple entities, in concert. A system is useful to simulate fire, smoke, but also flocks of birds.
 
 The concept is also useful to introduce inheritance and polymorphism, to build entities of different types.
@@ -793,3 +797,9 @@ _Please note_:
 ### Particle system
 
 The collection of particles is stored and managed in a `ParticleSystem` entity. The system is initialized with an `x` and `y` coordinate, to spawn particles from a specific point of origin; the coordinates are then modified following the mouse cursor.
+
+### Particle systems
+
+Building on top of a particle system as a collection of particles, it is possible to build a collection of collections, of particle systems. This is beyond the scope of the chapter, but useful to argue how a simulation is able to model nature with complex systems.
+
+In the demo, the script initializes a particle system following a mouse click, and removes a collection when there are no more particles. To reduce the rate at which particles are produced, each `ParticleSystem` is initialized with a `lifespan`; the value is incremented at every iteration and used in `math.random` to add a particle with smaller and smaller odds.
