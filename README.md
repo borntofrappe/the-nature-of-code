@@ -711,3 +711,85 @@ The vector describing the force is then calculated as follows:
   direction:normalize()
   local spring = LVector:multiply(direction, K * -1 * displacement)
   ```
+
+## Particle System
+
+Starting from a single particle, the idea is to manage multiple entities, in concert. A system is useful to simulate fire, smoke, but also flocks of birds.
+
+The concept is also useful to introduce inheritance and polymorphism, to build entities of different types.
+
+### Particle
+
+Picking up from the logic introduced with the `Mover` entity in the forces chapter, a single particle is built with three vectors: position, velocity and acceleration. The idea is to update the position with the velocity, and the velocity with the acceleration.
+
+```lua
+this = {
+  ["position"] = position,
+  ["velocity"] = velocity,
+  ["acceleration"] = acceleration,
+}
+```
+
+On top of these vectors, each particle is attributed a `lifespan`. This value is useful to determine when a particle dies off. In the context of a particle system, there is usually an _emitter_, producing particles or a stream of particles; as new and new particles are created, it is necessary to remove existing ones.
+
+```lua
+this = {
+  ["lifespan"] = 1
+}
+```
+
+In a first implementation, the lifespan is connected to the alpha channel of the particle, and decreased with every iteration.
+
+```lua
+function Particle.update(dt)
+  self.lifespan = self.lifespan - dt * UPDATE_SPEED
+end
+
+function Particle:render()
+  love.graphics.setColor(0.11, 0.11, 0.11, self.lifespan)
+  -- draw circle
+end
+```
+
+An additional method on the `Particle` entity finally describes whether the particle is dead or not, by returning `true` or `false` on the basis of the lifespan value.
+
+````lua
+function Particle:isDead()
+  return self.lifespan == 0
+end```
+````
+
+_Please note_:
+
+- the alpha channel in Love2D is in the `(0, 1)` range
+
+- `lifespan` is decreased to reach the minimum value of `0`. This by using `math.max` and provide a lower threshold.
+
+  ```lua
+  function Particle.update(dt)
+    self.lifespan = math.max(0, self.lifespan - dt * UPDATE_SPEED)
+  end
+  ```
+
+### Particles
+
+From a single particle, the idea is to produce a new entity with every iteration of the `love.update` function, and remove particles when they eventually die; this last part is implemented with the `:isDead` method.
+
+When removing a particle inside of a loop considering the collection, it is important to note that the collection is updated by translating the items to the left. Iterating through the table in order, the risk is to therefore skip a particle. One immediate way to fix this is to loop through the collection backwards.
+
+```lua
+for i = #particles, 1, -1 do
+  particles[i]:update(dt)
+  if particles[i]:isDead() then
+    table.remove(particles, i)
+  end
+end
+```
+
+_Please note_:
+
+- in `love.draw` the `love.graphics.print` function is used to double check that the particles are removed from the collection. Remove the comment to see how the table has at most roughly `239` items
+
+### Particle system
+
+The collection of particles is stored and managed in a `ParticleSystem` entity. The system is initialized with an `x` and `y` coordinate, to spawn particles from a specific point of origin; the coordinates are then modified following the mouse cursor.

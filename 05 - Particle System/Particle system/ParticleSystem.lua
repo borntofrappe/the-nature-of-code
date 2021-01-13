@@ -14,7 +14,7 @@ function ParticleSystem:new()
 end
 
 function ParticleSystem:update(dt)
-  table.insert(self.particles, Particle:new(LVector:copy(self.origin)))
+  table.insert(self.particles, Particle:new(self.origin.x, self.origin.y))
   for i = #self.particles, 1, -1 do
     self.particles[i]:update(dt)
     if self.particles[i]:isDead() then

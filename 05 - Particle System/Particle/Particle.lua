@@ -3,11 +3,8 @@ Particle.__index = Particle
 
 function Particle:new(mass)
   local position = LVector:new(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
-  local vx = math.random(VELOCITY_MIN, VELOCITY_MAX)
-  if math.random() > 0.5 then
-    vx = vx * -1
-  end
-  local vy = math.random(VELOCITY_MIN, VELOCITY_MAX) * -1
+  local vx = math.random(VELOCITY_X_MAX * -1, VELOCITY_X_MAX)
+  local vy = math.random(VELOCITY_Y_MIN, VELOCITY_Y_MAX) * -1
   local velocity = LVector:new(vx, vy)
   local acceleration = LVector:new(0, GRAVITY)
 
