@@ -716,6 +716,10 @@ The vector describing the force is then calculated as follows:
 
 <!-- TODOS
 Particle system demo has a radius of 6, update to 5
+rename chapter to 05 - Particle System
+comment out the instruction detailing the number of particle systems
+add local to this
+research object oriented programming _and_ multiple inheritance (super)
  -->
 
 Starting from a single particle, the idea is to manage multiple entities, in concert. A system is useful to simulate fire, smoke, but also flocks of birds.
