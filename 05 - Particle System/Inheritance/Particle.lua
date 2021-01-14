@@ -12,6 +12,7 @@ function Particle:new(x, y)
     ["velocity"] = velocity,
     ["acceleration"] = acceleration,
     ["lifespan"] = 1
+    -- ["angle"] = 0
   }
 
   self.__index = self
