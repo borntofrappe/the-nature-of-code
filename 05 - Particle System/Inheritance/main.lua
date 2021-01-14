@@ -31,7 +31,6 @@ function love.update(dt)
 end
 
 function love.draw()
-  love.graphics.print("There are " .. #particleSystem.particles .. " particles", 8, 8)
-
+  -- love.graphics.print("There are " .. #particleSystem.particles .. " particles", 8, 8)
   particleSystem:render()
 end

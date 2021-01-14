@@ -30,6 +30,7 @@ function ParticleSystem:update(dt)
 end
 
 function ParticleSystem:render()
+  love.graphics.setBlendMode("add")
   for i, particle in ipairs(self.particles) do
     particle:render()
   end

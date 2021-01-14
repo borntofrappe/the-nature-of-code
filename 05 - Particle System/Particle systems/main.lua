@@ -40,8 +40,7 @@ function love.mousepressed(x, y, button)
 end
 
 function love.draw()
-  love.graphics.print("There are " .. #particleSystems .. " particle systems", 8, 8)
-
+  -- love.graphics.print("There are " .. #particleSystems .. " particle systems", 8, 8)
   for i, particleSystem in ipairs(particleSystems) do
     particleSystem:render()
   end

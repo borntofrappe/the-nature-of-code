@@ -7,7 +7,7 @@ VELOCITY_X_MAX = 60
 VELOCITY_Y_MIN = 50
 VELOCITY_Y_MAX = 150
 GRAVITY = 300
-RADIUS = 6
+RADIUS = 5
 UPDATE_SPEED = 0.25
 
 function love.load()
@@ -31,6 +31,5 @@ end
 
 function love.draw()
   -- love.graphics.print("There are " .. #particleSystem.particles .. " particles", 8, 8)
-
   particleSystem:render()
 end

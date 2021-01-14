@@ -17,13 +17,13 @@ function love.load()
 
   math.randomseed(os.time())
   particleSystem = ParticleSystem:new()
+  img = love.graphics.newImage("particle.png")
 end
 
 function love.update(dt)
   particleSystem:update(dt)
   local gravity = LVector:new(0, GRAVITY)
   particleSystem:applyForce(gravity)
-  img = love.graphics.newImage("particle.png")
 
   local x, y = love.mouse:getPosition()
   if x > 0 and x < WINDOW_WIDTH and y > 0 and y < WINDOW_HEIGHT then
@@ -43,6 +43,5 @@ end
 
 function love.draw()
   -- love.graphics.print("There are " .. #particleSystem.particles .. " particles", 8, 8)
-  love.graphics.setBlendMode("add")
   particleSystem:render()
 end

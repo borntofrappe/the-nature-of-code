@@ -3,6 +3,7 @@ WINDOW_HEIGHT = 500
 VELOCITY_X_MAX = 60
 VELOCITY_Y_MIN = 50
 VELOCITY_Y_MAX = 150
+MASS = 1
 GRAVITY = 300
 WIND = 500
 RADIUS_PARTICLE = 5
@@ -19,13 +20,13 @@ require "ParticleSystem"
 require "Repeller"
 
 function love.load()
-  love.window.setTitle("Particle Systems - Repel")
+  love.window.setTitle("Particle Systems - Forces -Repel")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
   math.randomseed(os.time())
   particleSystem = ParticleSystem:new()
-  repeller = Repeller:new(WINDOW_WIDTH / 2 + 50, WINDOW_HEIGHT / 2)
+  repeller = Repeller:new(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 3)
 end
 
 function love.update(dt)

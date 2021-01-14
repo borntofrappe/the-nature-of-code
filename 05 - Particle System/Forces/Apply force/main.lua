@@ -3,6 +3,7 @@ WINDOW_HEIGHT = 500
 VELOCITY_X_MAX = 60
 VELOCITY_Y_MIN = 50
 VELOCITY_Y_MAX = 150
+MASS = 1
 GRAVITY = 300
 WIND = 500
 RADIUS = 5
@@ -13,7 +14,7 @@ LVector = require "LVector"
 require "ParticleSystem"
 
 function love.load()
-  love.window.setTitle("Particle Systems - Apply force")
+  love.window.setTitle("Particle Systems - Forces - Apply force")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 

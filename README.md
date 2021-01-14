@@ -712,21 +712,9 @@ The vector describing the force is then calculated as follows:
   local spring = LVector:multiply(direction, K * -1 * displacement)
   ```
 
-## Particle System
+## [05 - Particle System](https://repl.it/repls/folder/the-nature-of-code/05%20-%20Particle%20System)
 
-<!-- TODOS
-Particle system demo has a radius of 6, update to 5
-rename chapter to 05 - Particle System
-comment out the instruction detailing the number of particle systems
-add local to this
-research object oriented programming _and_ multiple inheritance (super)
-remove dt from examples
-document particle system
- -->
-
-Starting from a single particle, the idea is to manage multiple entities, in concert. A system is useful to simulate fire, smoke, but also flocks of birds.
-
-The concept is also useful to introduce inheritance and polymorphism, to build entities of different types.
+Starting from a single particle, the idea is to manage multiple entities, in concert. A system is useful to simulate complex phenomena, like fire, smoke, flocks of birds.
 
 ### Particle
 
@@ -751,7 +739,7 @@ this = {
 In a first implementation, the lifespan is connected to the alpha channel of the particle, and decreased with every iteration.
 
 ```lua
-function Particle.update(dt)
+function Particle:update(dt)
   self.lifespan = self.lifespan - dt * UPDATE_SPEED
 end
 
@@ -776,7 +764,7 @@ _Please note_:
 - `lifespan` is decreased to reach the minimum value of `0`. This by using `math.max` and provide a lower threshold.
 
   ```lua
-  function Particle.update(dt)
+  function Particle:update(dt)
     self.lifespan = math.max(0, self.lifespan - dt * UPDATE_SPEED)
   end
   ```
@@ -802,10 +790,122 @@ _Please note_:
 
 ### Particle system
 
-The collection of particles is stored and managed in a `ParticleSystem` entity. The system is initialized with an `x` and `y` coordinate, to spawn particles from a specific point of origin; the coordinates are then modified following the mouse cursor.
+The collection of particles is stored and managed in a `ParticleSystem` entity. The system is initialized with an `x` and `y` coordinate, to spawn particles from a specific point of origin.
+
+_Please note:_:
+
+- in the demo, the origin of the particle system is modified following the mouse cursor
 
 ### Particle systems
 
-Building on top of a particle system as a collection of particles, it is possible to build a collection of collections, of particle systems. This is beyond the scope of the chapter, but useful to argue how a simulation is able to model nature with complex systems.
+Building on top of a particle system as a collection of particles, it is possible to build a collection of collections, of particle systems. This is beyond the scope of the chapter, but useful to describe a simulation in multiple layers of complexity.
 
-In the demo, the script initializes a particle system following a mouse click, and removes a collection when there are no more particles. To reduce the rate at which particles are produced, each `ParticleSystem` is initialized with a `lifespan`; the value is incremented at every iteration and used in `math.random` to add a particle with smaller and smaller odds.
+_Please note_:
+
+- in the demo, the script initializes a particle system following a mouse click, and removes a collection when there are no more particles
+
+- always in the demo, and in order to eventually remove particle systems, the rate at which particles are produced is decreased with delta time. The rate at which the particles become fully transparent is also increased
+
+### Inheritance
+
+In the scope of object oriented programming, inheritance is useful to create a system in which entities pick up and expand the logic introduced by other entities. Case in point, `SquareParticle` and `CircleParticle` can inherit the behavior of the `Particle` entity, and render the particle with a different shape, respectively, a square and a circle.
+
+_Please note:_
+
+- the logic necessary to implement inheritance depends on the language being used. In the context of lua, there is no class system, but it is possible to recreate a mechanism similar to a prototype and have a table refer to a parent table (a concept similar to a superclass)
+
+### Forces
+
+The idea is to re-introduce the concepts of earlier chapters, but in the context of a particle system. The section is also useful to describe the structure of the simulation, and how certain methods are defined on the system, as a whole, and other methods on the particles, individually.
+
+#### Apply force
+
+One immediate way to influence the particle system is by applying a force to each and every particle. The logic is structured in two steps:
+
+- apply a force on the system
+
+  ```lua
+  local gravity = LVector:new(0, GRAVITY)
+  particleSystem:applyForce(gravity)
+  particleSystem:applyRepeller(repeller)
+  ```
+
+- apply the force on the composing particles
+
+  ```lua
+  function ParticleSystem:applyForce(force)
+    for i, particle in ipairs(self.particles) do
+      particle:applyForce(force)
+    end
+  end
+  ```
+
+The function is defined on the `Particle` entity, similar to `Mover` in the dedicated chapter.
+
+```lua
+function Particle:applyForce(force)
+  self.acceleration:add(LVector:divide(force, self.mass))
+end
+```
+
+_Please note_:
+
+- out of convenience, the particles are attributed a mass equal to `1`
+
+#### Repel
+
+Another way to affect the particles in the particle system is to create a separate structure, like a `Repeller` entity.
+
+In `love.update(dt)`, the system receives the repeller as an argument.
+
+```lua
+function love.update(dt)
+  particleSystem:applyRepeller(repeller)
+end
+```
+
+The dedicated function, then, loops through the set of particles to create the appropriate force of each entity.
+
+```lua
+function ParticleSystem:applyRepeller(repeller)
+  for i, particle in ipairs(self.particles) do
+    local force = repeller:repel(particle)
+    particle:applyForce(force)
+  end
+end
+```
+
+_Please note:_
+
+- to compute the force, the `repel` function considers the method developed for the _Gravitational attraction_ demo. The logic is updated to apply a considerable force away from the repeller, and when the particle approaches an arbitrary threshold
+
+### Blend mode
+
+Particles are drawn with regular shapes, like circles or rectangles as done so far, or with images.
+
+```lua
+function Particle:render()
+  love.graphics.setColor(1, 1, 1, self.lifespan)
+  love.graphics.draw(img, self.position.x, self.position.y, 0, 1, 1, img:getWidth() / 2, img:getHeight() / 2)
+end
+```
+
+Images are also useful to introduce blend modes, modifying the default pixel value of overlapping entities. With the `add` option, the rgb components are added to make the image brighter and eventually white. This is useful for instance to simulate fire particles.
+
+```lua
+function ParticleSystem:render()
+  love.graphics.setBlendMode("add")
+  -- draw particles
+end
+
+```
+
+_Please note:_
+
+- in the demo the image is initialized as a drawable object in `love.load`. This is a much preferable solution to include the instruction in the particle entity, in which case the script would continuously load the file
+
+  ```lua
+  function love.load()
+    img = love.graphics.newImage("particle.png")
+  end
+  ```

@@ -33,7 +33,6 @@ end
 
 function love.draw()
   -- love.graphics.print("There are " .. #particles .. " particles", 8, 8)
-
   for i, particle in ipairs(particles) do
     particle:render()
   end

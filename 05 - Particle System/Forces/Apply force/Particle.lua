@@ -1,6 +1,4 @@
 Particle = {}
--- !! set the index in :new() instead
--- Particle.__index = Particle
 
 function Particle:new(x, y)
   local position = LVector:new(x, y)
@@ -13,7 +11,7 @@ function Particle:new(x, y)
     ["position"] = position,
     ["velocity"] = velocity,
     ["acceleration"] = acceleration,
-    ["mass"] = 1,
+    ["mass"] = MASS,
     ["lifespan"] = 1
   }
 

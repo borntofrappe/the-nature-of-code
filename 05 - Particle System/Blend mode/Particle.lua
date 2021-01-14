@@ -1,5 +1,4 @@
 Particle = {}
--- !! set the index in :new() instead
 Particle.__index = Particle
 
 function Particle:new(x, y)
