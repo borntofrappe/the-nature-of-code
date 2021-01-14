@@ -4,7 +4,7 @@ Attractor.__index = Attractor
 function Attractor:new()
   local position = LVector:new(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
 
-  this = {
+  local this = {
     ["position"] = position,
     ["r"] = RADIUS_ATTRACTOR
   }

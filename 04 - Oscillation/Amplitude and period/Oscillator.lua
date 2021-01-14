@@ -2,7 +2,7 @@ Oscillator = {}
 Oscillator.__index = Oscillator
 
 function Oscillator:new()
-  this = {
+  local this = {
     ["x"] = 0,
     ["y"] = 0,
     ["size"] = SIZE,

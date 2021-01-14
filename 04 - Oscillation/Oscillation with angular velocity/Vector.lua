@@ -2,7 +2,7 @@ Vector = {}
 Vector.__index = Vector
 
 function Vector:new(x, y)
-  this = {
+  local this = {
     ["x"] = x,
     ["y"] = y
   }

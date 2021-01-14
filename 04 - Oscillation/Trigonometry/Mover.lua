@@ -8,7 +8,7 @@ function Mover:new()
   local y = math.random(height, WINDOW_HEIGHT - height)
   local angle = math.rad(math.random(ANGLE_MIN, ANGLE_MAX))
 
-  this = {
+  local this = {
     ["x"] = x,
     ["y"] = y,
     ["width"] = width,

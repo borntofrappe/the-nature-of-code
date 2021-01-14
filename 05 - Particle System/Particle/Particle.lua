@@ -8,7 +8,7 @@ function Particle:new(mass)
   local velocity = LVector:new(vx, vy)
   local acceleration = LVector:new(0, GRAVITY)
 
-  this = {
+  local this = {
     ["position"] = position,
     ["velocity"] = velocity,
     ["acceleration"] = acceleration,

@@ -6,7 +6,7 @@ ParticleSystem = {}
 ParticleSystem.__index = ParticleSystem
 
 function ParticleSystem:new()
-  this = {
+  local this = {
     ["origin"] = LVector:new(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4),
     ["particles"] = {}
   }

@@ -2,7 +2,7 @@ Mover = {}
 Mover.__index = Mover
 
 function Mover:new()
-  this = {
+  local this = {
     ["x"] = 0,
     ["y"] = 0,
     ["size"] = SIZE,

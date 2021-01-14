@@ -6,7 +6,7 @@ function Mover:new()
   local velocity = LVector:new(math.random(VELOCITY_MIN, VELOCITY_MAX), 0)
   local acceleration = LVector:new(0, 0)
 
-  this = {
+  local this = {
     ["position"] = position,
     ["velocity"] = velocity,
     ["acceleration"] = acceleration,

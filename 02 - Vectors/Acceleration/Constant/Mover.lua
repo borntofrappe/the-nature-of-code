@@ -9,7 +9,7 @@ function Mover:new()
   local velocity = LVector:new(vx, vy)
   local acceleration = LVector:new(0, 0)
 
-  this = {
+  local this = {
     ["position"] = position,
     ["velocity"] = velocity,
     ["acceleration"] = acceleration,

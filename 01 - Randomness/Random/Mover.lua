@@ -6,7 +6,7 @@ Mover.__index = Mover
   comment out the methods to display the different options 
 ]]
 function Mover:new()
-  this = {
+  local this = {
     ["x"] = WINDOW_WIDTH / 2,
     ["y"] = WINDOW_HEIGHT / 2,
     ["r"] = RADIUS

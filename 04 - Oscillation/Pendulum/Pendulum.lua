@@ -2,7 +2,7 @@ Pendulum = {}
 Pendulum.__index = Pendulum
 
 function Pendulum:new(x, y, angle)
-  this = {
+  local this = {
     ["x"] = x,
     ["y"] = y,
     ["angle"] = angle,

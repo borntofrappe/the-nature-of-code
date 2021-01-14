@@ -4,7 +4,7 @@ LVector = {}
 LVector.__index = LVector
 
 function LVector:init()
-  this = {}
+  local this = {}
 
   setmetatable(this, self)
   return this

@@ -14,7 +14,7 @@ function Mover:new()
     angularAcceleration = angularAcceleration * -1
   end
 
-  this = {
+  local this = {
     ["x"] = x,
     ["y"] = y,
     ["width"] = width,

@@ -18,7 +18,7 @@ function Oscillator:new()
   local ay = math.random(AMPLITUDE_MIN, AMPLITUDE_MAX)
   local amplitude = LVector:new(ax, ay)
 
-  this = {
+  local this = {
     ["x"] = 0,
     ["y"] = 0,
     ["r"] = RADIUS,

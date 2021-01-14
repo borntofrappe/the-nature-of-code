@@ -5,7 +5,7 @@ function Spring:new(x, y, restLength)
   local anchor = LVector:new(x, y)
   local location = LVector:new(0, restLength)
 
-  this = {
+  local this = {
     ["anchor"] = anchor,
     ["location"] = location,
     ["restLength"] = restLength

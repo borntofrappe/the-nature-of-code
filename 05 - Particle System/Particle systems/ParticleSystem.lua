@@ -5,7 +5,7 @@ ParticleSystem.__index = ParticleSystem
 
 function ParticleSystem:new(x, y)
   local origin = LVector:new(x, y)
-  this = {
+  local this = {
     ["origin"] = origin,
     ["particles"] = {},
     ["lifespan"] = 0
