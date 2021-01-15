@@ -913,3 +913,21 @@ _Please note:_
     img = love.graphics.newImage("particle.png")
   end
   ```
+
+## 06 - Physics Libraries
+
+The first chapters of the book are dedicated to creating a first environment, in order to learn about vectors, forces and particular types of simulations. That being said, there exist a variety of libraries already equipped to consider physics in a complete, more advanced manner. Two of these libraries are Box2D, especially equipped to consider collision between objects, and VerletPhysics.
+
+_Please note:_
+
+- Love2D takes advantage of the Box2D library through the `love.physics` module, already incorporated in the engine
+
+### Box2D
+
+Fundamentally, a simulation with Box2D works in two steps:
+
+1. set up the world and bodies
+
+2. update the world
+
+Once the world is initialized, there is no need to consider the forces, acceleration and velocity of the individual entities. This is curated by the library. The steps are however complicated due to the fact that Box2D works in real-world units, like meters and kilograms, while the code simulates the environment with pixels. Moreover, there are a series of steps necessary, unavoidable to create entities and eventually fill the world.
