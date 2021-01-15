@@ -14,6 +14,7 @@ UPDATE_SPEED = 0.25
 REPULSION_FORCE = 100
 DISTANCE_MIN = 2
 DISTANCE_MAX = 20
+ANGULAR_ACCELERATION = 10
 
 LVector = require "LVector"
 require "ParticleSystem"

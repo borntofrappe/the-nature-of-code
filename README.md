@@ -806,13 +806,17 @@ _Please note_:
 
 - always in the demo, and in order to eventually remove particle systems, the rate at which particles are produced is decreased with delta time. The rate at which the particles become fully transparent is also increased
 
-### Inheritance
+### Inheritance and polymorphism
 
 In the scope of object oriented programming, inheritance is useful to create a system in which entities pick up and expand the logic introduced by other entities. Case in point, `SquareParticle` and `CircleParticle` can inherit the behavior of the `Particle` entity, and render the particle with a different shape, respectively, a square and a circle.
+
+Polymorphism, as introduced in the book, refers to how it is possible to have different classes like `Dog` and `Cat` are able to retain multiple types, multiple forms. A `Dog` class inheriting from an `Animal` class is therefore both a dog and an animal. This is useful to have a collection like an array or array list with a singular type, storing different types of animals and call the same function on every instance. What the function does, then, depends on the implementation in the different classes.
 
 _Please note:_
 
 - the logic necessary to implement inheritance depends on the language being used. In the context of lua, there is no class system, but it is possible to recreate a mechanism similar to a prototype and have a table refer to a parent table (a concept similar to a superclass)
+
+- in Lua, a dynamically typed language with no concept of a class system, polymorphism is not a concern. A table stores different entities, without concern for their type
 
 ### Forces
 

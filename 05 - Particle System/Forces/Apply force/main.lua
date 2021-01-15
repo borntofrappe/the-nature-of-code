@@ -9,6 +9,7 @@ WIND = 500
 RADIUS = 5
 SIZE = 10
 UPDATE_SPEED = 0.25
+ANGULAR_ACCELERATION = 10
 
 LVector = require "LVector"
 require "ParticleSystem"
