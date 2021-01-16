@@ -916,18 +916,105 @@ _Please note:_
 
 ## 05 - Physics Libraries
 
-The first chapters of the book are dedicated to creating a first environment, in order to learn about vectors, forces and particular types of simulations. That being said, there exist a variety of libraries already equipped to consider physics in a complete, more advanced manner. Two of these libraries are Box2D, especially equipped to consider collision between objects, and VerletPhysics.
+Knowing about vectors, forces, trigonometry allows you to create a first environment subject to the law of physics. It is possible to expand from this basis, but one alternative comes in the form of physics libraries. Here you find code by other developers already considering the issue of simulating life, simulating nature.
 
-_Please note:_
-
-- Love2D takes advantage of the Box2D library through the `love.physics` module, already incorporated in the engine
+A physics engine provides a level of complexity and refinement only grasped in the previous sections. The price is that you need to learn about the library, its requirements and also limitations.
 
 ### Box2D
 
-Fundamentally, a simulation with Box2D works in two steps:
+Fundamentally, a simulation with Box2D works in two steps: set up and update. In the setup phase, you initialize the world, and populate the environment with however many entities are necessary. In the update phase, Box2D considers the underlying physics to update the world as necessary; there is here to consider the position, velocity, acceleration and forces of the individual entities.
 
-1. set up the world and bodies
+Box2D considers all the underlying physics, but it is however necessary to set up the world with the procedure and syntax prescribed by the library.
 
-2. update the world
+_Please note:_
 
-Once the world is initialized, there is no need to consider the forces, acceleration and velocity of the individual entities. This is curated by the library. The steps are however complicated due to the fact that Box2D works in real-world units, like meters and kilograms, while the code simulates the environment with pixels. Moreover, there are a series of steps necessary, unavoidable to create entities and eventually fill the world.
+- Love2D incorporates the Box2D library in the `love.physics` module. The code introduced in the book is adapted to use the connected functions
+
+#### Core elements
+
+A Box2D simulation starts with a _world_. This is where the simulation defines the features of the environment, like its gravity.
+
+```lua
+function love.load()
+  world = love.physics.newWorld(0, GRAVITY)
+end
+```
+
+Box2D works with meters, kilograms and real-world units. Since Love2D works with pixels instead, it is useful to adapt the measures with the `setMeter` function.
+
+```lua
+function love.load()
+  love.physics.setMeter(METER)
+  world = love.physics.newWorld(0, GRAVITY * GRAVITY_METER)
+end
+```
+
+Once initialized, the world is updated with the `update()` function, considering every single entity included in the simulation.
+
+```lua
+function love.update(dt)
+  world:update(dt)
+end
+```
+
+To populate the world, each entity needs three parts: a body, a shape and a fixture.
+
+- a _body_ is but a container describing the position, velocity and other defining features of the entity. Consider it similar to the `Mover` entity introduced in previous chapters.
+
+  ```lua
+  body = love.physics.newBody(world, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4, "dynamic")
+  ```
+
+  The function introduces a type between one of three options: `static`, `dynamic` and `kinematic`. A dynamic body is one subject to the forces of the world, and one colliding with other entities. The remaining two types are discussed in later sections.
+
+- a _shape_ provides the visual representation for the body, and is ultimately essential to define how a collision occurs.
+
+  ```lua
+  shape = love.physics.newCircleShape(RADIUS)
+  ```
+
+  Different functions provide different shapes, like circles, rectangles. The parameters vary accordingly.
+
+- a _fixture_ is finally how the body and shape are attached together.
+
+  ```lua
+  fixture = love.physics.newFixture(body, shape)
+  ```
+
+  The fixture is also where the entity can set other features, like density and restitution.
+
+This is enough to have the world consider and update an object. To provide a visual then, Love2D provides different methods to retrieve the defining features of the bodies. In the context of a circle, `body:getX()`. `body:getY()` and `shape:getRadius()` allow to find the measures for the circle's position and radius.
+
+#### Particles
+
+The demo works to create two entities dedicated to different shapes, a circle and a square, and to populate a table with multiple copies of each.
+
+It is also important to stress the importance of removing entities when they are no longer necessary. Removing items involves two steps:
+
+- update the table so that the bodies are not rendered in `love.draw`
+
+  ```lua
+  table.remove(particles, i)
+  ```
+
+- update the world so that the bodies are no longer considered in the simulation
+
+  ```lua
+  particles[i].body:destroy()
+  ```
+
+  Without this line the window doesn't show the bodies, but their position, movement and collision is still computed by Box2D.
+
+#### Fixed
+
+A previous section introduced how bodies have different. By default an object is static, but it's possible to modify this value already in the declaration of the body. This is what the previous demo achieved in `love.physics.newBody()`.
+
+```lua
+love.physics.newBody(world, x, y, "dynamic")
+```
+
+Shortly, a body can be _static_, fixed in the world and not subject to its forces, _dynamic_, reacting to the world's gravity, forces, and collisions, _kinematic_, not subject to forces, but manually moved through its velocity. Consider for instance a platform (fixed), a ball (dynamic) or a character directly controlled by the player (kinematic).
+
+_Please note:_
+
+- the demo populates the world with one platform, but allows to include more fixed objects with mouse input. Drag the cursor from point to point to generate a new platform
