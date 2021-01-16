@@ -3,26 +3,27 @@ WINDOW_HEIGHT = 500
 GRAVITY = 20
 GRAVITY_METER = 9.81
 METER = 100
-RADIUS = 6
-SIZE = 10
+SIZE = 16
 POINT_SIZE = 5
 LINE_WIDTH = 1
-HILL_POINTS = 50
-HILLS = 4
-AMPLITUDE = 35
+TERRAIN_POINTS = 200
+AMPLITUDE_MAX = 200
+OFFSET_INITIAL_MAX = 1000
+OFFSET_INCREMENT = 0.02
 
-require "Rectangle"
-require "Circle"
+require "ComplexShape"
 require "Platform"
 require "Terrain"
 
 function love.load()
-  love.window.setTitle("Physics Libraries - Box2D - Curvy boundary")
+  love.window.setTitle("Physics Libraries - Box2D - Complex shapes")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
+  math.randomseed(os.time())
   love.physics.setMeter(METER)
   world = love.physics.newWorld(0, GRAVITY * GRAVITY_METER)
+
   particles = {}
 
   origin = {
@@ -32,7 +33,7 @@ function love.load()
 
   platforms = {}
 
-  Terrain = Terrain:new(world)
+  terrain = Terrain:new(world)
 
   mouse = {
     ["isPressed"] = false,
@@ -65,12 +66,7 @@ end
 function love.update(dt)
   world:update(dt)
 
-  local isSquare = math.random() > 0.5
-  if isSquare then
-    table.insert(particles, Rectangle:new(world, origin.x, origin.y))
-  else
-    table.insert(particles, Circle:new(world, origin.x, origin.y))
-  end
+  table.insert(particles, ComplexShape:new(world, origin.x, origin.y))
 
   local x, y = love.mouse:getPosition()
   if x > 0 and x < WINDOW_WIDTH and y > 0 and y < WINDOW_HEIGHT then
@@ -100,7 +96,7 @@ function love.draw()
     platform:render()
   end
 
-  Terrain:render()
+  terrain:render()
 
   if mouse.isPressed then
     love.graphics.setColor(0.11, 0.11, 0.11)

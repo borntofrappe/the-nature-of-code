@@ -1018,3 +1018,19 @@ Shortly, a body can be _static_, fixed in the world and not subject to its force
 _Please note:_
 
 - the demo populates the world with one platform, but allows to include more fixed objects with mouse input. Drag the cursor from point to point to generate a new platform
+
+#### Curvy boundary
+
+A curved surface is introduced with a `ChainShape`. This particular shape accepts as argument a series of points, which are then connected to make up the object. Using a distribution or a trigonometric function, the effect is that the points produce the desired visual.
+
+_Please note_:
+
+- in the demo the terrain is introduced with three separate shapes. This is because using a single shape creates connections between the different hill tops
+
+#### Complex shapes
+
+There are at least two different approaches to building complex shapes: use a `PolygonShape`, detailing the vertices of the desired outline; fix multiple shapes to the same body. The second approach is the topic of the demo, and the reason the `ComplexShape` entity actually introduces two rectangle shapes.
+
+_Please note_:
+
+- in the demo I've decided to update the terrain to instead use `love.math.noise` and the connected noise function. This is just a matter of preference and in order to rehearse the concept of a chain shape

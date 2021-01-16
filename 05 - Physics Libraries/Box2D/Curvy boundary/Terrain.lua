@@ -1,11 +1,9 @@
-Surface = {}
-Surface.__index = Surface
+Terrain = {}
+Terrain.__index = Terrain
 
-function Surface:new(world)
+function Terrain:new(world)
   local hills = {}
 
-  local x = 0
-  local y = 0
   for h = 1, HILLS do
     local points = {}
     for i = 1, HILL_POINTS + 1 do
@@ -37,7 +35,7 @@ function Surface:new(world)
   return this
 end
 
-function Surface:render()
+function Terrain:render()
   love.graphics.setColor(0.11, 0.11, 0.11)
   love.graphics.setLineWidth(LINE_WIDTH)
   for i, hill in ipairs(self.hills) do
