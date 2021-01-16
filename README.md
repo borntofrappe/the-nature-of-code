@@ -12,7 +12,7 @@ The notes which follow are my own. The demos are written in [Lua](https://www.lu
 
 - [Project folder on repl.it](https://repl.it/repls/folder/the-nature-of-code)
 
-## [01 - Randomness](https://repl.it/repls/folder/the-nature-of-code/01%20-%20Randomness)
+## [00 - Randomness](https://repl.it/repls/folder/the-nature-of-code/01%20-%20Randomness)
 
 Randomness provides a first, rudimentary way to simulate real phenomena.
 
@@ -156,7 +156,7 @@ _Please note:_
 
 - `getNoiseNumbers` creates a series of numbers to plot the line and update the `Mover` entity. `getNoiseBackground` instead produces a grid of numbers to color the background with a makeshift texture; this last function is used to showcase how `love.math.noise` works with two arguments and dimensions
 
-## [02 - Vectors](https://repl.it/repls/folder/the-nature-of-code/02%20-%20Vectors)
+## [01 - Vectors](https://repl.it/repls/folder/the-nature-of-code/02%20-%20Vectors)
 
 Vectors as introduced in the book are _euclidean_ vectors, entities with a _magnitude_ and a _direction_. They are introduced in the context of a plane with two dimensions, `x` and `y`, but fundamentally, they work in the same manner with additional dimensions.
 
@@ -221,7 +221,7 @@ _Please note:_
 
 - in the `Acceleration` folder you find two demos: `Constant` setting a positive or negative acceleration with a particular key press, and `Mouse`, updating the acceleration to have the entities move toward the mouse cursor
 
-## [03 - Forces](https://repl.it/repls/folder/the-nature-of-code/03%20-%20Forces)
+## [02 - Forces](https://repl.it/repls/folder/the-nature-of-code/03%20-%20Forces)
 
 The goal is to adapt the concept of forces and Newtonian physics to the simplified environment introduced with vectors.
 
@@ -410,7 +410,7 @@ _Please note:_
 
   3. in `Mouse` the `Mover` entities gravitate toward the mouse cursor, and away from other entities
 
-## [04 - Oscillation](https://repl.it/repls/folder/the-nature-of-code/04%20-%20Oscillation)
+## [03 - Oscillation](https://repl.it/repls/folder/the-nature-of-code/04%20-%20Oscillation)
 
 To discuss oscillating motion, it is first necessary to introduce angles, polar coordinates and trigonometry. _Trigonometry_ relates to the study of the angles and sides of right triangles, and is useful to model angles, angular velocity and angular acceleration.
 
@@ -712,7 +712,7 @@ The vector describing the force is then calculated as follows:
   local spring = LVector:multiply(direction, K * -1 * displacement)
   ```
 
-## [05 - Particle System](https://repl.it/repls/folder/the-nature-of-code/05%20-%20Particle%20System)
+## [04 - Particle System](https://repl.it/repls/folder/the-nature-of-code/05%20-%20Particle%20System)
 
 Starting from a single particle, the idea is to manage multiple entities, in concert. A system is useful to simulate complex phenomena, like fire, smoke, flocks of birds.
 
@@ -914,7 +914,7 @@ _Please note:_
   end
   ```
 
-## 06 - Physics Libraries
+## 05 - Physics Libraries
 
 The first chapters of the book are dedicated to creating a first environment, in order to learn about vectors, forces and particular types of simulations. That being said, there exist a variety of libraries already equipped to consider physics in a complete, more advanced manner. Two of these libraries are Box2D, especially equipped to consider collision between objects, and VerletPhysics.
 
