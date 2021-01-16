@@ -1023,10 +1023,6 @@ _Please note:_
 
 A curved surface is introduced with a `ChainShape`. This particular shape accepts as argument a series of points, which are then connected to make up the object. Using a distribution or a trigonometric function, the effect is that the points produce the desired visual.
 
-_Please note_:
-
-- in the demo the terrain is introduced with three separate shapes. This is because using a single shape creates connections between the different hill tops
-
 #### Complex shapes
 
 There are at least two different approaches to building complex shapes: use a `PolygonShape`, detailing the vertices of the desired outline; fix multiple shapes to the same body. The second approach is the topic of the demo, and the reason the `ComplexShape` entity actually introduces two rectangle shapes.

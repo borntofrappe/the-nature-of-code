@@ -7,9 +7,9 @@ RADIUS = 6
 SIZE = 10
 POINT_SIZE = 5
 LINE_WIDTH = 1
-HILL_POINTS = 50
-HILLS = 4
+TERRAIN_POINTS = 150
 AMPLITUDE = 35
+CYCLES = 2
 
 require "Rectangle"
 require "Circle"
@@ -32,7 +32,7 @@ function love.load()
 
   platforms = {}
 
-  Terrain = Terrain:new(world)
+  terrain = Terrain:new(world)
 
   mouse = {
     ["isPressed"] = false,
@@ -100,7 +100,7 @@ function love.draw()
     platform:render()
   end
 
-  Terrain:render()
+  terrain:render()
 
   if mouse.isPressed then
     love.graphics.setColor(0.11, 0.11, 0.11)
