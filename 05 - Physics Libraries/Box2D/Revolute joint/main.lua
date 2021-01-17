@@ -7,11 +7,16 @@ RADIUS = 6
 POINT_SIZE = 5
 LINE_WIDTH = 1
 TERRAIN_POINTS = 200
-AMPLITUDE_MAX = 200
-OFFSET_INITIAL_MAX = 1000
-OFFSET_INCREMENT = 0.02
-JOINT_LENGTH = 50
+TERRAIN_HEIGHT = 50
+JOINT_LENGTH = 30
+MAX_MOTOR_TORQUE = 800
+MOTOR_SPEED = math.pi * 2
+WINDMILL_WIDTH = 12
+WINDMILL_HEIGHT = 60
+BLADE_WIDTH = 80
+BLADE_HEIGHT = 10
 
+require "Windmill"
 require "PairShape"
 require "Platform"
 require "Terrain"
@@ -28,6 +33,8 @@ function love.load()
   particles = {PairShape:new(world, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)}
 
   platforms = {}
+
+  windmill = Windmill:new(world)
 
   terrain = Terrain:new(world)
 
@@ -71,6 +78,16 @@ function love.update(dt)
       mouse.x2 = x
       mouse.y2 = y
     end
+
+    if x < WINDOW_WIDTH / 2 then
+      if windmill.joint:getMotorSpeed() > 0 then
+        windmill.joint:setMotorSpeed(MOTOR_SPEED * -1)
+      end
+    else
+      if windmill.joint:getMotorSpeed() < 0 then
+        windmill.joint:setMotorSpeed(MOTOR_SPEED)
+      end
+    end
   end
 
   for i = #particles, 1, -1 do
@@ -100,6 +117,8 @@ function love.draw()
   end
 
   terrain:render()
+
+  windmill:render()
 
   if mouse.isPressed then
     love.graphics.setColor(0.11, 0.11, 0.11)
