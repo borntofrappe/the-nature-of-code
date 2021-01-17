@@ -1071,6 +1071,9 @@ TODOS:
 - name revolute joint with the right label
 - store joint demos in unified folder
 - remove magic number for pairshape joint (frequency and damping ratio)
+- remove platform from forces demo
+- add forces demo to force folder
+- document everything
 -->
 
 #### Forces
