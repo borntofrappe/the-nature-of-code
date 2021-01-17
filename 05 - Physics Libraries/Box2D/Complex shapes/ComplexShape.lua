@@ -4,8 +4,8 @@ ComplexShape.__index = ComplexShape
 function ComplexShape:new(world, x, y)
   local body = love.physics.newBody(world, x, y, "dynamic")
 
-  local shape1 = love.physics.newRectangleShape(SIZE, SIZE / 4)
-  local shape2 = love.physics.newRectangleShape(SIZE / 4, SIZE)
+  local shape1 = love.physics.newRectangleShape(SIZE, SIZE_SMALLER)
+  local shape2 = love.physics.newRectangleShape(SIZE_SMALLER, SIZE)
   local shapes = {shape1, shape2}
 
   local fixtures = {}

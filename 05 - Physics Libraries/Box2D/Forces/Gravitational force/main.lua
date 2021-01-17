@@ -9,11 +9,13 @@ RESTITUTION = 0.25
 GRAVITATIONAL_FORCE = 5
 VELOCITY_MIN = 40
 VELOCITY_MAX = 160
+DISTANCE_MIN = math.floor(math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / 4)
+DISTANCE_MAX = math.floor(math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / 2)
 
 require "Circle"
 
 function love.load()
-  love.window.setTitle("Physics Libraries - Box2D - Gravitational force")
+  love.window.setTitle("Physics Libraries - Box2D - Forces - Gravitational force")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
@@ -24,11 +26,7 @@ function love.load()
   particles = {}
   for i = 1, PARTICLES do
     local angle = math.rad(math.random(360))
-    local distance =
-      math.random(
-      math.floor(math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / 4),
-      math.floor(math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / 2)
-    )
+    local distance = math.random(DISTANCE_MIN, DISTANCE_MAX)
     local x = WINDOW_WIDTH / 2 + math.cos(angle) * distance
     local y = WINDOW_HEIGHT / 2 + math.sin(angle) * distance
     local r = math.random(RADIUS_MIN, RADIUS_MAX)

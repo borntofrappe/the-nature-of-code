@@ -12,13 +12,13 @@ The notes which follow are my own. The demos are written in [Lua](https://www.lu
 
 - [Project folder on repl.it](https://repl.it/repls/folder/the-nature-of-code)
 
-## [00 - Randomness](https://repl.it/repls/folder/the-nature-of-code/01%20-%20Randomness)
+## [00 - Randomness](https://repl.it/repls/folder/the-nature-of-code/00%20-%20Randomness)
 
 Randomness provides a first, rudimentary way to simulate real phenomena.
 
 ### Random
 
-A random function returns a number in a range with the same probability as any number in the same range. The output isn't truly random, but pseudo-random, whereby the function creates a series of numbers and returns one of them. The sequence repeats itself, but over a long stretch of time.
+A random function returns a number in a range with the same probability as any number in the same range. The output isn"t truly random, but pseudo-random, whereby the function creates a series of numbers and returns one of them. The sequence repeats itself, but over a long stretch of time.
 
 To move an entity at random, there exist several strategies:
 
@@ -80,7 +80,7 @@ For the normal distribution, it is useful to remember the following:
   f(x) = 1 / (sigma * (2 * math.pi) ^ 0.5) * e ^ (- 1 / 2 * ((x - mu) / sigma) ^ 2)
   ```
 
-  `e` describes [_Euler's number_](<https://en.wikipedia.org/wiki/E_(mathematical_constant)>), and is approximated to `2.71828`.
+  `e` describes [_Euler"s number_](<https://en.wikipedia.org/wiki/E_(mathematical_constant)>), and is approximated to `2.71828`.
 
 - the tallest point of the bell curve depends on the standard deviation, and is computed with the following formula
 
@@ -135,7 +135,7 @@ The function returns a sequence of numbers in the `(0,1)` range and accepts mult
 
 _Please note:_
 
-- the demo works similarly to `Normal distribution`, by plotting the numbers with a line and update the `Mover` entity to follow the line's coordinates
+- the demo works similarly to `Normal distribution`, by plotting the numbers with a line and update the `Mover` entity to follow the line"s coordinates
 
 - using the same offset returns the same noise value. This explains why the for loop begins at an arbitrary offset, chosen at random
 
@@ -156,7 +156,7 @@ _Please note:_
 
 - `getNoiseNumbers` creates a series of numbers to plot the line and update the `Mover` entity. `getNoiseBackground` instead produces a grid of numbers to color the background with a makeshift texture; this last function is used to showcase how `love.math.noise` works with two arguments and dimensions
 
-## [01 - Vectors](https://repl.it/repls/folder/the-nature-of-code/02%20-%20Vectors)
+## [01 - Vectors](https://repl.it/repls/folder/the-nature-of-code/01%20-%20Vectors)
 
 Vectors as introduced in the book are _euclidean_ vectors, entities with a _magnitude_ and a _direction_. They are introduced in the context of a plane with two dimensions, `x` and `y`, but fundamentally, they work in the same manner with additional dimensions.
 
@@ -180,7 +180,7 @@ Vectors follow specific rules to compute mathematical operations.
 
 - divide by a scalar by dividing each component; be sure that the scalar is different from 0
 
-- compute the vector's magnitude; using pythagorean theorem, `a^2 + b^2 = c^2`, the magnitude represents the length, the distance between two points considering the `x` and `y` component: `m = (vector.x^2 + vector.y^2)^2`
+- compute the vector"s magnitude; using pythagorean theorem, `a^2 + b^2 = c^2`, the magnitude represents the length, the distance between two points considering the `x` and `y` component: `m = (vector.x^2 + vector.y^2)^2`
 
 - normalize a vector by dividing the vector by its magnitud. With this operation, you obtain a vector with length 1, a _unit vector_; the operation is helpful to have a unit vector with the same direction as the first vector. From this point you can scale the vector to any arbitrary length, by further multiplying the unit vector with the desired magnitude
 
@@ -221,19 +221,19 @@ _Please note:_
 
 - in the `Acceleration` folder you find two demos: `Constant` setting a positive or negative acceleration with a particular key press, and `Mouse`, updating the acceleration to have the entities move toward the mouse cursor
 
-## [02 - Forces](https://repl.it/repls/folder/the-nature-of-code/03%20-%20Forces)
+## [02 - Forces](https://repl.it/repls/folder/the-nature-of-code/02%20-%20Forces)
 
 The goal is to adapt the concept of forces and Newtonian physics to the simplified environment introduced with vectors.
 
-### Newton's laws
+### Newton"s laws
 
 In the simplified environment, a force is described as a vector which causes an object with mass to accelerate.
 
-Newton's first law, arguing that an object at rest stays at rest and an object in motion stays in motion, is adapted by saying that the vector describing the velocity stays constant. The only way for an object to stop, to reach an equilibrium is for the velocity to be affected by a series of forces which cancel its magnitude.
+Newton"s first law, arguing that an object at rest stays at rest and an object in motion stays in motion, is adapted by saying that the vector describing the velocity stays constant. The only way for an object to stop, to reach an equilibrium is for the velocity to be affected by a series of forces which cancel its magnitude.
 
-Newton's third law, detailing an action/reaction pair for any force, is partly incorporated in the environment by occasionally including a force contrasting the original one.
+Newton"s third law, detailing an action/reaction pair for any force, is partly incorporated in the environment by occasionally including a force contrasting the original one.
 
-Newton's second law, providing a formula to compute a force on the basis of mass and acceleration, is finally essential to the simulation. This law states that the force is equal to mass times acceleration.
+Newton"s second law, providing a formula to compute a force on the basis of mass and acceleration, is finally essential to the simulation. This law states that the force is equal to mass times acceleration.
 
 ```lua
 ->      ->
@@ -250,7 +250,7 @@ end
 
 _Please note:_
 
-- in the demo for the `Newton's law` folder a `Mover` entity is initialized without velocity, nor acceleration. The acceleration vector is then modified in `love.load` by applying a force
+- in the demo for the `Newton"s law` folder a `Mover` entity is initialized without velocity, nor acceleration. The acceleration vector is then modified in `love.load` by applying a force
 
   ```lua
   local force = LVector:new(fx, fy)
@@ -297,7 +297,7 @@ function Mover:applyForce(force)
 end
 ```
 
-It is important to note, however, that forces like gravity already incorporate the mass in their value. For these forces, it is necessary to remove the mass's influence.
+It is important to note, however, that forces like gravity already incorporate the mass in their value. For these forces, it is necessary to remove the mass"s influence.
 
 ```lua
 local gravity = LVector:new(0, GRAVITY)
@@ -349,7 +349,7 @@ _Please note:_
 
 #### Drag
 
-A force of drag considers the density of the material through which the object is moving, `rho`, the magnitude of the object's velocity, `||v||`, the surface area subject to resistance `A`, a coefficient of drag `C` and the velocity's unit vector `^v`
+A force of drag considers the density of the material through which the object is moving, `rho`, the magnitude of the object"s velocity, `||v||`, the surface area subject to resistance `A`, a coefficient of drag `C` and the velocity"s unit vector `^v`
 
 ```lua
 ->                                      ^
@@ -374,7 +374,7 @@ _Please note:_
 
 - the demo is updated to consider multiple entities with varying mass, as in the `Mass` demo. Notice how objects with a greater mass are subject to less drag, since the force is divided by the mass measure
 
-- each `Mover` entity is subject to different drag forces and according to the entity's own position. In the bottom half of the screen, the script simulates a more dense environment with a greater coefficient
+- each `Mover` entity is subject to different drag forces and according to the entity"s own position. In the bottom half of the screen, the script simulates a more dense environment with a greater coefficient
 
 #### Gravitational attraction
 
@@ -410,7 +410,7 @@ _Please note:_
 
   3. in `Mouse` the `Mover` entities gravitate toward the mouse cursor, and away from other entities
 
-## [03 - Oscillation](https://repl.it/repls/folder/the-nature-of-code/04%20-%20Oscillation)
+## [03 - Oscillation](https://repl.it/repls/folder/the-nature-of-code/03%20-%20Oscillation)
 
 To discuss oscillating motion, it is first necessary to introduce angles, polar coordinates and trigonometry. _Trigonometry_ relates to the study of the angles and sides of right triangles, and is useful to model angles, angular velocity and angular acceleration.
 
@@ -434,7 +434,7 @@ radians = 2 * math.pi * (degrees / 360)
 
 Alternatively, Lua provides the `math.rad` to convert to radians, `math.deg` to convert to degrees.
 
-It is perhaps useful to note that _pi_ is the ratio between a circle's circumference and its diameter. It is roughly `3.14159` and is provided by Lua in the math library and `math.pi`.
+It is perhaps useful to note that _pi_ is the ratio between a circle"s circumference and its diameter. It is roughly `3.14159` and is provided by Lua in the math library and `math.pi`.
 
 _Please note:_
 
@@ -483,7 +483,7 @@ theta = math.atan(opposite / adjacent)
 
 _Please note:_
 
-- `math.atan` doesn't consider the sign of the sides involved in the formula.
+- `math.atan` doesn"t consider the sign of the sides involved in the formula.
 
   To fix this, either use a series of `if` statements, for the quadrants in which the sign is the opposite, or `math.atan2`. The function does consider the sign.
 
@@ -529,7 +529,7 @@ Starting from the amplitude and period, it is possible to describe _simple harmo
 x = amplitude * math.cos(math.pi * 2 * (frameCount / period))
 ```
 
-The value returned by `math.cos` doesn't exceed the `(-1, 1)` range, which means the variable is assigned a value in the `(-amplitude, amplitude)` interval. Inside of the parenthesis, dividing the incrementing variable `frameCount` by the period and multiplying the value by `math.pi * 2` means the function completes a cycle as the count reaches the value of the period.
+The value returned by `math.cos` doesn"t exceed the `(-1, 1)` range, which means the variable is assigned a value in the `(-amplitude, amplitude)` interval. Inside of the parenthesis, dividing the incrementing variable `frameCount` by the period and multiplying the value by `math.pi * 2` means the function completes a cycle as the count reaches the value of the period.
 
 One other feature which defines oscillation is its _frequency_. This value describes the number of cycles per time unit, and is the inverse of the period. If an oscillation has a period of `math.pi * 2`, it completes a cycle in `math.pi * 2`, and has a frequency of `math.pi * 2 / frame`; it covers a certain distance in the span of a single frame.
 
@@ -583,7 +583,7 @@ In the simulation, a pendulum is composed of a pivot, an arm and a bob.
 
 The idea is to have the pivot function as the point around which the bob rotates, at a distance given by the inflexible arm.
 
-With this structure, the pendulum is subject to a force of gravity, pulling the bob downwards. The fact that the bob is attached to the immovable pivot, however, means that the force of gravity doesn't affect the round shape only in its `y` dimension.
+With this structure, the pendulum is subject to a force of gravity, pulling the bob downwards. The fact that the bob is attached to the immovable pivot, however, means that the force of gravity doesn"t affect the round shape only in its `y` dimension.
 
 ```text
  x
@@ -656,7 +656,7 @@ _Please note:_
 
 Instead of an inflexible arm, like the one introduced with the simulation of the pendulum, the idea is to have an elastic arm. Instead of using trigonometric functions to then describe the position of the bob and the length of the arm, the idea is to consider the force applied by the spring. In this manner, the influence of the spring can be paired with other forces, like gravity or wind.
 
-Starting with Hooke's law, the force applied by a spring is directly proportional to the extension of the spring. The farther the bob stretches the spring from its rest length, the greater the force.
+Starting with Hooke"s law, the force applied by a spring is directly proportional to the extension of the spring. The farther the bob stretches the spring from its rest length, the greater the force.
 
 ```lua
 ->       ->
@@ -665,7 +665,7 @@ F = -k * x
 
 `k` describes a constant to describe how elastic is the spring. It scales the vector describing the displacement to have a stronger or weaker force.
 
-`x` describes the displacement from the spring's rest length.
+`x` describes the displacement from the spring"s rest length.
 
 A spring tends to a state of equilibrium, described by the rest length. As the bob stretches the arm, the displacement causes an opposite force toward the original length.
 
@@ -680,7 +680,7 @@ A spring tends to a state of equilibrium, described by the rest length. As the b
     o
 ```
 
-Coming back to the formula, and with the logic introduced in the force chapter, it is necessary to evaluate the force's magnitude and direction. In terms of magnitude, it is possible to directly use the constant `k`. In terms of direction, the vector `x` is obtained by comparing the current length of the arm against the rest length.
+Coming back to the formula, and with the logic introduced in the force chapter, it is necessary to evaluate the force"s magnitude and direction. In terms of magnitude, it is possible to directly use the constant `k`. In terms of direction, the vector `x` is obtained by comparing the current length of the arm against the rest length.
 
 In code, the idea is to ultimately apply the force similarly to the force of gravity introduced in earlier demos.
 
@@ -690,7 +690,7 @@ bob:applyForce(spring)
 
 The vector describing the force is then calculated as follows:
 
-- find the vector describing the difference between the bob's position and the spring's anchor
+- find the vector describing the difference between the bob"s position and the spring"s anchor
 
   ```lua
   local direction = LVector:subtract(bob.position, self.anchor)
@@ -705,14 +705,14 @@ The vector describing the force is then calculated as follows:
   local displacement = currentLength - self.restLength
   ```
 
-- normalize the vector and describe the force as the vector, scaled by the Hooke's formula
+- normalize the vector and describe the force as the vector, scaled by the Hooke"s formula
 
   ```lua
   direction:normalize()
   local spring = LVector:multiply(direction, K * -1 * displacement)
   ```
 
-## [04 - Particle System](https://repl.it/repls/folder/the-nature-of-code/05%20-%20Particle%20System)
+## [04 - Particle System](https://repl.it/repls/folder/the-nature-of-code/04%20-%20Particle%20System)
 
 Starting from a single particle, the idea is to manage multiple entities, in concert. A system is useful to simulate complex phenomena, like fire, smoke, flocks of birds.
 
@@ -916,13 +916,11 @@ _Please note:_
 
 ## 05 - Physics Libraries
 
-Knowing about vectors, forces, trigonometry allows you to create a first environment subject to the law of physics. It is possible to expand from this basis, but one alternative comes in the form of physics libraries. Here you find code by other developers already considering the issue of simulating life, simulating nature.
+With vectors, forces, trigonometry it is possible to simulate a first environment with rudimentary physics. It is possible to refine the simulation considering more complex natural phenomena, but one alternative comes in the form of physics libraries. Here you find code by other developers already considering the issue of simulating life, simulating nature. A physics engine provides a level of complexity only grasped in the previous sections. The price is that you need to learn about the library, its requirements and also limitations.
 
-A physics engine provides a level of complexity and refinement only grasped in the previous sections. The price is that you need to learn about the library, its requirements and also limitations.
+### [Box2D](https://repl.it/repls/folder/the-nature-of-code/05%20-%20Physics%20Libraries%20Box2D)
 
-### Box2D
-
-Fundamentally, a simulation with Box2D works in two steps: set up and update. In the setup phase, you initialize the world, and populate the environment with however many entities are necessary. In the update phase, Box2D considers the underlying physics to update the world as necessary; there is here to consider the position, velocity, acceleration and forces of the individual entities.
+Fundamentally, a simulation with Box2D works in two steps: set up and update. In the setup phase, you initialize the world, and populate the environment with however many entities are necessary. In the update phase, Box2D considers the underlying physics to update the world as necessary; there is no need to consider the position, velocity, acceleration and forces of the individual entities.
 
 Box2D considers all the underlying physics, but it is however necessary to set up the world with the procedure and syntax prescribed by the library.
 
@@ -935,6 +933,7 @@ _Please note:_
 A Box2D simulation starts with a _world_. This is where the simulation defines the features of the environment, like its gravity.
 
 ```lua
+GRAVITY = 20
 function love.load()
   world = love.physics.newWorld(0, GRAVITY)
 end
@@ -943,6 +942,8 @@ end
 Box2D works with meters, kilograms and real-world units. Since Love2D works with pixels instead, it is useful to adapt the measures with the `setMeter` function.
 
 ```lua
+GRAVITY = 20
+GRAVITY_METER = 9.81
 function love.load()
   love.physics.setMeter(METER)
   world = love.physics.newWorld(0, GRAVITY * GRAVITY_METER)
@@ -973,23 +974,21 @@ To populate the world, each entity needs three parts: a body, a shape and a fixt
   shape = love.physics.newCircleShape(RADIUS)
   ```
 
-  Different functions provide different shapes, like circles, rectangles. The parameters vary accordingly.
+  Different functions provide different geometries, like circles, rectangles, polygons. The parameters vary according to the desired shape, considering for instance the radius for a circle.
 
-- a _fixture_ is finally how the body and shape are attached together.
+- a _fixture_ is attaches a body and shape together.
 
   ```lua
   fixture = love.physics.newFixture(body, shape)
   ```
 
-  The fixture is also where the entity can set other features, like density and restitution.
+  The fixture is also where the entity can set other features, like density, restitution.
 
-This is enough to have the world consider and update an object. To provide a visual then, Love2D provides different methods to retrieve the defining features of the bodies. In the context of a circle, `body:getX()`. `body:getY()` and `shape:getRadius()` allow to find the measures for the circle's position and radius.
+This is enough to have the world consider and update an object. To provide a visual then, Love2D provides different methods to retrieve the defining features of the bodies. In the context of a circle, `body:getX()`. `body:getY()` and `shape:getRadius()` allow to find the measures for the circle"s position and radius.
 
 #### Particles
 
-The demo works to create two entities dedicated to different shapes, a circle and a square, and to populate a table with multiple copies of each.
-
-It is also important to stress the importance of removing entities when they are no longer necessary. Removing items involves two steps:
+The demo works to create two entities dedicated to different shapes, a circle and a rectangle, and to populate a table with multiple copies of each. Adding multiple objects is also important to stress the importance of removing entities when they are no longer necessary. Removing items involves two steps:
 
 - update the table so that the bodies are not rendered in `love.draw`
 
@@ -1003,17 +1002,17 @@ It is also important to stress the importance of removing entities when they are
   particles[i].body:destroy()
   ```
 
-  Without this line the window doesn't show the bodies, but their position, movement and collision is still computed by Box2D.
+  Without this line the window doesn"t show the bodies, but their position, movement and collision is still computed by Box2D. It is here essential to math the data structure evaluated by Love2D with the world simulated by Box2D.
 
 #### Fixed
 
-A previous section introduced how bodies have different. By default an object is static, but it's possible to modify this value already in the declaration of the body. This is what the previous demo achieved in `love.physics.newBody()`.
+A previous section introduced how bodies have different types. By default an object is static, but it"s possible to modify this value already in the declaration of the body. This is what the previous demo achieved in `love.physics.newBody()`.
 
 ```lua
 love.physics.newBody(world, x, y, "dynamic")
 ```
 
-Shortly, a body can be _static_, fixed in the world and not subject to its forces, _dynamic_, reacting to the world's gravity, forces, and collisions, _kinematic_, not subject to forces, but manually moved through its velocity. Consider for instance a platform (fixed), a ball (dynamic) or a character directly controlled by the player (kinematic).
+Shortly, a body can be _static_, fixed in the world and not subject to its forces, _dynamic_, reacting to the world"s gravity, forces, and collisions, _kinematic_, not subject to forces, but manually moved through its velocity. Consider for instance a platform (fixed), a ball (dynamic) or a character directly controlled by the player (kinematic).
 
 _Please note:_
 
@@ -1021,15 +1020,21 @@ _Please note:_
 
 #### Curvy boundary
 
-A curved surface is introduced with a `ChainShape`. This particular shape accepts as argument a series of points, which are then connected to make up the object. Using a distribution or a trigonometric function, the effect is that the points produce the desired visual.
+A curved surface is introduced with a `ChainShape`. This particular shape accepts as argument a series of points, which are then connected to make up the object. Using a particular distribution or a trigonometric function, the effect is that the points produce the desired visual.
+
+_Please note:_
+
+- the demo creates a chain shape with the cosine function. In future projects, however, the `Terrain` entity is modified to experiment with other values and distributions.
 
 #### Complex shapes
 
-There are at least two different approaches to building complex shapes: use a `PolygonShape`, detailing the vertices of the desired outline; fix multiple shapes to the same body. The second approach is the topic of the demo, and the reason the `ComplexShape` entity actually introduces two rectangle shapes.
+There are at least two different approaches to building complex shapes:
 
-_Please note_:
+1. use a `PolygonShape`, detailing the vertices of the desired outline;
 
-- in the demo I've decided to update the terrain to instead use `love.math.noise` and the connected noise function. This is just a matter of preference and in order to rehearse the concept of a chain shape
+2. fix multiple shapes to the same body.
+
+The second approach is the topic of the demo, and the reason the `ComplexShape` entity actually introduces two rectangle shapes.
 
 #### Joint
 
@@ -1039,7 +1044,7 @@ A joint creates a connection between multiple bodies. There are different types,
 
 - a revolute joint, anchors a body to a point and rotates the entity around the anchor
 
-- a mouse joint connects a body to an `x`, `y` point
+- a mouse joint connects a body to an `x`, `y` point. In the demo it is used to have a circle tied to the position of the mouse cursor, but only when said mouse is pressed in the window
 
 _Please note:_
 
@@ -1057,7 +1062,7 @@ _Please note:_
   )
   ```
 
-  There is no need to draw a matching visual for the joint to have effect. Whatsmore, there is no need to have a reference to the joint itself; consider how in _Distance joint_ the `PairShape` entity doesn't include the joint in its definition (the line is commented out).
+  There is no need to draw a matching visual for the joint to have effect. Whatsmore, there is no need to have a reference to the joint itself; consider how in _Distance joint_ the `PairShape` entity doesn"t include the joint in its definition (the line is commented out).
 
   ```lua
   local this = {
@@ -1066,14 +1071,52 @@ _Please note:_
   }
   ```
 
-<!--
-TODOS:
-- name revolute joint with the right label
-- store joint demos in unified folder
-- remove magic number for pairshape joint (frequency and damping ratio)
-- remove platform from forces demo
-- add forces demo to force folder
-- document everything
--->
+  A reference is useful in the moment you need to modify the joint. Consider for instance how the revolute joint changes the speed using the horizontal coordinate of the mouse cursor, or again how the mouse joint is destroyed as the mouse is released.
 
 #### Forces
+
+Re-introducing the topic from previous chapters, it is possible to affect a Box2D simulation applying a force directly on a body.
+
+```lua
+Body:applyForce(fx, fy)
+```
+
+_Please note:_
+
+- in the _Forces_ folder you find two demo, simulating a gust of wind following a mouse press or gravitational force between a fixed object and a series of dynamic particles
+
+- the attractor entity in the demo exploring gravitational force is included as a kinematic body, and updated manually through its velocity considering the position of the mouse cursor
+
+#### Collision events
+
+Often, it is helpful to react to a collision between bodies. Box2D provides an interface to execute some code in the lifecycle of a collision, by referring to a callcback function on the world.
+
+```lua
+world:setCallbacks(beginContact)
+```
+
+`:setCallbacks` actually accepts up to four arguments, to consider when a contact begins, ends, and when a collision is about to be resolved or has just been resolved.
+
+```lua
+world:setCallbacks(beginContact, endContact, preSolve, postSolve)
+```
+
+The functions must be defined in the code, and receive a series of arguments describing the collision and the objects involved. More accurately, `beginContact` receives the fixtures of the objects involved, and a table describing the collision.
+
+```lua
+function beginContact(f1, f2, collision)
+
+end
+```
+
+The collision occurs between two objects coming into contact with each other. It is here extremely useful to know which objects are however involved. To this end, a fixture can describe a label with a `userdata` field.
+
+```lua
+fixture:setUserData("attractor")
+```
+
+The label is then evaluated in the body of the `beginContact` function.
+
+_Please note:_
+
+- in the demo, the idea is to apply a repulsing force when a particle collides with the attractor. The data structure collecting the particles is modified to have the table use the keys with the same value as the `userdata` field. This is helpful to refer to the particular particle, but requires a small adjusment in the iterator function. `ipairs` works with sequences, while `pairs` is equipped to loop through key-value pairs.

@@ -15,7 +15,7 @@ require "Circle"
 require "Rectangle"
 
 function love.load()
-  love.window.setTitle("Physics Libraries - Box2D - Mouse joint")
+  love.window.setTitle("Physics Libraries - Box2D - Joint - Mouse")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 

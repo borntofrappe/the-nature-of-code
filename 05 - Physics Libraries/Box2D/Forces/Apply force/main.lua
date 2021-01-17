@@ -4,6 +4,7 @@ GRAVITY = 20
 GRAVITY_METER = 9.81
 METER = 100
 SIZE = 16
+SIZE_SMALLER = SIZE / 4
 WALL_WIDTH_LEFT_RIGHT = 10
 WIND_FORCE = 10
 
@@ -11,7 +12,7 @@ require "ComplexShape"
 require "Rectangle"
 
 function love.load()
-  love.window.setTitle("Physics Libraries - Box2D - Forces")
+  love.window.setTitle("Physics Libraries - Box2D - Forces - Apply force")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 

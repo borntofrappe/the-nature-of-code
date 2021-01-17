@@ -10,6 +10,8 @@ GRAVITATIONAL_FORCE = 5
 REPULSION_FORCE = 200
 VELOCITY_MIN = 40
 VELOCITY_MAX = 160
+DISTANCE_MIN = math.floor(math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / 4)
+DISTANCE_MAX = math.floor(math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / 2)
 
 require "Circle"
 
@@ -41,11 +43,7 @@ function love.load()
   for i = 1, PARTICLES do
     local userdata = "particle" .. i
     local angle = math.rad(math.random(360))
-    local distance =
-      math.random(
-      math.floor(math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / 4),
-      math.floor(math.min(WINDOW_WIDTH, WINDOW_HEIGHT) / 2)
-    )
+    local distance = math.random(DISTANCE_MIN, DISTANCE_MAX)
     local x = WINDOW_WIDTH / 2 + math.cos(angle) * distance
     local y = WINDOW_HEIGHT / 2 + math.sin(angle) * distance
     local r = math.random(RADIUS_MIN, RADIUS_MAX)

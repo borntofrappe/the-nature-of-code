@@ -22,7 +22,7 @@ require "Platform"
 require "Terrain"
 
 function love.load()
-  love.window.setTitle("Physics Libraries - Box2D - Distance joint")
+  love.window.setTitle("Physics Libraries - Box2D - Joint - Revolute")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
