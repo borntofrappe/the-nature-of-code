@@ -1037,9 +1037,9 @@ A joint creates a connection between multiple bodies. There are different types,
 
 - a distance joint connects two bodies with a string. Attributes like frequency and damping ratio allow the string to be elastic
 
-- a mouse joint connects a body to an `x`, `y` point
-
 - a revolute joint, anchors a body to a point and rotates the entity around the anchor
+
+- a mouse joint connects a body to an `x`, `y` point
 
 _Please note:_
 
@@ -1065,3 +1065,10 @@ _Please note:_
     -- ["joint"] = joint
   }
   ```
+
+<!--
+TODOS:
+- name revolute joint with the right label
+- store joint demos in unified folder
+- remove magic number for pairshape joint (frequency and damping ratio)
+-->
