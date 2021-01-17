@@ -1030,3 +1030,38 @@ There are at least two different approaches to building complex shapes: use a `P
 _Please note_:
 
 - in the demo I've decided to update the terrain to instead use `love.math.noise` and the connected noise function. This is just a matter of preference and in order to rehearse the concept of a chain shape
+
+#### Joint
+
+A joint creates a connection between multiple bodies. There are different types, each with its own usefulness and defining features. For instance:
+
+- a distance joint connects two bodies with a string. Attributes like frequency and damping ratio allow the string to be elastic
+
+- a mouse joint connects a body to an `x`, `y` point
+
+- a revolute joint, anchors a body to a point and rotates the entity around the anchor
+
+_Please note:_
+
+- it is enough to initialize a joint in the world to affect the simulation.
+
+  ```lua
+  local joint =
+    love.physics.newDistanceJoint(
+    circleA.body,
+    circleB.body,
+    circleA.body:getX(),
+    circleA.body:getY(),
+    circleB.body:getX(),
+    circleB.body:getY()
+  )
+  ```
+
+  There is no need to draw a matching visual for the joint to have effect. Whatsmore, there is no need to have a reference to the joint itself; consider how in _Distance joint_ the `PairShape` entity doesn't include the joint in its definition (the line is commented out).
+
+  ```lua
+  local this = {
+    ["circles"] = {circleA, circleB}
+    -- ["joint"] = joint
+  }
+  ```
