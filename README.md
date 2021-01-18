@@ -1156,3 +1156,5 @@ Two variables allow to refine this first behavior:
 - `maxSpeed` limits the velocity so that the entity doesn't immediately jump towards the target
 
 - `forceCoefficient` reduces the influence of the force so that the entity changes direction more slowly. In the book this is achieved with a variable limiting the force to a maximum value
+
+<!-- ### Arriving -->
