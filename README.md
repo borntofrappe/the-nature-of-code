@@ -1120,3 +1120,9 @@ The label is then evaluated in the body of the `beginContact` function.
 _Please note:_
 
 - in the demo, the idea is to apply a repulsing force when a particle collides with the attractor. The data structure collecting the particles is modified to have the table use the keys with the same value as the `userdata` field. This is helpful to refer to the particular particle, but requires a small adjusment in the iterator function. `ipairs` works with sequences, while `pairs` is equipped to loop through key-value pairs.
+
+### Toxiclib Verlet Physics
+
+_Please note:_
+
+- toxiclib refers to a library developed for Java and Processing. Here I try to replicate the demos introduced in the book with [_Toxiclibs.js_](https://github.com/hapticdata/toxiclibsjs), a port for the JavaScript language. Each demo has an `index.html` file which refers to the minified build of the library
