@@ -1122,3 +1122,37 @@ The label is then evaluated in the body of the `beginContact` function.
 _Please note:_
 
 - in the demo, the idea is to apply a repulsing force when a particle collides with the attractor. The data structure collecting the particles is modified to have the table use the keys with the same value as the `userdata` field. This is helpful to refer to the particular particle, but requires a small adjusment in the iterator function. `ipairs` works with sequences, while `pairs` is equipped to loop through key-value pairs.
+
+## 06 - Autonomous Agents
+
+With the chapter the idea is to include entities capable of moving "on their own", on the basis of a desire. These entities share three defining features:
+
+- a limited ability to perceive the environment
+
+- the ability to process the environment to formulate an action
+
+- the lack of a leader, of an object detailing the entity's eventual movement
+
+The goal is to run a simulation without a pre-ordained structure, and analyse the interaction, the behavior of independent entities.
+
+### Steering
+
+A first way to program autonomous agents is inspired by the work of _Craig Reynolds_ on algorithmic steering behaviors.
+
+The idea is to have a `Vehicle` entity, initially similar to the `Mover` or `Particle` entities of previous sections. Similar in that the unit has a position, velocity and acceleration.
+
+Motion is however expressed in three layers:
+
+- select an action on the basis of a goal or set of goals; for instance, compute the velocity on the basis of a target
+
+- formulate a steering force to materialize the action; for instance, apply a force considering the desired velocity against the current velocity
+
+- actually move; in the demos this step is less important, as the entity is directly modified in its `x`, `y` coordinate, but in a more complex simulation the movement could involve a set of operations, the turning of a wheel, or again the stretching of a leg
+
+In the demo, the `Vehicle` entity moves through a `steer` method, receiving as argument a `Target` entity. In the body of the function, the entity computes the desired velocity by considering its position against the target, and applies a force in the newfound direction.
+
+Two variables allow to refine this first behavior:
+
+- `maxSpeed` limits the velocity so that the entity doesn't immediately jump towards the target
+
+- `forceCoefficient` reduces the influence of the force so that the entity changes direction more slowly. In the book this is achieved with a variable limiting the force to a maximum value
