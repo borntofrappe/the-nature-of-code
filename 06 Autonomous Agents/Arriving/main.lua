@@ -7,11 +7,11 @@ WINDOW_HEIGHT = 500
 RADIUS_VEHICLE = 7
 RADIUS_TARGET = 15
 LINE_WIDTH_TARGET = 3
-RADIUS_SLOWDOWN = 120
+RADIUS_SLOWDOWN = 100
 LINE_WIDTH_SLOWDOWN = 1
 MAX_SPEED = 15
-FORCE_COEFFICIENT = 0.2
-UPDATE_SPEED = 15
+MAX_FORCE = 1
+UPDATE_SPEED = 20
 
 function love.load()
   love.window.setTitle("Autonomous Agents - Arriving")
@@ -41,7 +41,7 @@ end
 
 function love.update(dt)
   vehicle:update(dt)
-  vehicle:steer(target)
+  vehicle:arrive(target)
 
   local x, y = love.mouse:getPosition()
   if x > 0 and x < WINDOW_WIDTH and y > 0 and y < WINDOW_HEIGHT then

@@ -1131,7 +1131,7 @@ With the chapter the idea is to include entities capable of moving "on their own
 
 - the ability to process the environment to formulate an action
 
-- the lack of a leader, of an object detailing the entity's eventual movement
+- the lack of a leader, of an entity detailing the agent's eventual movement
 
 The goal is to run a simulation without a pre-ordained structure, and analyse the interaction, the behavior of independent entities.
 
@@ -1139,22 +1139,72 @@ The goal is to run a simulation without a pre-ordained structure, and analyse th
 
 A first way to program autonomous agents is inspired by the work of _Craig Reynolds_ on algorithmic steering behaviors.
 
-The idea is to have a `Vehicle` entity, initially similar to the `Mover` or `Particle` entities of previous sections. Similar in that the unit has a position, velocity and acceleration.
+The idea is to have a `Vehicle` entity, initially similar to the `Mover` or `Particle` entities of previous sections. Similar in that the unit has a position, velocity and acceleration. Motion is however expressed in three layers:
 
-Motion is however expressed in three layers:
+1. _action selection_: select an action on the basis of a goal or set of goals; for instance, compute the desired velocity as the difference between the position of the vehicle and a target
 
-- select an action on the basis of a goal or set of goals; for instance, compute the velocity on the basis of a target
+   ```lua
+   local desiredVelocity = LVector:subtract(target.position, self.position)
+   ```
 
-- formulate a steering force to materialize the action; for instance, apply a force considering the desired velocity against the current velocity
+2. _steering_: formulate a steering force to materialize the action; for instance, generate a force considering the desired velocity against the current velocity
 
-- actually move; in the demos this step is less important, as the entity is directly modified in its `x`, `y` coordinate, but in a more complex simulation the movement could involve a set of operations, the turning of a wheel, or again the stretching of a leg
+   ```lua
+   local force = LVector:subtract(desiredVelocity, self.velocity)
+   ```
 
-In the demo, the `Vehicle` entity moves through a `steer` method, receiving as argument a `Target` entity. In the body of the function, the entity computes the desired velocity by considering its position against the target, and applies a force in the newfound direction.
+3. _locomotion_: actually move the vehicle; for instance, apply a force to modify the entity's acceleration and velocity
 
-Two variables allow to refine this first behavior:
+   ```lua
+   self:applyForce(force)
+   ```
 
-- `maxSpeed` limits the velocity so that the entity doesn't immediately jump towards the target
+In the demo, the logic steering the vehicle toward the target is described in the `steer` method. In the body of the function, the entity computes the desired velocity and steering force, but refines the movement with two additional variables:
 
-- `forceCoefficient` reduces the influence of the force so that the entity changes direction more slowly. In the book this is achieved with a variable limiting the force to a maximum value
+- `maxSpeed` describes the magnitude of the vector
 
-<!-- ### Arriving -->
+  ```lua
+  desiredVelocity:normalize()
+  desiredVelocity:multiply(self.maxSpeed)
+  ```
+
+  The fixed magnitude means that the entity eventually overshoots its trajectory, and is pushed continuously before and after the target
+
+- `maxForce` reduces the force so that the entity changes direction more slowly
+
+  ```lua
+  force:limit(self.maxForce)
+  ```
+
+  Limiting the influence of the force means that it takes some time for the vehicle to point to the target
+
+_Please note:_
+
+- in the demo the vehicle and target are position at opposite ends, but the target is updated using the mouse coordinates
+
+### Arriving
+
+Building on top of the steering demo, the idea is to have the `Vehicle` entity steer toward the target, but then slow down as it gets closer and closer to the target's position.
+
+The function evaluates the desired velocity, but also the distance of the vector.
+
+```lua
+local desiredVelocity = LVector:subtract(target.position, self.position)
+local distance = desiredVelocity:getMagnitude()
+```
+
+The velocity is then multiplied by a value proportional to the actual distance. The smaller the distance, the slower the force. This however, only when the vehicle is in the range of the target.
+
+```lua
+if distance < RADIUS_SLOWDOWN then
+  -- from [0, RADIUS_SLOWDOWN] to [0, maxSpeed]
+  local speed = map(distance, 0, RADIUS_SLOWDOWN, 0, self.maxSpeed)
+  desiredVelocity:multiply(speed)
+end
+```
+
+_Please note:_
+
+- following a mouse click the demo toggles the visibility of the circle in which the vehicle slows down
+
+- the `arrive` method is slightly different in how the conditional is implemented, but the logic is the same

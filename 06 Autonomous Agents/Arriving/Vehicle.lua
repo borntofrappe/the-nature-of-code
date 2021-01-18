@@ -9,7 +9,7 @@ function Vehicle:new(position)
     ["velocity"] = velocity,
     ["acceleration"] = acceleration,
     ["maxSpeed"] = MAX_SPEED,
-    ["forceCoefficient"] = FORCE_COEFFICIENT,
+    ["maxForce"] = MAX_FORCE,
     ["r"] = RADIUS_VEHICLE
   }
 
@@ -20,6 +20,7 @@ end
 function Vehicle:update(dt)
   self.position:add(LVector:multiply(self.velocity, dt * UPDATE_SPEED))
   self.velocity:add(LVector:multiply(self.acceleration, dt * UPDATE_SPEED))
+  self.velocity:limit(self.maxSpeed)
   self.acceleration:multiply(0)
 end
 
@@ -32,17 +33,16 @@ function Vehicle:applyForce(force)
   self.acceleration:add(force)
 end
 
-function Vehicle:steer(target)
+function Vehicle:arrive(target)
   local desiredVelocity = LVector:subtract(target.position, self.position)
   local distance = desiredVelocity:getMagnitude()
 
-  if distance > RADIUS_SLOWDOWN then
-    desiredVelocity:limit(self.maxSpeed)
-  else
-    desiredVelocity:limit(map(distance, 0, RADIUS_SLOWDOWN, 0, self.maxSpeed))
-  end
+  desiredVelocity:normalize()
 
-  local steeringForce = LVector:subtract(desiredVelocity, self.velocity)
-  steeringForce:multiply(self.forceCoefficient)
-  self:applyForce(steeringForce)
+  local speed = distance > RADIUS_SLOWDOWN and self.maxSpeed or map(distance, 0, RADIUS_SLOWDOWN, 0, self.maxSpeed)
+  desiredVelocity:multiply(speed)
+
+  local force = LVector:subtract(desiredVelocity, self.velocity)
+  force:multiply(self.maxForce)
+  self:applyForce(force)
 end

@@ -8,8 +8,8 @@ RADIUS_VEHICLE = 7
 RADIUS_TARGET = 15
 LINE_WIDTH_TARGET = 3
 MAX_SPEED = 15
-FORCE_COEFFICIENT = 0.1
-UPDATE_SPEED = 15
+MAX_FORCE = 1
+UPDATE_SPEED = 20
 
 function love.load()
   love.window.setTitle("Autonomous Agents - Steering")
