@@ -914,19 +914,21 @@ _Please note:_
   end
   ```
 
-## 05 - Physics Libraries
+## [05 - Physics Libraries](https://repl.it/repls/folder/the-nature-of-code/05%20-%20Physics%20Libraries%20Box2D)
 
 With vectors, forces, trigonometry it is possible to simulate a first environment with rudimentary physics. It is possible to refine the simulation considering more complex natural phenomena, but one alternative comes in the form of physics libraries. Here you find code by other developers already considering the issue of simulating life, simulating nature. A physics engine provides a level of complexity only grasped in the previous sections. The price is that you need to learn about the library, its requirements and also limitations.
 
-### [Box2D](https://repl.it/repls/folder/the-nature-of-code/05%20-%20Physics%20Libraries%20Box2D)
+_Please note:_
+
+- while the chapter is devoted to two libraries, Box2D and Verletlib, I cover the examples of the first library only
+
+- Love2D includes the Box2D library in the `love.physics` module
+
+### Box2D
 
 Fundamentally, a simulation with Box2D works in two steps: set up and update. In the setup phase, you initialize the world, and populate the environment with however many entities are necessary. In the update phase, Box2D considers the underlying physics to update the world as necessary; there is no need to consider the position, velocity, acceleration and forces of the individual entities.
 
 Box2D considers all the underlying physics, but it is however necessary to set up the world with the procedure and syntax prescribed by the library.
-
-_Please note:_
-
-- Love2D incorporates the Box2D library in the `love.physics` module. The code introduced in the book is adapted to use the connected functions
 
 #### Core elements
 
@@ -1120,9 +1122,3 @@ The label is then evaluated in the body of the `beginContact` function.
 _Please note:_
 
 - in the demo, the idea is to apply a repulsing force when a particle collides with the attractor. The data structure collecting the particles is modified to have the table use the keys with the same value as the `userdata` field. This is helpful to refer to the particular particle, but requires a small adjusment in the iterator function. `ipairs` works with sequences, while `pairs` is equipped to loop through key-value pairs.
-
-### Toxiclib Verlet Physics
-
-_Please note:_
-
-- toxiclib refers to a library developed for Java and Processing. Here I try to replicate the demos introduced in the book with [_Toxiclibs.js_](https://github.com/hapticdata/toxiclibsjs), a port for the JavaScript language. Each demo has an `index.html` file which refers to the minified build of the library
