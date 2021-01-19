@@ -1208,3 +1208,17 @@ _Please note:_
 - following a mouse click the demo toggles the visibility of the circle in which the vehicle slows down
 
 - the `arrive` method is slightly different in how the conditional is implemented, but the logic is the same
+
+### Pursuing
+
+Building on top of the steering demo, the idea is to have the vehicle move toward not where the target is, but where the target will be. In ordeer to achieve this effect, the target is attributed a velocity vector, and this vector is modified to have the entity move toward the mouse. The same vector is then incorporated in the `pursue` function of the vehicle entity, in order to modify the desired velocity.
+
+_Please note:_
+
+- following a mouse click the demo toggles the visibility of a circle displaying the desired location for the vehicle
+
+- to highlight how the vehicle actually pursues the target the demo includes two precautions:
+
+  1. `UPDATE_SPEED` is reduced, so that it is more evident how the entity changes direction
+
+  2. `VELOCITY_MULTIPLIER` scales up the velocity of the target so that the vehicle over-estimates where the target is going to be. You could explain this behavior as thinking that velocity begets velocity, and the vehicle presumes the target will continuously move in the same direction
