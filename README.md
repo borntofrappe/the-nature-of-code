@@ -1222,3 +1222,7 @@ _Please note:_
   1. `UPDATE_SPEED` is reduced, so that it is more evident how the entity changes direction
 
   2. `VELOCITY_MULTIPLIER` scales up the velocity of the target so that the vehicle over-estimates where the target is going to be. You could explain this behavior as thinking that velocity begets velocity, and the vehicle presumes the target will continuously move in the same direction
+
+### Bouncing
+
+Building on top of the steering demo, the idea is to have a vehicle consistently move in the window, and change its direction in order to respect arbitrary boundaries. This is achieved by applying an force opposite to the desired velocity if the desired velocity would move the entity outside of the given boundaries.
