@@ -1226,3 +1226,11 @@ _Please note:_
 ### Bouncing
 
 Building on top of the steering demo, the idea is to have a vehicle consistently move in the window, and change its direction in order to respect arbitrary boundaries. This is achieved by applying an force opposite to the desired velocity if the desired velocity would move the entity outside of the given boundaries.
+
+### Jittering
+
+Building on top of the pursuing demo, and following a suggestion included in the book, the idea is to have the vehicle move toward a point in the vicinity of the target. By choosing a point around the target, signalled by a small circle the vehicle moves unpredictably, and yet pursuing the target.
+
+_Please note:_
+
+- following a mouse click the demo toggles the visibility of the small circle
