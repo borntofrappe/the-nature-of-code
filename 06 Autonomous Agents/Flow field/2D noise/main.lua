@@ -10,9 +10,11 @@ LINE_WIDTH_FIELD = 0.5
 MAX_SPEED = 15
 MAX_FORCE = 2
 UPDATE_SPEED = 15
+OFFSET_INITIAL_MAX = 1000
+OFFSET_INCREMENT = 0.02
 
 function love.load()
-  love.window.setTitle("Autonomous Agents - Flow field")
+  love.window.setTitle("Autonomous Agents - Flow field - 2D noise")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
@@ -24,12 +26,17 @@ function love.load()
     vehicle
   }
   field = Field:new()
+
+  showField = true
 end
 
 function love.mousepressed(x, y, button)
   if button == 1 then
     local position = LVector:new(x, y)
     table.insert(vehicles, Vehicle:new(position))
+  end
+  if button == 2 then
+    showField = not showField
   end
 end
 
@@ -44,5 +51,7 @@ function love.draw()
   for i, vehicle in ipairs(vehicles) do
     vehicle:render()
   end
-  field:render()
+  if showField then
+    field:render()
+  end
 end
