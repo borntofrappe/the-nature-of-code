@@ -10,7 +10,8 @@ function Vehicle:new(position)
     ["acceleration"] = acceleration,
     ["maxSpeed"] = MAX_SPEED,
     ["maxForce"] = MAX_FORCE_VEHICLE,
-    ["r"] = RADIUS_VEHICLE
+    ["size"] = SIZE_VEHICLE,
+    ["angle"] = 0
   }
 
   setmetatable(this, self)
@@ -22,11 +23,16 @@ function Vehicle:update(dt)
   self.velocity:add(LVector:multiply(self.acceleration, dt * UPDATE_SPEED))
   self.velocity:limit(self.maxSpeed)
   self.acceleration:multiply(0)
+  self.angle = math.atan2(self.velocity.y, self.velocity.x)
 end
 
 function Vehicle:render()
   love.graphics.setColor(0.11, 0.11, 0.11, 1)
-  love.graphics.circle("fill", self.position.x, self.position.y, self.r)
+  love.graphics.push()
+  love.graphics.translate(self.position.x, self.position.y)
+  love.graphics.rotate(self.angle)
+  love.graphics.polygon("fill", -self.size, -self.size, self.size, 0, -self.size, self.size)
+  love.graphics.pop()
 end
 
 function Vehicle:applyForce(force)

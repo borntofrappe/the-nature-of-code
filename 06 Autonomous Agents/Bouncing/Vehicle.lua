@@ -3,7 +3,8 @@ Vehicle.__index = Vehicle
 
 function Vehicle:new()
   local position = LVector:new(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
-  local velocity = LVector:new(20, 10)
+  local velocity =
+    LVector:new(math.random(VELOCITY_MAX * -1, VELOCITY_MAX), math.random(VELOCITY_MAX * -1, VELOCITY_MAX))
   local acceleration = LVector:new(0, 0)
   local this = {
     ["position"] = position,
@@ -11,7 +12,8 @@ function Vehicle:new()
     ["acceleration"] = acceleration,
     ["maxSpeed"] = MAX_SPEED,
     ["maxForce"] = MAX_FORCE,
-    ["r"] = RADIUS
+    ["size"] = SIZE_VEHICLE,
+    ["angle"] = 0
   }
 
   setmetatable(this, self)
@@ -23,11 +25,16 @@ function Vehicle:update(dt)
   self.velocity:add(LVector:multiply(self.acceleration, dt * UPDATE_SPEED))
   self.velocity:limit(self.maxSpeed)
   self.acceleration:multiply(0)
+  self.angle = math.atan2(self.velocity.y, self.velocity.x)
 end
 
 function Vehicle:render()
   love.graphics.setColor(0.11, 0.11, 0.11, 1)
-  love.graphics.circle("fill", self.position.x, self.position.y, self.r)
+  love.graphics.push()
+  love.graphics.translate(self.position.x, self.position.y)
+  love.graphics.rotate(self.angle)
+  love.graphics.polygon("fill", -self.size, -self.size, self.size, 0, -self.size, self.size)
+  love.graphics.pop()
 end
 
 function Vehicle:applyForce(force)
