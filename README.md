@@ -1275,3 +1275,43 @@ As mentioned, there are multiple demos in the `Flow field` folder:
   ```
 
   `time` is initialized at `0` and incremented with each iteration in `Field:update()`, so that the angle smoothly changes over time.
+
+_Please note:_
+
+- it is possible to include additional vehicles by pressing the mouse with the left button
+
+- the visibility of the field is toggled by pressing the mouse with the right button
+
+### Dot product
+
+The dot product allows to compute the angle between two vectors. It is helpful to build a scaler projection and ultimately important to introduce a simulation in which vehicles follow a given path. Defined as the multiplication of two vectors, the product is computed as follows:
+
+- multiply the components making up the vectors
+
+  ```code
+  ->
+  A = (ax, ay)
+  ->
+  B = (bx, by)
+
+  ->  ->
+  A * B = ax * bx + ay * by
+  ```
+
+- multiply the magnitude of the two vectors and the cosine of the angle between the same vectors
+
+  ```code
+  ->
+  A = (ax, ay)
+  ->
+  B = (bx, by)
+
+  ->  ->   ->    ->
+  A * B = |A| * |B| * cos(theta)
+  ```
+
+By computing the product with the first formula, it is possible to find the angle solving the second formula for theta.
+
+_Please note:_
+
+- `LVector` is updated to include a function returning the dot product for two input vectors, and a function returning the angle between two vectors (using the dot product itself)
