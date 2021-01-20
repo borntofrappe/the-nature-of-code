@@ -1315,3 +1315,63 @@ By computing the product with the first formula, it is possible to find the angl
 _Please note:_
 
 - `LVector` is updated to include a function returning the dot product for two input vectors, and a function returning the angle between two vectors (using the dot product itself)
+
+### Scalar projection
+
+The goal is to find a point on a vector according to another vector, a projection.
+
+```code
+->
+a /|
+ / |
+/  |
+---o---
+   ->
+   b
+```
+
+Project a line from the vector `a` to the vector `b` so that the line creates a `90` degrees angle, building a right triangle. With this line then, the dot product allows to compute the point making up the projection through the angle.
+
+```code
+h /|
+ / |
+/t |
+---o
+ ->
+ x
+```
+
+In terms of math, there are a couple of steps involved:
+
+- consider the angle `t` through the mnemonic _sohcahtoa_, as the cosine of the adjacent (x) divided by the hypothenuse (h)
+
+  ```code
+  cos(t) = x / h
+  ```
+
+- consider `h` as the magnitude of the `a` vector, so that the adjecent segment (x) is computed as
+
+  ```code
+                ->
+  cos(t) = x / |a|
+
+                ->
+  x = cos(t) * |a|
+  ```
+
+- notice how the formula for the adjacent segment is similar to the one for the dot product. It is actually the same in the instancethe vector `b` has a magnitude of `1` (is a unit vector)
+
+  ```code
+   ->
+  |b| = 1
+                ->    ->
+  x = cos(t) * |a| * |b|
+  ```
+
+This means that ultimately, the projection is computed considering the dot product of the normalized `b` vector.
+
+_Please note_:
+
+- the demo builds from the script showcasing the dot product, but swaps the name of the vectors `b` and `a`. This in line with the convention introduced in the book
+
+- the vector `b` points to the right half of the screen, changing the `y` coordinate by a random amount. The value is also updated following a mouse click, to show how the projection works for any vector
