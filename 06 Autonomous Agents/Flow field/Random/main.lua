@@ -10,6 +10,7 @@ LINE_WIDTH_FIELD = 0.5
 MAX_SPEED = 15
 MAX_FORCE = 2
 UPDATE_SPEED = 15
+VEHICLES = 7
 
 function love.load()
   love.window.setTitle("Autonomous Agents - Flow field - Random")
@@ -18,11 +19,11 @@ function love.load()
 
   math.randomseed(os.time())
 
-  local position = LVector:new(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
-  local vehicle = Vehicle:new(position)
-  vehicles = {
-    vehicle
-  }
+  vehicles = {}
+  for i = 1, VEHICLES do
+    table.insert(vehicles, Vehicle:new())
+  end
+
   field = Field:new()
 end
 
@@ -30,6 +31,9 @@ function love.mousepressed(x, y, button)
   if button == 1 then
     local position = LVector:new(x, y)
     table.insert(vehicles, Vehicle:new(position))
+  end
+  if button == 2 then
+    field.isVisible = not field.isVisible
   end
 end
 
@@ -44,5 +48,6 @@ function love.draw()
   for i, vehicle in ipairs(vehicles) do
     vehicle:render()
   end
+
   field:render()
 end

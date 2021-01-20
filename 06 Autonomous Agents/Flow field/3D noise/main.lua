@@ -12,6 +12,7 @@ MAX_FORCE = 2
 UPDATE_SPEED = 15
 OFFSET_INITIAL_MAX = 1000
 OFFSET_INCREMENT = 0.03
+VEHICLES = 7
 
 function love.load()
   love.window.setTitle("Autonomous Agents - Flow field - 3D noise")
@@ -20,14 +21,12 @@ function love.load()
 
   math.randomseed(os.time())
 
-  local position = LVector:new(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
-  local vehicle = Vehicle:new(position)
-  vehicles = {
-    vehicle
-  }
+  vehicles = {}
+  for i = 1, VEHICLES do
+    table.insert(vehicles, Vehicle:new())
+  end
 
   field = Field:new()
-  showField = true
 end
 
 function love.mousepressed(x, y, button)
@@ -36,7 +35,7 @@ function love.mousepressed(x, y, button)
     table.insert(vehicles, Vehicle:new(position))
   end
   if button == 2 then
-    showField = not showField
+    field.isVisible = not field.isVisible
   end
 end
 
@@ -53,7 +52,6 @@ function love.draw()
   for i, vehicle in ipairs(vehicles) do
     vehicle:render()
   end
-  if showField then
-    field:render()
-  end
+
+  field:render()
 end

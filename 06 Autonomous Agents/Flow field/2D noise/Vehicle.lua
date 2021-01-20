@@ -2,6 +2,7 @@ Vehicle = {}
 Vehicle.__index = Vehicle
 
 function Vehicle:new(position)
+  local position = position or LVector:new(math.random(WINDOW_WIDTH), math.random(WINDOW_HEIGHT))
   local velocity = LVector:new(0, 0)
   local acceleration = LVector:new(0, 0)
   local this = {
@@ -51,8 +52,7 @@ function Vehicle:applyForce(force)
 end
 
 function Vehicle:navigate(field)
-  local row, column = field:lookup(self.position.x, self.position.y)
-  local force = field.grid[row][column].force
+  local force = field:lookup(self.position.x, self.position.y).force
   force:limit(self.maxForce)
   self:applyForce(force)
 end

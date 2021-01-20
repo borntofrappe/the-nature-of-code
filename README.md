@@ -1234,3 +1234,44 @@ Building on top of the pursuing demo, and following a suggestion included in the
 _Please note:_
 
 - following a mouse click the demo toggles the visibility of the small circle
+
+### Flow field
+
+The idea of a flow field is to build a grid with a certain number of columns and rows. In this grid, each cells describes a velocity, which is then picked up by the vehicle as it navigates the window.
+
+Each cell is attributed an angle, and there are multiple demos which differ in how this angle is computed, as well as a force vector. To compute this vector, the idea is to use the trigonometric functions cosine and sine in order to find the segment.
+
+```lua
+local x1 = math.cos(angle + math.pi)
+local y1 = math.sin(angle + math.pi)
+local x2 = math.cos(angle)
+local y2 = math.sin(angle)
+```
+
+Incrementing the angle by `math.pi` allows to find the origin of the segment, half a rotation from the destination of the vector.The variables are also useful to draw a line without the translate and rotate functions.
+
+From this setup, all the vehicle needs is to find a cell, and apply a force matching the vector.
+
+As mentioned, there are multiple demos in the `Flow field` folder:
+
+- in `Random` the angle is computed at random
+
+  ```lua
+  local angle = math.random() * (math.pi * 2)
+  ```
+
+- in `2D noise` the angle considers a noise function with two arguments
+
+  ```lua
+  local angle = love.math.noise(offsetX, offsetY) * (math.pi * 2)
+  ```
+
+  The concept was first introduced in the demo for randomness and perlin noise, and has the effect of creating a series of angles connected to one another.
+
+- in `3D` noise the angle is influenced by a noise function with three arguments
+
+  ```lua
+  local angle = love.math.noise(offsetX, offsetY, time) * (math.pi * 2)
+  ```
+
+  `time` is initialized at `0` and incremented with each iteration in `Field:update()`, so that the angle smoothly changes over time.
