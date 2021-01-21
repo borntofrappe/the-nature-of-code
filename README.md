@@ -1619,7 +1619,46 @@ _Please note:_
   end
   ```
 
+#### Separation
+
+Instead of aligning vehicles together, the idea is to separate the entities by applying a force away from the surrounding neighbors.
+
+The code is similar to the alignment demo, in that the function loops through the collection of vehicles and considers only those vehicles closer than a given range. However, once a vehicle is within range, the vector is computed by subtracting the entities in reverse order.
+
+```lua
+local force = LVector:subtract(self.position, vehicle.position)
+```
+
+The idea is to describe a force away from the neighbor, and a similar effect would be achieved with the previous order, and by multiplying the vector by `-1`.
+
+```lua
+local force = LVector:subtract(vehicle.position, self.position)
+force:multiply(-1)
+```
+
+Once computed, regardless of how, the force is added to a vector considering the cumulative vector for every neighbor.
+
+```lua
+force:divide(distance)
+separationForce:add(force)
+```
+
+The force is also weighed by the distance, so that the closer a neighbor is, the more influence it will have on the cumulative vector.
+
+This is enough to consider the influence of the neighbors. However, it is finally useful to scale the vector to avoid excessive values. One way to achieve this is to normalize the vector and scale the result by an arbitrary amount.
+
+```lua
+separationForce:normalize()
+separationForce:multiply(MAX_SPEED)
+self:applyForce(separationForce)
+```
+
+_Please note:_
+
+- the same notes for the alignment demo apply
+
 <!--
 TODOS: path following, remove comment and unused projection field
 docs segments should be ####
+group alignment demo x bug: count number of neighbors
  -->
