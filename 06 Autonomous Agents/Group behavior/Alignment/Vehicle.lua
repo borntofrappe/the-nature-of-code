@@ -53,12 +53,14 @@ end
 
 function Vehicle:align(vehicles)
   local velocity = LVector:new(0, 0)
+  local neighbors = 0
   for i, vehicle in ipairs(vehicles) do
     local distance = LVector:distance(vehicle.position, self.position)
     if distance < DISTANCE_VEHICLE and vehicle.id ~= self.id then
       velocity:add(vehicle.velocity)
+      neighbors = neighbors + 1
     end
   end
-  velocity:divide(#vehicles - 1)
+  velocity:divide(neighbors)
   self:applyForce(velocity)
 end

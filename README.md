@@ -1660,5 +1660,4 @@ _Please note:_
 <!--
 TODOS: path following, remove comment and unused projection field
 docs segments should be ####
-group alignment demo x bug: count number of neighbors
  -->
