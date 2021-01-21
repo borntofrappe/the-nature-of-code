@@ -1556,3 +1556,70 @@ end
 _Please note:_
 
 - the same notes for the `Straight` demos apply (seek function, add vehicles and create a new path with the mouse cursor)
+
+### Group behaviors
+
+With a group behavior the goal is to model the movement of `Vehicle` entities relative to other entities.
+
+#### Alignment
+
+The idea is to align the movement of the entities. In the `align` method, each entity receives the collection describing every vehicle.
+
+```lua
+function Vehicle:align(vehicles)
+end
+```
+
+From this collection, the idea is to tally every vector describing the velocity.
+
+```lua
+local velocity = LVector:new(0, 0)
+for i, vehicle in ipairs(vehicles) do
+  velocity:add(vehicle.velocity)
+end
+```
+
+Every vector except the one describing the entity itself. To this end, the `new` method is modified to have each entity distinguished with an `id`.
+
+```lua
+local this = {
+  -- previous attributes
+  ["id"] = math.random()
+}
+```
+
+The velocity is then added only if the id do not match.
+
+```lua
+if vehicle.id ~= self.id then
+  velocity:add(vehicle.velocity)
+end
+```
+
+This has the desired effect of aligning all the entities. However, as explained in the book, it is useful to limit the area of alignment to those vehicles falling in an arbitrary radius. Here, it is helpful to consider the distance between the vectors.
+
+```lua
+if distance < DISTANCE_VEHICLE and vehicle.id ~= self.id then
+  velocity:add(vehicle.velocity)
+end
+```
+
+By increasing/decreasing `VEHICLE_DISTANCE`, the demo shows how a vehicle aligns itself with more/less neighbors, and form a larger/smaller cluster.
+
+_Please note:_
+
+- vehicles are added continuously as the mouse is pressed
+
+- `LVector` is updated to have a function return the distance between two vectors. This is achieved by subtracting the vectors and returning the magnitude of the resulting vector.
+
+  ```lua
+  function LVector:distance(v1, v2)
+    local dir = LVector:subtract(v1, v2)
+    return dir:getMagnitude()
+  end
+  ```
+
+<!--
+TODOS: path following, remove comment and unused projection field
+docs segments should be ####
+ -->
