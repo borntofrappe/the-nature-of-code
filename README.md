@@ -1482,3 +1482,77 @@ _Please note:_
 - the `Path` entity introduces two vectors, for where the line should start and end. I use `finish` instead of `end` since the latter is a reserved word in Lua
 
 - pressing the mouse with the left button has the effect of adding a new vehicle; the right button instead changes the `y` coordinate of the path
+
+### Segments
+
+The idea is to have a path described not by two vectors, by a series of segments, each with a start and end point.
+
+```lua
+local segments = {}
+for i = 1, POINTS_PATH do
+-- create segment
+end
+```
+
+To have the segments connected to one another, `Path:new` keeps a reference to the `y` coordinate where each segment should end.
+
+```lua
+local previousY = math.random(HEIGHT_MIN, HEIGHT_MAX)
+  for i = 1, POINTS_PATH do
+    local x1 = xStart + xIncrement * (i - 1)
+    local x2 = xStart + xIncrement * i
+    local y1 = previousY
+    local y2 = math.random(HEIGHT_MIN, HEIGHT_MAX)
+    previousY = y2
+  end
+end
+```
+
+From this setup, `Path` is equipped with a `segments` field, storing the desired `x` and `y` coordinates. The `Vehicle` entity then needs to loop through the collection to evaluate the projection on each and every line.
+
+```lua
+function Vehicle:follow(path)
+  -- knowing desiredLocation
+  for i, segment in ipairs(path.segments) do
+    -- compute projection
+  end
+end
+```
+
+The idea is to consider here the _closest_ projection which _belongs_ to the actual path. Both conditions are necessary to avoid moving the entity towards the wrong segment.
+
+To check if the projection belongs to the path, it is enough to check if the `x` coordinate falls between the beginning and the end of the segment.
+
+```lua
+if projection.x > segment.start.x and projection.x < segment.finish.x then
+  -- consider distance
+end
+
+```
+
+In order to consider the closest projection, then, the distance is evaluated against a variable intialized with a large value.
+
+```lua
+local recordDistance = math.huge
+local recordProjection = nil
+
+for i, segment in ipairs(path.segments) do
+  -- evaluate distance
+  if distance > RADIUS_PATH and distance < recordDistance then
+    recordDistance = distance
+    recordProjection = projection
+  end
+end
+```
+
+The projection is stored in yet another variable, in the same conditional, and is ultimately used to change the velocity of the vehicle.
+
+```lua
+if recordProjection then
+  self:seek(recordProjection)
+end
+```
+
+_Please note:_
+
+- the same notes for the `Straight` demos apply (seek function, add vehicles and create a new path with the mouse cursor)
