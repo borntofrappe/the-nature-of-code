@@ -8,18 +8,18 @@ SIZE_VEHICLE = 8
 MAX_SPEED = 40
 MAX_FORCE = 10
 UPDATE_SPEED = 5
-RADIUS_PATH = 20
+RADIUS_PATH = 15
 LINE_WIDTH_PATH = 2
 VELOCITY_MIN = 5
 VELOCITY_MAX = 15
 HEIGHT_MIN = WINDOW_HEIGHT / 4
 HEIGHT_MAX = WINDOW_HEIGHT * 3 / 4
-LOCATION_DISTANCE = 20
+DESIRED_LOCATION_DISTANCE = 30
 TARGET_MULTIPLIER = 1.1
 VEHICLES = 7
 
 function love.load()
-  love.window.setTitle("Autonomous Agents - Path following")
+  love.window.setTitle("Autonomous Agents - Path following - Straight")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 

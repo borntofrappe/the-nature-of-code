@@ -8,7 +8,6 @@ function Path:new()
   local y2 = math.random(HEIGHT_MIN, HEIGHT_MAX)
   local start = LVector:new(x1, y1)
   local finish = LVector:new(x2, y2)
-  local vector = LVector:subtract(finish, start)
   local this = {
     ["r"] = RADIUS_PATH,
     ["lineWidth"] = LINE_WIDTH_PATH,
@@ -21,7 +20,7 @@ function Path:new()
 end
 
 function Path:render()
-  love.graphics.setColor(0.11, 0.11, 0.11, 0.15)
+  love.graphics.setColor(0.11, 0.11, 0.11, 0.1)
   love.graphics.setLineWidth(self.r * 2)
   love.graphics.line(self.start.x, self.start.y, self.finish.x, self.finish.y)
 

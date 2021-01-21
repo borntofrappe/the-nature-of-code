@@ -1375,3 +1375,110 @@ _Please note_:
 - the demo builds from the script showcasing the dot product, but swaps the name of the vectors `b` and `a`. This in line with the convention introduced in the book
 
 - the vector `b` points to the right half of the screen, changing the `y` coordinate by a random amount. The value is also updated following a mouse click, to show how the projection works for any vector
+
+### Path following
+
+The dot product and scalar projection are useful as building block for path following, another behavior by Craig Reynolds. The idea is to have a vehicle move in the window and follow the trajectory described by a path.
+
+In the folder, you find two demos: `Straight` and `Segments`, to show how a vehicle first follows a single straight line and then a series of connected paths.
+
+#### Straight
+
+A `Path` entity includes two vectors for each line, describing where the line should start and end. It also describes a radius to have the vehicle move toward the line with some margin.
+
+In the `Vehicle` entity then, the `follow` function receives the path and modifies the velocity of the vehicle with the following logic:
+
+- find `desiredLocation`, as the vector describing where the entity would be moving with its current velocity
+
+  ```lua
+  local velocity = LVector:copy(self.velocity)
+  velocity:normalize()
+  velocity:multiply(DESIRED_LOCATION_DISTANCE)
+  local desiredLocation = LVector:add(self.position, velocity)
+  ```
+
+  `DESIRED_LOCATION_DISTANCE` is used to scale the unit vector so that the vehicle looks ahead by a given value. Essentially, however, the location is found by adding position and velocity
+
+- compute the `a` and `b` vectors as described in the scalar projection demo
+
+  - `a` describes the vector between the desired location and the beginning of the path
+
+    ```code
+        x  desired location
+    -> /
+    a x  currentposition
+      /
+    /
+    x------
+    path
+    ```
+
+    ```lua
+    local a = LVector:subtract(desiredLocation, path.start)
+    ```
+
+  - `b` describes the vector for the path itself
+
+    ```code
+        /
+      /
+      /
+    /
+    x------x
+      ->
+      b
+    ```
+
+    ```lua
+    local b = LVector:subtract(path.finish, path.start)
+    ```
+
+- find the projection through the dot product, again taking inspiration from the scalar projection
+
+  ```lua
+  b:normalize()
+  b:multiply(TARGET_MULTIPLIER)
+  local projection = LVector:multiply(b, LVector:dot(a, b))
+  projection:add(path.start)
+  ```
+
+  Notice that `b` is normalized, exactly as in the previous demo, but also multiplied by a factor.
+
+  ```lua
+  b:multiply(TARGET_MULTIPLIER)
+  ```
+
+  The idea is to provide an offset from the projection describing the normal. Without this offset, the vehicle would move to a fixed point describing the perpendicular line connecting point to path.
+
+  Also notice that the vector is incremented by the start vector.
+
+  ```lua
+  projection:add(path.start)
+  ```
+
+  This is essential to have the projection relative to the path origin.
+
+- with the vector describing the projection, a point on the path, the idea is to move the entity towards the path, but only when exceeding the space given by the radius.
+
+  To compute the distance, consider the projection and the vector describing the desired location
+
+  ```lua
+  local dir = LVector:subtract(projection, desiredLocation)
+  ```
+
+  The magnitude of this vector details the distance, so that the vehicle is pushed to the projection when exceeding the desired value.
+
+  ```lua
+  local distance = dir:getMagnitude()
+  if distance > RADIUS_PATH then
+    self:seek(projection)
+  end
+  ```
+
+_Please note:_
+
+- `Vehicle:seek` repeats the logic introduced in the steering demo, with the only difference that the argument of the function is a vector and not a `Target` entity
+
+- the `Path` entity introduces two vectors, for where the line should start and end. I use `finish` instead of `end` since the latter is a reserved word in Lua
+
+- pressing the mouse with the left button has the effect of adding a new vehicle; the right button instead changes the `y` coordinate of the path

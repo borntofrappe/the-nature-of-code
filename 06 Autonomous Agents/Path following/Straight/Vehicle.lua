@@ -22,7 +22,8 @@ function Vehicle:new(position)
     ["maxSpeed"] = MAX_SPEED,
     ["maxForce"] = MAX_FORCE,
     ["size"] = SIZE_VEHICLE,
-    ["angle"] = 0
+    ["angle"] = 0,
+    ["projection"] = nil
   }
 
   setmetatable(this, self)
@@ -64,16 +65,19 @@ end
 function Vehicle:follow(path)
   local velocity = LVector:copy(self.velocity)
   velocity:normalize()
-  velocity:multiply(LOCATION_DISTANCE)
-  local location = LVector:add(self.position, velocity)
-  local a = LVector:subtract(location, path.start)
+  velocity:multiply(DESIRED_LOCATION_DISTANCE)
+  local desiredLocation = LVector:add(self.position, velocity)
+
+  local a = LVector:subtract(desiredLocation, path.start)
   local b = LVector:subtract(path.finish, path.start)
   b:normalize()
   b:multiply(TARGET_MULTIPLIER)
   local projection = LVector:multiply(b, LVector:dot(a, b))
   projection:add(path.start)
-  local dir = LVector:subtract(projection, self.position)
-  if dir:getMagnitude() > RADIUS_PATH then
+
+  local dir = LVector:subtract(projection, desiredLocation)
+  local distance = dir:getMagnitude()
+  if distance > RADIUS_PATH then
     self:seek(projection)
   end
 end
