@@ -1660,4 +1660,13 @@ _Please note:_
 <!--
 TODOS: path following, remove comment and unused projection field
 docs segments should be ####
+consider adding a folder for the steering/pursuing/jittering demos, labeled agency, and one for the dot product/scalar projection, labeled math
  -->
+
+### Combining behaviors
+
+#### Steering and separation
+
+#### Path following and separation
+
+#### Separation, alignment and cohesion
