@@ -34,10 +34,7 @@ end
 
 function love.mousepressed(x, y, button)
   if button == 2 then
-    vehicles = {}
-    for i = 1, VEHICLES do
-      table.insert(vehicles, Vehicle:new())
-    end
+    target.isVisible = not target.isVisible
   end
 end
 
@@ -74,7 +71,7 @@ function love.update(dt)
 end
 
 function love.draw()
-  -- target:render()
+  target:render()
   for i, vehicle in ipairs(vehicles) do
     vehicle:render()
   end

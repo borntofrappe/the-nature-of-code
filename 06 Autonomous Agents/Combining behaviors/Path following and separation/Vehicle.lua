@@ -93,7 +93,7 @@ function Vehicle:follow(path)
     local projection = LVector:multiply(b, LVector:dot(a, b))
     projection:add(segment.start)
 
-    if projection.x > segment.start.x and projection.x < segment.finish.x then
+    if projection.x > segment.start.x - 5 and projection.x < segment.finish.x + 5 then
       local dir = LVector:subtract(projection, desiredLocation)
       local distance = dir:getMagnitude()
       if distance > RADIUS_PATH and distance < recordDistance then

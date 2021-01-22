@@ -37,7 +37,6 @@ function love.mousepressed(x, y, button)
   if button == 1 then
     local position = LVector:new(x, y)
     table.insert(vehicles, Vehicle:new(position))
-  --add vehicle at x y
   end
 
   if button == 2 then

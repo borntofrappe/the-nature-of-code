@@ -5,19 +5,19 @@ require "Target"
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 500
 SIZE_VEHICLE = 8
+MAX_SPEED = 20
+MAX_FORCE_VEHICLE = 2
 RADIUS_TARGET = 12
 RADIUS_SATELLITE = 5
 DISTANCE_SATELLITE = 18
 LINE_WIDTH_TARGET = 2
-MAX_SPEED = 20
-MAX_FORCE_VEHICLE = 2
 MAX_FORCE_TARGET = 0.5
 VELOCITY_MULTIPLIER = 3
 UPDATE_SPEED = 10
 UPDATE_SPEED_ANGLE = 3
 
 function love.load()
-  love.window.setTitle("Autonomous Agents - Jittering")
+  love.window.setTitle("Autonomous Agents - Agency - Jittering")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 

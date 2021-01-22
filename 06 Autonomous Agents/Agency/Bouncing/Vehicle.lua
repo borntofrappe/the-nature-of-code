@@ -3,8 +3,17 @@ Vehicle.__index = Vehicle
 
 function Vehicle:new()
   local position = LVector:new(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2)
-  local velocity =
-    LVector:new(math.random(VELOCITY_MAX * -1, VELOCITY_MAX), math.random(VELOCITY_MAX * -1, VELOCITY_MAX))
+
+  local vx = math.random(VELOCITY_MIN, VELOCITY_MAX)
+  local vy = math.random(VELOCITY_MIN, VELOCITY_MAX)
+  if math.random() > 0.5 then
+    vx = vx * -1
+  end
+  if math.random() > 0.5 then
+    vy = vy * -1
+  end
+  local velocity = LVector:new(vx, vy)
+
   local acceleration = LVector:new(0, 0)
   local this = {
     ["position"] = position,
@@ -44,6 +53,7 @@ end
 function Vehicle:moveWithin(boundary)
   local desiredVelocity = LVector:copy(self.velocity)
   local position = LVector:add(desiredVelocity, self.position)
+
   if position.x < boundary.x then
     self:applyForce(LVector:new(BOUNCE_FORCE, 0))
   elseif position.x > boundary.x + boundary.width then

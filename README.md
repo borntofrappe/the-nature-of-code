@@ -1123,9 +1123,9 @@ _Please note:_
 
 - in the demo, the idea is to apply a repulsing force when a particle collides with the attractor. The data structure collecting the particles is modified to have the table use the keys with the same value as the `userdata` field. This is helpful to refer to the particular particle, but requires a small adjusment in the iterator function. `ipairs` works with sequences, while `pairs` is equipped to loop through key-value pairs.
 
-## 06 - Autonomous Agents
+## [06 - Autonomous Agents](https://repl.it/repls/folder/the-nature-of-code/05%20-%Autonomous%20Agents)
 
-With the chapter the idea is to include entities capable of moving "on their own", on the basis of a desire. These entities share three defining features:
+With the chapter the idea is to include entities capable of moving on their own, on the basis of a desire. These entities share three defining features:
 
 - a limited ability to perceive the environment
 
@@ -1133,33 +1133,37 @@ With the chapter the idea is to include entities capable of moving "on their own
 
 - the lack of a leader, of an entity detailing the agent's eventual movement
 
-The goal is to run a simulation without a pre-ordained structure, and analyse the interaction, the behavior of independent entities.
+The goal is to run a simulation without a pre-ordained structure, and analyze the interaction between the independent entities.
 
-### Steering
+The demos are inspired by the book which itself cites as inspiration the work of _Craig Reynolds_ on algorithmic steering behaviors.
 
-A first way to program autonomous agents is inspired by the work of _Craig Reynolds_ on algorithmic steering behaviors.
+### Agency
 
-The idea is to have a `Vehicle` entity, initially similar to the `Mover` or `Particle` entities of previous sections. Similar in that the unit has a position, velocity and acceleration. Motion is however expressed in three layers:
+In the folder you find several examples to illustrate the concept of _desire_. An entity might desire to move toward a target, or away from an obstacle; this wanting is materialized in a function applying a force on the basis of the surrounding environment.
 
-1. _action selection_: select an action on the basis of a goal or set of goals; for instance, compute the desired velocity as the difference between the position of the vehicle and a target
+#### Steering
+
+In the steering example, a `Vehicle` entity is initilized with a structure eerily similar to the `Mover` or `Particle` entities introduced in previous sections. Every entity has a position, velocity and acceleration. Motion is however expressed in three layers:
+
+1. _action selection_: select an action on the basis of a goal or set of goals; for instance, compute the desired velocity as the difference between the position of the vehicle and target
 
    ```lua
    local desiredVelocity = LVector:subtract(target.position, self.position)
    ```
 
-2. _steering_: formulate a steering force to materialize the action; for instance, generate a force considering the desired velocity against the current velocity
+2. _steering_: formulate a force to materialize the action; for instance, generate a force considering the desired velocity against the current velocity
 
    ```lua
-   local force = LVector:subtract(desiredVelocity, self.velocity)
+   local steeringForce = LVector:subtract(desiredVelocity, self.velocity)
    ```
 
 3. _locomotion_: actually move the vehicle; for instance, apply a force to modify the entity's acceleration and velocity
 
    ```lua
-   self:applyForce(force)
+   self:applyForce(steeringForce)
    ```
 
-In the demo, the logic steering the vehicle toward the target is described in the `steer` method. In the body of the function, the entity computes the desired velocity and steering force, but refines the movement with two additional variables:
+In the demo, the logic steering the vehicle toward the target is described in the `steer()` method. In the body of the function, the entity computes the desired velocity and steering force, but refines the movement with two additional variables:
 
 - `maxSpeed` describes the magnitude of the vector
 
@@ -1168,7 +1172,7 @@ In the demo, the logic steering the vehicle toward the target is described in th
   desiredVelocity:multiply(self.maxSpeed)
   ```
 
-  The fixed magnitude means that the entity eventually overshoots its trajectory, and is pushed continuously before and after the target
+  The fixed magnitude means that the entity eventually overshoots its trajectory. In a future demo this behavior is modified to have the entity slow down as it approaches the target.
 
 - `maxForce` reduces the force so that the entity changes direction more slowly
 
@@ -1182,9 +1186,9 @@ _Please note:_
 
 - in the demo the vehicle and target are position at opposite ends, but the target is updated using the mouse coordinates
 
-### Arriving
+#### Arriving
 
-Building on top of the steering demo, the idea is to have the `Vehicle` entity steer toward the target, but then slow down as it gets closer and closer to the target's position.
+The idea is to have the `Vehicle` entity steer toward the target, but then slow down as it gets closer and closer to the target's position.
 
 The function evaluates the desired velocity, but also the distance of the vector.
 
@@ -1207,11 +1211,9 @@ _Please note:_
 
 - following a mouse click the demo toggles the visibility of the circle in which the vehicle slows down
 
-- the `arrive` method is slightly different in how the conditional is implemented, but the logic is the same
+#### Pursuing
 
-### Pursuing
-
-Building on top of the steering demo, the idea is to have the vehicle move toward not where the target is, but where the target will be. In ordeer to achieve this effect, the target is attributed a velocity vector, and this vector is modified to have the entity move toward the mouse. The same vector is then incorporated in the `pursue` function of the vehicle entity, in order to modify the desired velocity.
+The vehicle moves toward the target considering both its position and velocity. In order to achieve this effect, the target is initialized with a velocity vector, and this vector is modified to have the entity move toward the mouse. The same vector is then incorporated in the `pursue` function of the vehicle in order to modify the desired velocity.
 
 _Please note:_
 
@@ -1223,23 +1225,27 @@ _Please note:_
 
   2. `VELOCITY_MULTIPLIER` scales up the velocity of the target so that the vehicle over-estimates where the target is going to be. You could explain this behavior as thinking that velocity begets velocity, and the vehicle presumes the target will continuously move in the same direction
 
-### Bouncing
+#### Bouncing
 
-Building on top of the steering demo, the idea is to have a vehicle consistently move in the window, and change its direction in order to respect arbitrary boundaries. This is achieved by applying an force opposite to the desired velocity if the desired velocity would move the entity outside of the given boundaries.
-
-### Jittering
-
-Building on top of the pursuing demo, and following a suggestion included in the book, the idea is to have the vehicle move toward a point in the vicinity of the target. By choosing a point around the target, signalled by a small circle the vehicle moves unpredictably, and yet pursuing the target.
+The vehicle moves in the window at a constant speed, and changes this behavior in order to respect arbitrary boundaries. This is achieved by applying an force opposite to the desired velocity if the desired velocity would move the entity outside of the boundaries.
 
 _Please note:_
 
-- following a mouse click the demo toggles the visibility of the small circle
+- following a mouse click the demo toggles the visibility of the boundaries
+
+#### Jittering
+
+Following a suggestion included in the book, the vehicle moves toward a point in the vicinity of the target. By choosing a point around the target, signalled by a small circle the vehicle moves unpredictably, and yet pursuing the target.
+
+_Please note:_
+
+- following a mouse click the demo toggles the visibility of the small circle around the target
 
 ### Flow field
 
-The idea of a flow field is to build a grid with a certain number of columns and rows. In this grid, each cells describes a velocity, which is then picked up by the vehicle as it navigates the window.
+With a flow field the window is divided in a certain number of columns and rows. In this grid, the cells describe a velocity, which is then picked up by the vehicle as it navigates the environment.
 
-Each cell is attributed an angle, and there are multiple demos which differ in how this angle is computed, as well as a force vector. To compute this vector, the idea is to use the trigonometric functions cosine and sine in order to find the segment.
+Each cell is attributed an angle, and there are multiple demos which differ in how this angle is computed, as well as a force vector. To compute this vector, the cosine and sine functions identify where the segment should start and end.
 
 ```lua
 local x1 = math.cos(angle + math.pi)
@@ -1248,27 +1254,27 @@ local x2 = math.cos(angle)
 local y2 = math.sin(angle)
 ```
 
-Incrementing the angle by `math.pi` allows to find the origin of the segment, half a rotation from the destination of the vector.The variables are also useful to draw a line without the translate and rotate functions.
+Incrementing the angle by `math.pi` allows to find the origin of the segment, half a rotation from the destination. This structure is useful to draw a line without the translate and rotate functions.
 
 From this setup, all the vehicle needs is to find a cell, and apply a force matching the vector.
 
-As mentioned, there are multiple demos in the `Flow field` folder:
+As mentioned, there are multiple demos which change how the angle is computed:
 
-- in `Random` the angle is computed at random
+- in `Random` the value is purely random
 
   ```lua
   local angle = math.random() * (math.pi * 2)
   ```
 
-- in `2D noise` the angle considers a noise function with two arguments
+- in `2D noise` the value benefits from a noise function with two arguments
 
   ```lua
   local angle = love.math.noise(offsetX, offsetY) * (math.pi * 2)
   ```
 
-  The concept was first introduced in the demo for randomness and perlin noise, and has the effect of creating a series of angles connected to one another.
+  The concept was first introduced in the demo for randomness and Perlin noise, and has the effect of creating a series of angles connected to one another.
 
-- in `3D` noise the angle is influenced by a noise function with three arguments
+- in `3D noise` the value is computed with a noise function with three arguments
 
   ```lua
   local angle = love.math.noise(offsetX, offsetY, time) * (math.pi * 2)
@@ -1282,13 +1288,17 @@ _Please note:_
 
 - the visibility of the field is toggled by pressing the mouse with the right button
 
-### Dot product
+### Math
 
-The dot product allows to compute the angle between two vectors. It is helpful to build a scaler projection and ultimately important to introduce a simulation in which vehicles follow a given path. Defined as the multiplication of two vectors, the product is computed as follows:
+The `Math` folder introduces a few concepts essential for future demos.
+
+#### Dot product
+
+The dot product allows to compute the angle between two vectors. It is helpful to build a scalar projection, and ultimately important to introduce a simulation in which vehicles follow a given path. Defined as the multiplication of two vectors, the product is computed as follows:
 
 - multiply the components making up the vectors
 
-  ```code
+  ```text
   ->
   A = (ax, ay)
   ->
@@ -1300,7 +1310,7 @@ The dot product allows to compute the angle between two vectors. It is helpful t
 
 - multiply the magnitude of the two vectors and the cosine of the angle between the same vectors
 
-  ```code
+  ```text
   ->
   A = (ax, ay)
   ->
@@ -1316,11 +1326,11 @@ _Please note:_
 
 - `LVector` is updated to include a function returning the dot product for two input vectors, and a function returning the angle between two vectors (using the dot product itself)
 
-### Scalar projection
+#### Scalar projection
 
 The goal is to find a point on a vector according to another vector, a projection.
 
-```code
+```text
 ->
 a /|
  / |
@@ -1330,9 +1340,9 @@ a /|
    b
 ```
 
-Project a line from the vector `a` to the vector `b` so that the line creates a `90` degrees angle, building a right triangle. With this line then, the dot product allows to compute the point making up the projection through the angle.
+Cast a line from the vector `a` to the vector `b` so that the line creates a `90` degrees angle. With this line then, the dot product allows to compute the point making up the projection through the angle.
 
-```code
+```text
 h /|
  / |
 /t |
@@ -1343,15 +1353,15 @@ h /|
 
 In terms of math, there are a couple of steps involved:
 
-- consider the angle `t` through the mnemonic _sohcahtoa_, as the cosine of the adjacent (x) divided by the hypothenuse (h)
+- consider the angle `t` through the mnemonic _sohcahtoa_, as the cosine of the adjacent, `x`, divided by the hypothenuse, `h`
 
-  ```code
+  ```text
   cos(t) = x / h
   ```
 
-- consider `h` as the magnitude of the `a` vector, so that the adjecent segment (x) is computed as
+- consider `h` as the magnitude of the vector `a`, so that the adjecent segment, `x`, is computed as
 
-  ```code
+  ```text
                 ->
   cos(t) = x / |a|
 
@@ -1361,7 +1371,7 @@ In terms of math, there are a couple of steps involved:
 
 - notice how the formula for the adjacent segment is similar to the one for the dot product. It is actually the same in the instancethe vector `b` has a magnitude of `1` (is a unit vector)
 
-  ```code
+  ```text
    ->
   |b| = 1
                 ->    ->
@@ -1378,9 +1388,9 @@ _Please note_:
 
 ### Path following
 
-The dot product and scalar projection are useful as building block for path following, another behavior by Craig Reynolds. The idea is to have a vehicle move in the window and follow the trajectory described by a path.
+The dot product and scalar projection are useful as building block for path following, another behavior studied by Craig Reynolds. The idea is to have a vehicle move in the window and follow the trajectory described by a path.
 
-In the folder, you find two demos: `Straight` and `Segments`, to show how a vehicle first follows a single straight line and then a series of connected paths.
+In the folder there are two demos: `Straight` and `Segments`, to show how a vehicle first follows a single straight line and then a series of connected segments.
 
 #### Straight
 
@@ -1403,11 +1413,11 @@ In the `Vehicle` entity then, the `follow` function receives the path and modifi
 
   - `a` describes the vector between the desired location and the beginning of the path
 
-    ```code
+    ```text
         x  desired location
     -> /
     a x  currentposition
-      /
+     /
     /
     x------
     path
@@ -1419,11 +1429,11 @@ In the `Vehicle` entity then, the `follow` function receives the path and modifi
 
   - `b` describes the vector for the path itself
 
-    ```code
+    ```text
         /
+       /
       /
-      /
-    /
+     /
     x------x
       ->
       b
@@ -1483,7 +1493,7 @@ _Please note:_
 
 - pressing the mouse with the left button has the effect of adding a new vehicle; the right button instead changes the `y` coordinate of the path
 
-### Segments
+#### Segments
 
 The idea is to have a path described not by two vectors, by a series of segments, each with a start and end point.
 
@@ -1563,7 +1573,7 @@ With a group behavior the goal is to model the movement of `Vehicle` entities re
 
 #### Alignment
 
-The idea is to align the movement of the entities. In the `align` method, each entity receives the collection describing every vehicle.
+Align the movement of a vehicle relative to other the entities. In the `align` method, each entity receives the collection describing the instances.
 
 ```lua
 function Vehicle:align(vehicles)
@@ -1619,9 +1629,16 @@ _Please note:_
   end
   ```
 
+- the velocity is divided by the neighbors actually considered in the `align` function
+
+  ```lua
+  velocity:divide(neighbors)
+  self:applyForce(velocity)
+  ```
+
 #### Separation
 
-Instead of aligning vehicles together, the idea is to separate the entities by applying a force away from the surrounding neighbors.
+Instead of aligning vehicles together, the entities are separated by applying a force away from the surrounding neighbors.
 
 The code is similar to the alignment demo, in that the function loops through the collection of vehicles and considers only those vehicles closer than a given range. However, once a vehicle is within range, the vector is computed by subtracting the entities in reverse order.
 
@@ -1629,14 +1646,7 @@ The code is similar to the alignment demo, in that the function loops through th
 local force = LVector:subtract(self.position, vehicle.position)
 ```
 
-The idea is to describe a force away from the neighbor, and a similar effect would be achieved with the previous order, and by multiplying the vector by `-1`.
-
-```lua
-local force = LVector:subtract(vehicle.position, self.position)
-force:multiply(-1)
-```
-
-Once computed, regardless of how, the force is added to a vector considering the cumulative vector for every neighbor.
+The idea is to describe a force away from the neighbor. Once computed, the force is added to a vector considering the cumulative vector for every neighbor.
 
 ```lua
 force:divide(distance)
@@ -1657,16 +1667,30 @@ _Please note:_
 
 - the same notes for the alignment demo apply
 
-<!--
-TODOS: path following, remove comment and unused projection field
-docs segments should be ####
-consider adding a folder for the steering/pursuing/jittering demos, labeled agency, and one for the dot product/scalar projection, labeled math
- -->
-
 ### Combining behaviors
 
-#### Steering and separation
+The folder works to show how multiple behaviors can be paired to produce more complex simulations. The forces are computed in dedicated functions and applied in the `applyBehaviors` method.
 
-#### Path following and separation
+```lua
+function Vehicle:applyBehaviors(vehicles, target)
+  local steeringForce = self:steer(target)
+  local separationForce = self:separate(vehicles)
 
-#### Separation, alignment and cohesion
+  self:applyForce(steeringForce)
+  self:applyForce(separationForce)
+end
+```
+
+By weighing the forces with different factors, the idea is to have a particular force take precedence. For instance, and in the exercise pairing the steering and separation forces, the vector pushing the vehicles away is multiplied by three. This has the net result of creating a swarm of vehicles moving toward the intended target, but giving precedence to avoid any overlap.
+
+#### Cohesion
+
+The exercises include forces already developed in previous demos, in order to steer vehicles toward a target, away from each other or to follow a path. There is however a new force in the `Separation, alignment and cohesion` folder, to express cohesion between the entities.
+
+The idea of the cohesive force is to consider the surrounding neighbors and move the vehicle to the center of the group. This is achieved by considering the sum of the vectors describing the position, and computing the average.
+
+The force is then described by the distance between the vehicle's current position and the newfound vector.
+
+```lua
+local cohesionForce = LVector:subtract(position, self.position)
+```

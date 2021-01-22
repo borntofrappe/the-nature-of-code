@@ -5,16 +5,14 @@ require "Target"
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 500
 SIZE_VEHICLE = 8
-RADIUS_TARGET = 15
-LINE_WIDTH_TARGET = 3
-RADIUS_SLOWDOWN = 100
-LINE_WIDTH_SLOWDOWN = 1
 MAX_SPEED = 15
 MAX_FORCE = 1
+RADIUS_TARGET = 15
+LINE_WIDTH_TARGET = 3
 UPDATE_SPEED = 20
 
 function love.load()
-  love.window.setTitle("Autonomous Agents - Arriving")
+  love.window.setTitle("Autonomous Agents - Agency - Steering")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
@@ -29,19 +27,11 @@ function love.load()
 
   vehicle = Vehicle:new(positionVehicle)
   target = Target:new(positionTarget)
-
-  showRadiusSlowdown = false
-end
-
-function love.mousepressed(x, y, button)
-  if button == 1 then
-    showRadiusSlowdown = not showRadiusSlowdown
-  end
 end
 
 function love.update(dt)
   vehicle:update(dt)
-  vehicle:arrive(target)
+  vehicle:steer(target)
 
   local x, y = love.mouse:getPosition()
   if x > 0 and x < WINDOW_WIDTH and y > 0 and y < WINDOW_HEIGHT then
@@ -51,16 +41,6 @@ function love.update(dt)
 end
 
 function love.draw()
-  if showRadiusSlowdown then
-    love.graphics.setLineWidth(LINE_WIDTH_SLOWDOWN)
-    love.graphics.setColor(0.11, 0.11, 0.11, 0.5)
-    love.graphics.circle("line", target.position.x, target.position.y, RADIUS_SLOWDOWN)
-  end
-
   vehicle:render()
   target:render()
-end
-
-function map(value, currentMin, currentMax, newMin, newMax)
-  return (value - currentMin) / (currentMax - currentMin) * (newMax - newMin) + newMin
 end

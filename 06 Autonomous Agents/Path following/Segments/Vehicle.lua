@@ -22,8 +22,7 @@ function Vehicle:new(position)
     ["maxSpeed"] = MAX_SPEED,
     ["maxForce"] = MAX_FORCE,
     ["size"] = SIZE_VEHICLE,
-    ["angle"] = 0,
-    ["projection"] = nil
+    ["angle"] = 0
   }
 
   setmetatable(this, self)

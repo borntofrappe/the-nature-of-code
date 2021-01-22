@@ -76,8 +76,8 @@ function Vehicle:unite(vehicles)
     end
   end
   position:divide(neighbors)
-  position:subtract(self.position)
-  return position
+  local cohesionForce = LVector:subtract(position, self.position)
+  return cohesionForce
 end
 
 function Vehicle:separate(vehicles)

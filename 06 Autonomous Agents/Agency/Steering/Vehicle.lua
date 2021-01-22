@@ -44,8 +44,8 @@ function Vehicle:steer(target)
   desiredVelocity:normalize()
   desiredVelocity:multiply(self.maxSpeed)
 
-  local force = LVector:subtract(desiredVelocity, self.velocity)
-  force:limit(self.maxForce)
+  local steeringForce = LVector:subtract(desiredVelocity, self.velocity)
+  steeringForce:limit(self.maxForce)
 
-  self:applyForce(force)
+  self:applyForce(steeringForce)
 end
