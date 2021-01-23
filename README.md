@@ -1694,3 +1694,32 @@ The force is then described by the distance between the vehicle's current positi
 ```lua
 local cohesionForce = LVector:subtract(position, self.position)
 ```
+
+## 07 - Cellular Automata
+
+With a cellular automaton the book introduces a system of rules. This system has three foundational ingredients:
+
+- a grid of cells
+
+- cells with a concept of state and neighborhood
+
+- state as a function of neighborhood
+
+There are two particular examples in Wolfram's elementary cellular automata and Conway's game of life, but to get started, the folder includes a rudimentary system with the following rules:
+
+- initialize a grid of cells with a boolean at random
+
+  ```lua
+  local isAlive = math.random() > 0.5
+  ```
+
+- at each iteration, modify the state so that a cell is alive only if one of its neighbors is alive
+
+  ```lua
+  for j, neighbor in ipairs(neighbors) do
+    if neighbor.isAlive then
+      aliveCount = aliveCount + 1
+    end
+  end
+  local isAlive = aliveCount == 1
+  ```
