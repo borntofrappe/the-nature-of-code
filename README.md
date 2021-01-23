@@ -1723,3 +1723,5 @@ There are two particular examples in Wolfram's elementary cellular automata and 
   end
   local isAlive = aliveCount == 1
   ```
+
+### Wolfram elementary cellular automata
