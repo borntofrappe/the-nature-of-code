@@ -8,7 +8,7 @@ NEIGHBORS = math.floor(WINDOW_WIDTH / CELL_SIZE)
 LINE_WIDTH = 2
 
 function love.load()
-  love.window.setTitle("Cellular automata - Wolfram elementary cellular automata")
+  love.window.setTitle("Cellular automata - Wolfram - Elementary cellular automata")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 

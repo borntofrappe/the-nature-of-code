@@ -1723,11 +1723,11 @@ At each iteration, the idea is to modify the state so that a cell is alive only 
 local isAlive = aliveNeighbors == 1
 ```
 
-### Wolfram elementary cellular automata
+### Wolfram
 
-The automaton creates a one-dimensional grid of binary values, `0`s and `1`s. The first generation is specifically initialized with a single `1`, to study the evolution from the same starting point.
+Wolfram systems are described by one-dimensional cellular automata, where a ruleset dictates the state of the cell as a function of the state of the same cell and its surrounding neighbors.
 
-With each iteration, each cell considers its surrounding neighbors, combining the three values to form a string like `001` or `010`. This string is then mapped to a specific `0` or `1` on the basis of a ruleset. For instance, a ruleset might be initialized as follows:
+Each cell is initialized with a binary value, so that the generation is described by a sequence of `0`s and `1`s. At each iteration then, the idea is to consider the neighboring cell to form a string, like `001` or `010`, and use the string to describe the state from a given set. For instance, a ruleset might be initialized as follows:
 
 ```lua
 local ruleset = {
@@ -1742,11 +1742,29 @@ local ruleset = {
 }
 ```
 
-The specific sequence describes the rule. For instance `10101011` is rule `171`.
+As a sequence of neighbors describes `101`, the new cell receives the matching state of `1`.
 
-_Please note:_
+The specific sequence describes the rule, in decimal representation. For instance, ruleset `10101011` describes rule `171`.
 
-- in `main.lua` you find two functions converting between decimal and binary. `decimalToBinary` is however the only function used in the simulation. It accepts two arguments, to obtain the binary string with a certain length, and is useful to both create the ruleset.
+The outcome can be described in one of four categories:
+
+- uniformity, where the system settles on a constant value and each generation is equal to the one before it. Consider rule 222;
+
+- repetition, where the system oscillates between generations, creating a predictable pattern. Consider rule 90;
+
+- randomness, where the system behaves unpredictably. Consider rule 30 (until the system reaches the edge of the window);
+
+- complexity, similar to repetition, in that it creates a series of patterns, but also to randomness, in that the patterns do not repeat in a predictable manner
+
+_Please note:_ the `Wolfram` folder contains a series of demos, each with its own purpose:
+
+- `Elementary cellular automata` introduces the system in its most basic version. The `Automata` entity receives a rule as a decimal and creates a ruleset for the three neighbors
+
+- `Neighbors` expands the logic so that the system considers a variable numbers of neighbors before and after the current cell
+
+- `Wrap around` modifies the update function so that the cells at the edge of the generation consider those at the end and vice-versa as neighbors. In the previous implementation, a cell would use a default value of `0` for unavailable neighbors
+
+- `Rulesets` modifies the default behavior of using the same rule over and over by re-initializing the system every time the generation reaches the bottom of the window
 
 ### Game of life
 
