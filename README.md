@@ -1760,11 +1760,11 @@ _Please note:_ the `Wolfram` folder contains a series of demos, each with its ow
 
 - `Elementary cellular automata` introduces the system in its most basic version. The `Automata` entity receives a rule as a decimal and creates a ruleset for the three neighbors
 
-- `Neighbors` expands the logic so that the system considers a variable numbers of neighbors before and after the current cell. Please note that the number of rules increases; for instance with three neighbors, and four cells, there are 16 possible configurations leading up to `1111` and sixteen-bit numbers reach `65535` as the greatest rule
+- `Neighbors` expands the logic so that the system considers a variable numbers of neighbors before and after the current cell. Notice that the number of rules increases; for instance with three neighbors, and four cells, there are 16 possible configurations leading up to `1111` and sixteen-bit numbers reach `65535` as the greatest rule
 
 - `Wrap around` modifies the update function so that the cells at the edge of the generation consider those at the end and vice-versa as neighbors. In the previous implementation, a cell would use a default value of `0` for unavailable neighbors
 
-- `Rulesets` modifies the default behavior of using the same rule over and over by re-initializing the system every time the generation reaches the bottom of the window
+- `Rulesets` modifies the default behavior of using the same rule over and over by re-initializing the system every time the generation reaches the bottom of the window. Notice that the size of the individual cell is reduced and the speed at which the automaton is updated is increased; this is to show more cells and rules.
 
 ### Game of life
 
