@@ -12,7 +12,7 @@ The notes which follow are my own. The demos are written in [Lua](https://www.lu
 
 - [Project folder on repl.it](https://repl.it/repls/folder/the-nature-of-code)
 
-## [00 - Randomness](https://repl.it/repls/folder/the-nature-of-code/00%20-%20Randomness)
+## 00 - Randomness
 
 Randomness provides a first, rudimentary way to simulate real phenomena.
 
@@ -156,7 +156,7 @@ _Please note:_
 
 - `getNoiseNumbers` creates a series of numbers to plot the line and update the `Mover` entity. `getNoiseBackground` instead produces a grid of numbers to color the background with a makeshift texture; this last function is used to showcase how `love.math.noise` works with two arguments and dimensions
 
-## [01 - Vectors](https://repl.it/repls/folder/the-nature-of-code/01%20-%20Vectors)
+## 01 - Vectors
 
 Vectors as introduced in the book are _euclidean_ vectors, entities with a _magnitude_ and a _direction_. They are introduced in the context of a plane with two dimensions, `x` and `y`, but fundamentally, they work in the same manner with additional dimensions.
 
@@ -221,7 +221,7 @@ _Please note:_
 
 - in the `Acceleration` folder you find two demos: `Constant` setting a positive or negative acceleration with a particular key press, and `Mouse`, updating the acceleration to have the entities move toward the mouse cursor
 
-## [02 - Forces](https://repl.it/repls/folder/the-nature-of-code/02%20-%20Forces)
+## 02 - Forces
 
 The goal is to adapt the concept of forces and Newtonian physics to the simplified environment introduced with vectors.
 
@@ -410,7 +410,7 @@ _Please note:_
 
   3. in `Mouse` the `Mover` entities gravitate toward the mouse cursor, and away from other entities
 
-## [03 - Oscillation](https://repl.it/repls/folder/the-nature-of-code/03%20-%20Oscillation)
+## 03 - Oscillation
 
 To discuss oscillating motion, it is first necessary to introduce angles, polar coordinates and trigonometry. _Trigonometry_ relates to the study of the angles and sides of right triangles, and is useful to model angles, angular velocity and angular acceleration.
 
@@ -712,7 +712,7 @@ The vector describing the force is then calculated as follows:
   local spring = LVector:multiply(direction, K * -1 * displacement)
   ```
 
-## [04 - Particle System](https://repl.it/repls/folder/the-nature-of-code/04%20-%20Particle%20System)
+## 04 - Particle System
 
 Starting from a single particle, the idea is to manage multiple entities, in concert. A system is useful to simulate complex phenomena, like fire, smoke, flocks of birds.
 
@@ -914,7 +914,7 @@ _Please note:_
   end
   ```
 
-## [05 - Physics Libraries](https://repl.it/repls/folder/the-nature-of-code/05%20-%20Physics%20Libraries%20Box2D)
+## 05 - Physics Libraries
 
 With vectors, forces, trigonometry it is possible to simulate a first environment with rudimentary physics. It is possible to refine the simulation considering more complex natural phenomena, but one alternative comes in the form of physics libraries. Here you find code by other developers already considering the issue of simulating life, simulating nature. A physics engine provides a level of complexity only grasped in the previous sections. The price is that you need to learn about the library, its requirements and also limitations.
 
@@ -1123,7 +1123,7 @@ _Please note:_
 
 - in the demo, the idea is to apply a repulsing force when a particle collides with the attractor. The data structure collecting the particles is modified to have the table use the keys with the same value as the `userdata` field. This is helpful to refer to the particular particle, but requires a small adjusment in the iterator function. `ipairs` works with sequences, while `pairs` is equipped to loop through key-value pairs.
 
-## [06 - Autonomous Agents](https://repl.it/repls/folder/the-nature-of-code/05%20-%Autonomous%20Agents)
+## 06 - Autonomous Agents
 
 With the chapter the idea is to include entities capable of moving on their own, on the basis of a desire. These entities share three defining features:
 
@@ -1697,7 +1697,7 @@ local cohesionForce = LVector:subtract(position, self.position)
 
 ## 07 - Cellular Automata
 
-With a cellular automaton the book introduces a system of rules. This system has three foundational ingredients:
+With a cellular automaton the book introduces a system of rules. Such a system has three foundational ingredients:
 
 - a grid of cells
 
@@ -1705,23 +1705,63 @@ With a cellular automaton the book introduces a system of rules. This system has
 
 - state as a function of neighborhood
 
-There are two particular examples in Wolfram's elementary cellular automata and Conway's game of life, but to get started, the folder includes a rudimentary system with the following rules:
+There are two particular examples in Wolfram's elementary cellular automata and Conway's game of life, but to get started, the folder includes a rudimentary system in `Cellular automaton`.
 
-- initialize a grid of cells with a boolean at random
+### Cellular automaton
 
-  ```lua
-  local isAlive = math.random() > 0.5
-  ```
+The example creates a one-dimensional grid, where a cell has up to two neighbors, described by the previous or following unit.
 
-- at each iteration, modify the state so that a cell is alive only if one of its neighbors is alive
+A cell has a boolean value, initialized at random.
 
-  ```lua
-  for j, neighbor in ipairs(neighbors) do
-    if neighbor.isAlive then
-      aliveCount = aliveCount + 1
-    end
-  end
-  local isAlive = aliveCount == 1
-  ```
+```lua
+local isAlive = math.random() > 0.5
+```
+
+At each iteration, the idea is to modify the state so that a cell is alive only if one of its neighbors is alive.
+
+```lua
+local isAlive = aliveNeighbors == 1
+```
 
 ### Wolfram elementary cellular automata
+
+The automaton creates a one-dimensional grid of binary values, `0`s and `1`s. The first generation is specifically initialized with a single `1`, to study the evolution from the same starting point.
+
+With each iteration, each cell considers its surrounding neighbors, combining the three values to form a string like `001` or `010`. This string is then mapped to a specific `0` or `1` on the basis of a ruleset. For instance, a ruleset might be initialized as follows:
+
+```lua
+local ruleset = {
+  ["111"] = 1,
+  ["110"] = 0,
+  ["101"] = 1,
+  ["100"] = 0,
+  ["011"] = 1,
+  ["010"] = 0,
+  ["001"] = 1,
+  ["000"] = 1,
+}
+```
+
+The specific sequence describes the rule. For instance `10101011` is rule `171`.
+
+_Please note:_
+
+- in `main.lua` you find two functions converting between decimal and binary. `decimalToBinary` is however the only function used in the simulation. It accepts two arguments, to obtain the binary string with a certain length, and is useful to both create the ruleset.
+
+### Game of life
+
+With the game of life the automaton is described by a two dimensional grid. Each iteration creates not a new generation, but a new frame of the system.
+
+Each cell is initialized with a boolean at random.
+
+```lua
+grid[column][row] = math.random() > 0.5
+```
+
+With each iteration, then, the idea is to consider the available neighbors and change the state on the basis of the state and how many neighbors are alive (`true`):
+
+- if the cell is alive, it dies with less than two or more than three neighbors
+
+- if the cell is dead, it comes back alive with exactly three neighbors
+
+Outside of these instances, the cell is repeated from the previous iteration.

@@ -2,11 +2,11 @@ Automaton = {}
 Automaton.__index = Automaton
 
 function Automaton:new(rule)
-  local ruleset = decimalToBinary(rule, 8)
-  local options = {}
-  for i = 1, #ruleset do
+  local binaryRule = decimalToBinary(rule, 8)
+  local ruleset = {}
+  for i = 1, #binaryRule do
     local key = decimalToBinary(7 - (i - 1), 3)
-    options[key] = math.floor(ruleset:sub(i, i))
+    ruleset[key] = math.floor(binaryRule:sub(i, i))
   end
 
   local generation = {}
@@ -19,7 +19,7 @@ function Automaton:new(rule)
 
   local this = {
     ["generations"] = generations,
-    ["options"] = options
+    ["ruleset"] = ruleset
   }
 
   setmetatable(this, self)
@@ -40,9 +40,11 @@ function Automaton:update()
       end
     end
 
-    table.insert(generation, self.options[key])
+    table.insert(generation, self.ruleset[key])
   end
+
   table.insert(self.generations, generation)
+
   if #self.generations > WINDOW_HEIGHT / CELL_SIZE then
     table.remove(self.generations, 1)
   end
@@ -52,13 +54,10 @@ function Automaton:render()
   love.graphics.setLineWidth(LINE_WIDTH)
   love.graphics.setColor(0.11, 0.11, 0.11, 1)
   for i, generation in ipairs(self.generations) do
-    love.graphics.push()
-    love.graphics.translate(0, (i - 1) * CELL_SIZE)
     for j, cell in ipairs(generation) do
       if cell == 1 then
-        love.graphics.rectangle("fill", (j - 1) * CELL_SIZE, 0, CELL_SIZE, CELL_SIZE)
+        love.graphics.rectangle("fill", (j - 1) * CELL_SIZE, (i - 1) * CELL_SIZE, CELL_SIZE, CELL_SIZE)
       end
     end
-    love.graphics.pop()
   end
 end

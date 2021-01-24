@@ -2,7 +2,7 @@ require "Automaton"
 
 WINDOW_WIDTH = 510
 WINDOW_HEIGHT = 510
-UPDATE_TIMER = 0.1
+UPDATE_TIMER = 0.15
 CELL_SIZE = 10
 NEIGHBORS = math.floor(WINDOW_WIDTH / CELL_SIZE)
 LINE_WIDTH = 2
@@ -39,7 +39,7 @@ function binaryToDecimal(binary)
   return decimal
 end
 
-function decimalToBinary(decimal, padding)
+function decimalToBinary(decimal, length)
   local binary = decimal == 0 and "0" or ""
 
   while decimal / 2 > 0 do
@@ -49,8 +49,8 @@ function decimalToBinary(decimal, padding)
     decimal = integerQuotient
   end
 
-  if padding then
-    return string.format("%0" .. padding .. "d", binary)
+  if length then
+    return string.format("%0" .. length .. "d", binary)
   end
 
   return binary

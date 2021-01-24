@@ -4,16 +4,8 @@ Automaton.__index = Automaton
 function Automaton:new()
   local generation = {}
   for i = 1, NEIGHBORS do
-    local x = (i - 1) * CELL_SIZE
-    local y = 0
     local isAlive = math.random() > 0.5
-    table.insert(
-      generation,
-      {
-        ["x"] = x,
-        ["isAlive"] = isAlive
-      }
-    )
+    table.insert(generation, isAlive)
   end
 
   local generations = {generation}
@@ -30,33 +22,17 @@ function Automaton:update()
   local latestGeneration = self.generations[#self.generations]
   local generation = {}
   for i = 1, #latestGeneration do
-    local x = latestGeneration[i].x
-    local wasAlive = latestGeneration[i].isAlive
-    local neighbors = {}
-    if i > 1 then
-      table.insert(neighbors, latestGeneration[i - 1])
-    end
-    if i < #latestGeneration then
-      table.insert(neighbors, latestGeneration[i + 1])
-    end
-
-    local aliveCount = 0
-    for j, neighbor in ipairs(neighbors) do
-      if neighbor.isAlive then
-        aliveCount = aliveCount + 1
+    local aliveNeighbors = 0
+    local start = math.max(1, i - 1)
+    local finish = math.min(#latestGeneration, i + 1)
+    for j = start, finish do
+      if latestGeneration[j] and j ~= i then
+        aliveNeighbors = aliveNeighbors + 1
       end
     end
+    local isAlive = aliveNeighbors == 1
 
-    local isAlive = aliveCount == 1
-
-    table.insert(
-      generation,
-      {
-        ["x"] = x,
-        ["y"] = y,
-        ["isAlive"] = isAlive
-      }
-    )
+    table.insert(generation, isAlive)
   end
 
   table.insert(self.generations, generation)
@@ -70,15 +46,10 @@ function Automaton:render()
   love.graphics.setLineWidth(LINE_WIDTH)
   love.graphics.setColor(0.11, 0.11, 0.11, 1)
   for i, generation in ipairs(self.generations) do
-    love.graphics.push()
-    love.graphics.translate(0, (i - 1) * CELL_SIZE)
-    for j, cell in ipairs(generation) do
-      if cell.isAlive then
-        love.graphics.rectangle("fill", cell.x, 0, CELL_SIZE, CELL_SIZE)
-      else
-        love.graphics.rectangle("line", cell.x, 0, CELL_SIZE, CELL_SIZE)
+    for j, neighbor in ipairs(generation) do
+      if neighbor then
+        love.graphics.rectangle("fill", (j - 1) * CELL_SIZE, (i - 1) * CELL_SIZE, CELL_SIZE, CELL_SIZE)
       end
     end
-    love.graphics.pop()
   end
 end
