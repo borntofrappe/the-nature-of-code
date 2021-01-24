@@ -1790,7 +1790,7 @@ _Please note:_ similarly to `Wolfram`, the folder dedicated to the game of life 
 
 - `Game` creates the game in its simplest version, considering the available neighbors and the aforementioned rules
 
-- `Wrap around` has edge cells look at neighbors at the opposite end of the grid
+- `Wrap around` has edge cells look at neighbors at the opposite end of the grid. The demo also includes `newGrid` to avoid creating a new collection with every update; the idea is to here update the state in the new collection and then pick up the value in the current set
 
 - `Object oriented` creates a dedicated entity for the cells, and changes the appearance of the simulation to highlight a newborn/just dead cell
 
