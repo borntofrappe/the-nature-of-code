@@ -1768,18 +1768,32 @@ _Please note:_ the `Wolfram` folder contains a series of demos, each with its ow
 
 ### Game of life
 
-With the game of life the automaton is described by a two dimensional grid. Each iteration creates not a new generation, but a new frame of the system.
+The game of life provides two dimensional cellular automata. More than just an exercise, its works as a starting point for simulations inspired by nature, and specifically inspired by a system of biological reproduction. With a set of limited rules, the idea is to produce pattern and unpredictability similarly to the systems introduced in the Wolfram section. The systems ultimately settle to create uniformity or repeating the same pattern; oscillating as it were.
+
+The two dimensional system is described by a two dimensional collection. Each iteration creates not a new generation, but a new frame of the system.
 
 Each cell is initialized with a boolean at random.
 
 ```lua
-grid[column][row] = math.random() > 0.5
+grid[column][row] = math.random() > 0.5 and 1 or 0
 ```
 
-With each iteration, then, the idea is to consider the available neighbors and change the state on the basis of the state and how many neighbors are alive (`true`):
+With each iteration, then, the idea is to consider the available neighbors and change the state not on the basis of a ruleset, but considering the features of the neighborhood, and speficially the number of neighboring cells which are alive. The rules modify the grid as follows:
 
-- if the cell is alive, it dies with less than two or more than three neighbors
+- if the cell is alive, it dies with less than two (loneliness) or more than three neighbors (overpopulation)
 
-- if the cell is dead, it comes back alive with exactly three neighbors
+- if the cell is dead, it comes back alive with exactly three neighbors (birth)
 
-Outside of these instances, the cell is repeated from the previous iteration.
+- outside of the previous instances, the cell maintains its previous state (stasis)
+
+_Please note:_ similarly to `Wolfram`, the folder dedicated to the game of life includes a series of demos, each with its own purpose:
+
+- `Game` creates the game in its simplest version, considering the available neighbors and the aforementioned rules
+
+- `Wrap around` has edge cells look at neighbors at the opposite end of the grid
+
+- `Object oriented` creates a dedicated entity for the cells, and changes the appearance of the simulation to highlight a newborn/just dead cell
+
+- `Probability` modifies the rules to change the state as a function of the available neighbors, but also with certain odds
+
+- `Cotinuous` modifies the game to have the state describe a value in the `[0, 1]` range. This value is then used for the opacity of the individual cells, and is increased/decreased on the basis of the surrounding neighbors

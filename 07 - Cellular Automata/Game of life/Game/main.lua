@@ -6,10 +6,10 @@ UPDATE_TIMER = 0.15
 CELL_SIZE = 10
 COLUMNS = math.floor(WINDOW_WIDTH / CELL_SIZE)
 ROWS = math.floor(WINDOW_HEIGHT / CELL_SIZE)
-LINE_WIDTH = 2
+LINE_WIDTH = 1
 
 function love.load()
-  love.window.setTitle("Cellular automata - Game of life")
+  love.window.setTitle("Cellular automata - Game of life - Game")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
