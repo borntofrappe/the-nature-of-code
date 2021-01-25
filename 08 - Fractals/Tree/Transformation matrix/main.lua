@@ -1,5 +1,3 @@
-LVector = require "LVector"
-
 WINDOW_WIDTH = 540
 WINDOW_HEIGHT = 480
 UPDATE_SPEED = 20

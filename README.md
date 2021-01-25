@@ -1896,6 +1896,14 @@ The demo includes a bit of math, mostly to find the coordinates of the line segm
 
 ### Tree
 
-- push, pop functions
-- thinner branches
-- map angle
+Multiple demos:
+
+- `Transformation matrix` drawing a tree with push, pop functions and with thinner branches. Angle mapped to the cursor horizontal coordinate
+
+- `Stochastic` modifying the perfect self-similarity to have branches of different lengths, or at different angles
+
+- `Object oriented` describing the line with a dedicated entity and the tree with a collection of lines
+
+- `Noise` modifying the angle with a noise function to emulate a gentle breeze
+
+
