@@ -1794,6 +1794,41 @@ _Please note:_ similarly to `Wolfram`, the folder dedicated to the game of life 
 
 - `Object oriented` creates a dedicated entity for the cells, and changes the appearance of the simulation to highlight a newborn/just dead cell with a blue/red fill
 
-- `Probability` modifies the rules to change the state as a function of the available neighbors, but also with certain odds
+## 08 - Fractals
 
-- `Cotinuous` modifies the game to have the state describe a value in the `[0, 1]` range. This value is then used for the opacity of the individual cells, and is increased/decreased on the basis of the surrounding neighbors
+Fractals are introduced through the concept of _recursion_, where a function calls itself, but with different arguments. The exemplary use-case is that of a function computing the factorial.
+
+```lua
+function factorial(n)
+  if n == 1 then
+    return 1
+  end
+  return n * factorial(n - 1)
+end
+```
+
+Trivially, the factorial of `5` is `5!` and is computed as `5*4*3*2*1`. It can be re-written as `5*4!`, and `5*4*3!` until `1`. It is important to stress this last value because it describes the exit condition, where the recursion should stop. Without such a condition, the function would call itself indefinitely resulting in a stack overflow.
+
+### Recursive draw
+
+Acknowledging recursion, the demo shows how a `draw` function calls itself to draw circles at different locations and with different radii.
+
+```lua
+function draw(x, y, r)
+  love.graphics.circle("line", x, y, r)
+  if r > RADIUS_MIN then
+    draw(x, y, r / 2)
+    draw(x + r, y, r / 2)
+    draw(x - r, y, r / 2)
+    draw(x, y + r, r / 2)
+  end
+end
+```
+
+The function is first called with a value describing the largest circle.
+
+```lua
+draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, RADIUS_MAX)
+```
+
+At each iteration, then, it draws more circles assuming the radius is more than an arbitrary threshold. As the `draw` function calls itself with different maeasures, _every_ circle has a smaller circles to the right, to the left and to the bottom, resulting in an intriguing pattern.
