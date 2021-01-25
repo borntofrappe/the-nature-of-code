@@ -1796,7 +1796,17 @@ _Please note:_ similarly to `Wolfram`, the folder dedicated to the game of life 
 
 ## 08 - Fractals
 
-Fractals are introduced through the concept of _recursion_, where a function calls itself, but with different arguments. The exemplary use-case is that of a function computing the factorial.
+Fractals are defined as geometric shapes that can be split into parts, each of which resembles the whole. These shapes share a few common features:
+
+- self-similarity; there is perfect self-similarity, where the part is an exact copy of the whole, and stochastic self-similarity, based on probabilities and randomness
+
+- a fine structure at small scale, which cannot be recreated with Euclidean geometries
+
+- a recursive definition
+
+### Recursive draw
+
+To draw a fractal it is first necessary to introduce the concept of _recursion_, the repeated application of a rule to successive results. In practice, this concept sees a function calling itself, but with different arguments. The exemplary use case is that of a function computing the factorial.
 
 ```lua
 function factorial(n)
@@ -1808,8 +1818,6 @@ end
 ```
 
 Trivially, the factorial of `5` is `5!` and is computed as `5*4*3*2*1`. It can be re-written as `5*4!`, and `5*4*3!` until `1`. It is important to stress this last value because it describes the exit condition, where the recursion should stop. Without such a condition, the function would call itself indefinitely resulting in a stack overflow.
-
-### Recursive draw
 
 Acknowledging recursion, the demo shows how a `draw` function calls itself to draw circles at different locations and with different radii.
 
@@ -1858,3 +1866,11 @@ end
 ```
 
 ### Cantor rule
+
+A Cantor rule is expressed by a line recursively drawn by dividing the line in three parts, and erasing the middle third. The concept is visualized in the demo showing the different steps.
+
+### Koch line
+
+Building on top of the example introduced with the Cantor rule, a Koch line divides a line in three parts, erases the middle portion and connects the remaining thirds with the sides of an equilateral triangle. It is here necessary to have a reference to the line(s), so that the new segments are created from known coordinates, and to this end, the code is modified to have the line(s) expressed with a dedicated entity and two vectors, detailing where the lines should start and end.
+
+At first, the demo shows a single line spanning the width of the window. Following a mouse click, then, the idea is to have the line segmented following the rules mentioned above. Consider each step as a generation, much similarly to the CA described in the previous chapter.
