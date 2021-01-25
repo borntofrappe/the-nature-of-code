@@ -1832,3 +1832,27 @@ draw(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, RADIUS_MAX)
 ```
 
 At each iteration, then, it draws more circles assuming the radius is more than an arbitrary threshold. As the `draw` function calls itself with different maeasures, _every_ circle has a smaller circles to the right, to the left and to the bottom, resulting in an intriguing pattern.
+
+### Sierpinski triangle
+
+With a function drawing a shape and recursively calling itself it is possible draw Sieprinski triangle, a particular type of fractal in which a triangle is subdivided into three, smaller triangle. The structure is based on an equilateral triangle, where the sides are all the same; to find the coordinates of this shape, it is necessary to know the height of the triangle.
+
+```lua
+local height = (side * 3 ^ 0.5) / 2
+```
+
+Once an equilateral triangle is drawn, the idea is to position the three, smaller triangles to subdivide the shape evenly.
+
+```lua
+draw(x - side / 4, y + height / 4, side / 2)
+draw(x + side / 4, y + height / 4, side / 2)
+draw(x, y - height / 4, side / 2)
+```
+
+Notice that the code retains an exit condition, once more to have the function eventually terminate its recursive pattern.
+
+```lua
+if side > SIDE_MIN then
+  -- draw triangles
+end
+```
