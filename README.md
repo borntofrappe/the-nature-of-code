@@ -1893,3 +1893,9 @@ _Please note:_
 Following a suggestion from the book, the demo reiterates the concept introduced in the `Koch line` to produce a regular polygon where the sides are actually Koch lines. The `Snoflake` entity is initialized with a certain number of sides and generations, with default values describing a triangular shape after `5` iterations. Following a mouse press, the shape is re-initialized with a random number of sides in the `[3, 10]` range.
 
 The demo includes a bit of math, mostly to find the coordinates of the line segments, but also to have the size of the polygon change depending on the number of sides. The idea is to have a variable `RADIUS` describe the radius of the circle wrapping around the polygon, and compute the length of the side and of the apothem in order to keep the shape inside the edges of the window and exactly in the center.
+
+### Tree
+
+- push, pop functions
+- thinner branches
+- map angle
