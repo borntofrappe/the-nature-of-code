@@ -1,15 +1,15 @@
 LVector = require "LVector"
-require "KochLine"
+require "Snowflake"
 
-WINDOW_WIDTH = 520
-WINDOW_HEIGHT = 520
+WINDOW_WIDTH = 500
+WINDOW_HEIGHT = 500
 PADDING = 20
 LINE_WIDTH = 1
 UPDATE_SPEED = 20
 RADIUS = 180
+SIDES_MIN = 3
+SIDES_MAX = 10
 SIDES = 3
-APOTHEM = RADIUS * (math.cos(math.pi / SIDES))
-SIDE = 2 * RADIUS * math.sin(math.pi / SIDES)
 GENERATIONS = 5
 
 function love.load()
@@ -17,28 +17,15 @@ function love.load()
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
-  kochLines = {}
-  local angle = math.rad(360 / SIDES)
-  local x = WINDOW_WIDTH / 2 - SIDE / 2
-  local y = WINDOW_HEIGHT / 2 - APOTHEM
-  local start = LVector:new(x, y)
-  local side = LVector:new(SIDE, 0)
-  for i = 1, SIDES do
-    local finish = LVector:add(start, side)
-    table.insert(kochLines, KochLine:new(start, finish))
-    start = LVector:copy(finish)
-    side:rotate(angle)
-  end
+  snowflake = Snowflake:new()
+end
 
-  for i = 1, GENERATIONS do
-    for i, kochLine in ipairs(kochLines) do
-      kochLine:generate()
-    end
+function love.mousepressed(x, y, button)
+  if button == 1 then
+    snowflake = Snowflake:new(math.random(SIDES_MIN, SIDES_MAX))
   end
 end
 
 function love.draw()
-  for i, kochLine in ipairs(kochLines) do
-    kochLine:render()
-  end
+  snowflake:render()
 end

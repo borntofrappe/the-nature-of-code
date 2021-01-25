@@ -1874,3 +1874,22 @@ A Cantor rule is expressed by a line recursively drawn by dividing the line in t
 Building on top of the example introduced with the Cantor rule, a Koch line divides a line in three parts, erases the middle portion and connects the remaining thirds with the sides of an equilateral triangle. It is here necessary to have a reference to the line(s), so that the new segments are created from known coordinates, and to this end, the code is modified to have the line(s) expressed with a dedicated entity and two vectors, detailing where the lines should start and end.
 
 At first, the demo shows a single line spanning the width of the window. Following a mouse click, then, the idea is to have the line segmented following the rules mentioned above. Consider each step as a generation, much similarly to the CA described in the previous chapter.
+
+_Please note:_
+
+- the `Vector` entity is modified to consider a rotation for the `2D` vector. The functionality is essential to figure out the location of the point making up the equilateral triangle in the middle third, and modifies the `x` and `y` component of the vector according to the input angle and the rules described by the rotation matrix.
+
+  ```lua
+  function Vector:rotate(theta)
+    local x1 = self.x * math.cos(theta) - self.y * math.sin(theta)
+    local y1 = self.x * math.sin(theta) + self.y * math.cos(theta)
+  end
+  ```
+
+- by pressing the right button of the mouse cursor the line is animated in the `y` coordinate describing the end of each line (except the last one)
+
+### Koch snowflake
+
+Following a suggestion from the book, the demo reiterates the concept introduced in the `Koch line` to produce a regular polygon where the sides are actually Koch lines. The `Snoflake` entity is initialized with a certain number of sides and generations, with default values describing a triangular shape after `5` iterations. Following a mouse press, the shape is re-initialized with a random number of sides in the `[3, 10]` range.
+
+The demo includes a bit of math, mostly to find the coordinates of the line segments, but also to have the size of the polygon change depending on the number of sides. The idea is to have a variable `RADIUS` describe the radius of the circle wrapping around the polygon, and compute the length of the side and of the apothem in order to keep the shape inside the edges of the window and exactly in the center.
