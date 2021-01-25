@@ -1856,3 +1856,5 @@ if side > SIDE_MIN then
   -- draw triangles
 end
 ```
+
+### Cantor rule
