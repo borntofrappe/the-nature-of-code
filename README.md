@@ -1921,3 +1921,29 @@ The folder includes multiple demos to explore the topic:
 - `Stochastic` includes randomness and probability to have the branches change in number, angle and length. This is in line with the purpose of the tree fractal, to show stochastic, non-deterministic shapes
 
 - `Noise` animates the last generation of trees modifying the `finish` vector with a noise function
+
+## L-system
+
+An L-system is a grammar-based sytem, a way to write strings that is adapted in the demos to map characters to particular drawing instructions. It is ultimately useful to describe production rules through strings, commanding an entity with a series of instructions.
+
+Such a system is characterized by three defining features:
+
+- an alphabet, describing the allowed characters; for instance `A` and `B`
+
+- an axiom, a string for the initial state, for generation zero; for instance `A`
+
+- a rule, a production rule applied recursively to the string; for instance, a rule replacing every character `A` with the sequence `ABA` and every character `B` with the sequence `BBB`
+
+Generation after generation, the rule makes it possible to build a sentence with a variety of characters.
+
+The folder includes a few demos to illustrate the point:
+
+- with `Grammar` the idea is to show a the sentence generation after generation
+
+- with `Cantor rule` the goal is to re-create the visual proposed in the folder bearing the same name, but with an L-system
+
+- with `Turtle` the demo contemplates a more complex sentence, in line with the example provided in the book
+
+_Please note:_
+
+- Lua has no concept of a string buffer, but the table provides a similar benefit. Instead of modifying a string through concatenation and the `..` operator, each character is added to a table and the table is finally joined together through the `concact` function
