@@ -1,33 +1,35 @@
+LVector = require "LVector"
+require "Tree"
+
 WINDOW_WIDTH = 540
 WINDOW_HEIGHT = 480
 UPDATE_SPEED = 20
+ANGLE = math.pi / 8
 LENGTH_INITIAL = 100
-ANGLE_INITIAL = math.pi / 8
+LENGTH_MULTIPLIER = 0.75
 LENGTH_MIN = 5
-LINE_WIDTH_MAX = 7
-LINE_WIDTH_MIN = 1
-LINE_WIDTH_CHANGE = 2
-
+LINEWIDTH_MAX = 7
+LINEWIDTH_MIN = 1
+LINEWIDTH_CHANGE = 2
 function love.load()
-  love.window.setTitle("Fractals - Tree - Transformation matrix")
+  love.window.setTitle("Fractals - Tree - Object oriented")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
-  angle = ANGLE_INITIAL
+  tree = Tree:new()
 end
 
-function love.update(dt)
-  local x, y = love.mouse:getPosition()
-
-  if x > 0 and x < WINDOW_WIDTH then
-    angle = map(x, 0, WINDOW_WIDTH, 0, math.pi / 2)
+function love.mousepressed(x, y, button)
+  if button == 1 then
+    tree:generate()
+  end
+  if button == 2 then
+    tree = Tree:new()
   end
 end
 
 function love.draw()
-  love.graphics.setColor(0.11, 0.11, 0.11, 1)
-  love.graphics.translate(WINDOW_WIDTH / 2, WINDOW_HEIGHT)
-  drawLine(LENGTH_INITIAL, LINE_WIDTH_MAX)
+  tree:render()
 end
 
 function drawLine(length, lineWidth)
