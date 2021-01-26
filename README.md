@@ -1906,4 +1906,6 @@ Multiple demos:
 
 - `Noise` modifying the angle with a noise function to emulate a gentle breeze
 
-
+<!--
+object oriented/main.lua, add line between constants and load, remove unnecessary functions
+ -->
