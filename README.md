@@ -1896,16 +1896,28 @@ The demo includes a bit of math, mostly to find the coordinates of the line segm
 
 ### Tree
 
-Multiple demos:
+Trees are useful to describe fractals without perfect self-similarity. By modifying the shape with random values and probabilities the idea is to avoid a stylized, symmetric shape to find another way to emulate nature.
 
-- `Transformation matrix` drawing a tree with push, pop functions and with thinner branches. Angle mapped to the cursor horizontal coordinate
+The folder includes multiple demos to explore the topic:
 
-- `Stochastic` modifying the perfect self-similarity to have branches of different lengths, or at different angles
+- `Transformation matrix` creates a deterministic tree with a specific production rule:
 
-- `Object oriented` describing the line with a dedicated entity and the tree with a collection of lines
+  1. draw a line
 
-- `Noise` modifying the angle with a noise function to emulate a gentle breeze
+  2. rotate to the left and to the right, each time drawing a shorter line
 
-<!--
-object oriented/main.lua, add line between constants and load, remove unnecessary functions
- -->
+  3. repeat step 2 until an arbitrary exit condition, for instance a line shorter than a given number
+
+  The rule is implemented with a recursive function and benefiting from the `push` and `pop` functions; these functions allow to save and retrieve a particular coordinate, so that the line is drawn from a specific advantage point.
+
+  _Please note:_ following the mouse cursor, the demo maps the horizontal coordinate to the angle used to rotate the line, and in the `[0, math.pi / 2]` range
+
+- `Object oriented` drops the recursive draw function to create a `Tree` and `Line` entity.
+
+  The idea is to have a tree describes lines in generations, and have the `:generate()` function produce branches on the basis of the last generation
+
+  _Please note:_ it is possible to preserve recursion by having the `:generate()` function call itself; this is exactly what is achieved in the demos which follow
+
+- `Stochastic` includes randomness and probability to have the branches change in number, angle and length. This is in line with the purpose of the tree fractal, to show stochastic, non-deterministic shapes
+
+- `Noise` animates the last generation of trees modifying the `finish` vector with a noise function
