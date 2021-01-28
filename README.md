@@ -1946,4 +1946,4 @@ The folder includes a few demos to illustrate the point:
 
 _Please note:_
 
-- Lua has no concept of a string buffer, but the table provides a similar benefit. Instead of modifying a string through concatenation and the `..` operator, each character is added to a table and the table is finally joined together through the `concact` function
+- Lua has no concept of a string buffer, but the table provides a similar benefit. Instead of modifying a string through concatenation and the `..` operator, each character is added to a table and the table is finally joined together through the `concat` function
