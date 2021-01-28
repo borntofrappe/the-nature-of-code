@@ -27,7 +27,7 @@ RULE = {
 }
 
 function love.load()
-  love.window.setTitle("Fractals - L-system - Turtle")
+  love.window.setTitle("Fractals - L-system - Turtle - Tree")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
