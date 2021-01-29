@@ -1,39 +1,36 @@
-WINDOW_WIDTH = 540
-WINDOW_HEIGHT = 480
+WINDOW_WIDTH = 500
+WINDOW_HEIGHT = 500
+
+AXIOM = "A"
+RULE = {
+  ["A"] = "ABA",
+  ["B"] = "BBB"
+}
+GENERATIONS_MAX = 5
 
 function love.load()
   love.window.setTitle("Fractals - L-system - Grammar")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
-  generations = {
-    "A"
-  }
-  rule = {
-    ["A"] = "ABA",
-    ["B"] = "BBB"
-  }
+  sentence = AXIOM
 end
 
 function love.mousepressed(x, y, button)
   if button == 1 then
     local next = {}
-    local current = generations[#generations]
-    for i = 1, #current do
-      next[#next + 1] = rule[current:sub(i, i)]
+    for i = 1, #sentence do
+      next[#next + 1] = RULE[sentence:sub(i, i)]
     end
-    current = table.concat(next)
-    table.insert(generations, current)
+    sentence = table.concat(next)
   end
 
   if button == 2 then
-    generations = {
-      "A"
-    }
+    sentence = AXIOM
   end
 end
 
 function love.draw()
   love.graphics.setColor(0.11, 0.11, 0.11, 1)
-  love.graphics.printf(generations[#generations], 0, 8, WINDOW_WIDTH, "center")
+  love.graphics.printf(sentence, 2, 0, WINDOW_WIDTH, "left")
 end

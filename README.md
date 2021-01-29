@@ -1928,11 +1928,11 @@ An L-system is a grammar-based sytem, a way to write strings that is adapted in 
 
 Such a system is characterized by three defining features:
 
-- an alphabet, describing the allowed characters; for instance `A` and `B`
+- an _alphabet_ describing the allowed characters; for instance `A` and `B`
 
-- an axiom, a string for the initial state, for generation zero; for instance `A`
+- an _axiom_ detailing a string for the initial state, for generation zero; for instance `A`
 
-- a rule, a production rule applied recursively to the string; for instance, a rule replacing every character `A` with the sequence `ABA` and every character `B` with the sequence `BBB`
+- a _rule_, a production rule applied recursively to the string; for instance, a rule replacing every character `A` with the sequence `ABA` and every character `B` with the sequence `BBB`
 
 Generation after generation, the rule makes it possible to build a sentence with a variety of characters.
 
@@ -1940,46 +1940,16 @@ The folder includes a few demos to illustrate the point:
 
 - with `Grammar` the idea is to show a the sentence generation after generation
 
-- with `Cantor rule` the goal is to re-create the visual proposed in the folder bearing the same name, but with an L-system
+- with `Cantor rule` the goal is to re-create the visual proposed in the folder bearing the same name, but with an L-system. The production rule is exactly the same as the one proposed earlier, where each character `A` creates a line, and each character `B` creates whitespace between segments
 
-- with `Turtle` the demo contemplates a more complex sentence, in line with the example provided in the book
+- with `Turtle` the folder contemplates more complex systems, with a more rich alphabet and a prescribed axiom; the idea is to here produce several patterns proposed in the book:
+
+  - `Tree`
+
+  - `Sierpinski triangle`
+
+  - `Fractal pattern`
 
 _Please note:_
 
 - Lua has no concept of a string buffer, but the table provides a similar benefit. Instead of modifying a string through concatenation and the `..` operator, each character is added to a table and the table is finally joined together through the `concat` function
-
-## 09 - Genetic Algorithms
-
-Genetic algorithms are useful to solve problems which do not have a feasible solution with traditional methods. For instance, in order to print the string `"to be or not to be that is the question"`, the brute approach of choosing letters at random requires an insurmountable number of attemps before finding the right pattern.
-
-### Traditional genetic algorithm
-
-Inspired by actual biological evolution and specifically darwinian natural selection, the algorithm considers three key principles:
-
-- _heredity_, a way to pass data from generation to generation
-
-- _variation_, a way to change the properties between generations
-
-- _selection_, a way to pick and choose property over another
-
----
-
-Evolve the sentence "unicorn"
-
-1. (setup) create a population of `N` elements. Elements with random genetic material, for instance set of seven-character words with random letters 'unijorn', 'panccake', 'aaaaaah', 'popcorn'. Here you find a flouring of variation, in that the more the population is varied, the easier it will be to find a solution
-
-2. (draw, loop)
-
-a. calculate fitness for `N` elements. This is selection, and will dictate which set of seven-character word is best equipped to be picked; for instance, fitness is expressed by the number of matching characters (5, 1, 0, 4)
-
-b. reproduct, select to produce another population of `N` elements. The idea is to continuously repeat step 2, increasing the fitness iteration after iteration
-
-1. pick 2 parents (arbitrary number of picks) (selection); for instance, with a probability proportional to the fitness score
-
-2. make a new element/entity/creature (heredity)
-
-3. crossover, for instance unijorm and popcorn, create 'unicorn' or 'popjorm', or again 'uoicorn'; mixing letters
-
-4. mutation, last ingredients necessary to combat, compensate for the lack of a varied population; introduce additional variation, for instance a `1%` change that a letter is picked at random, befor/after in the alphabet. The rate of mutation heavily influences the success of the algorithm
-
-https://www.youtube.com/watch?v=-jv3CgDN9sc&list=PLRqwX-V7Uu6bJM3VgzjNV5YxVxUwzALHV&index=4
