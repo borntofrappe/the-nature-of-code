@@ -1997,3 +1997,32 @@ b. mutation, where the element has a chance to produce a different trait; for in
 Mutation allows to cope with a population that doesn't have the traits desired in the solution; for instance, a set of words without a character used in the sentence.
 
 Similarly to the size of the population in the setup phase, there are many variables affecting the efficiency and efficacy of the algorithm. Among these values, the probability to introduce a different trait contributes to find a solution, but if excessive makes it harder to improve the fitness score. The more random the number of characters, the more the algorithm will try to find a solution in the insurmountable way described earlier, purely at random.
+
+### Shakesperian monkey
+
+The demo works to illustrate the brute force approach of finding a match for a four letter word. While ineffective, it also works to introduce the building blocks for the genetic algorithm:
+
+- `getRandomCharacter` returns a random character between `a` and `z` lowercase; the string library allows to rapidly switch between character and numerical representation, but it is important to stress the importance of the decided range.
+
+  ```lua
+  local start = string.byte("a") -- 97
+  local finish = string.byte("z") -- 122
+  ```
+
+  With a sentence including spaces, punctuation and other special characters, it is essential to widen the set of possible values.
+
+  ```lua
+  string.byte(" ") -- 32
+  ```
+
+- `getRandomWord` returns a sequence of characters according to the input length.
+
+  The characters are actually added to a table, and the function ultimately returns a string by concatenating the values.
+
+  ```lua
+  return table.concat(word)
+  ```
+
+  This is in line with a consideration made for the `L-system` demos, which argued for tables as a substitude for string buffers. It is more efficient for lua to add items to a table that it is to concatenate characters to a string.
+
+With a four letter word and twenty-six possible characters, the odds of finding a match are already a measly `1` in `456 976`, motivating a different approach.
