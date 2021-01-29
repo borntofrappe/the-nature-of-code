@@ -6,7 +6,6 @@ RULE = {
   ["A"] = "ABA",
   ["B"] = "BBB"
 }
-GENERATIONS_MAX = 5
 
 function love.load()
   love.window.setTitle("Fractals - L-system - Grammar")

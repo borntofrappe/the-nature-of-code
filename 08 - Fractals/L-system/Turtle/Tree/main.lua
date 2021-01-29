@@ -32,12 +32,14 @@ function love.load()
   love.graphics.setBackgroundColor(1, 1, 1)
 
   math.randomseed(os.time())
-  turtle = Turtle:new(STEP_LENGTH, ANGLE, AXIOM)
+
+  local turtle = Turtle:new(0, STEP_LENGTH * -1, ANGLE, AXIOM)
+  turtles = {turtle}
 end
 
 function love.mousepressed(x, y, button)
   if button == 1 then
-    if turtle.generation > GENERATIONS_MAX then
+    if #turtles > GENERATIONS_MAX then
       -- past the number of generations, reset the turtle with a random angle
       -- map the stepLength to have steeper angle match longer branches (steeper angles mean the tree extends less in the y dimension)
       local degrees = math.random(ANGLE_MIN, ANGLE_MAX)
@@ -48,15 +50,19 @@ function love.mousepressed(x, y, button)
 
       local stepLength = map(degrees, ANGLE_MIN, ANGLE_MAX, STEP_LENGTH_MIN, STEP_LENGTH_MAX)
 
-      turtle = Turtle:new(stepLength, angle, AXIOM)
+      local turtle = Turtle:new(0, stepLength * -1, angle, AXIOM)
+      turtles = {turtle}
     else
-      -- create new sentence and halve the step length
-      local stepLength = turtle.stepLength
-      local angle = turtle.angle
-      local sentence = turtle.sentence
-      local generation = turtle.generation
+      -- create new turtle and halve the step length
+      local previousTurtle = turtles[#turtles]
 
-      stepLength = stepLength * 0.5
+      local x = previousTurtle.x
+      local y = previousTurtle.y
+      local angle = previousTurtle.angle
+      local sentence = previousTurtle.sentence
+      local generation = previousTurtle.generation
+
+      y = y * 0.5
       generation = generation + 1
 
       local nextSentence = {}
@@ -71,13 +77,18 @@ function love.mousepressed(x, y, button)
       end
       sentence = table.concat(nextSentence)
 
-      turtle = Turtle:new(stepLength, angle, sentence, generation)
+      local turtle = Turtle:new(x, y, angle, sentence, generation)
+      table.insert(turtles, turtle)
     end
   end
 end
 
 function love.draw()
-  turtle:render()
+  -- draw last turtle from the bottom center of the window
+  love.graphics.setColor(0.11, 0.11, 0.11, 0.5)
+  love.graphics.setLineWidth(LINE_WIDTH)
+  love.graphics.translate(WINDOW_WIDTH / 2, WINDOW_HEIGHT)
+  turtles[#turtles]:render()
 end
 
 function map(value, currentMin, currentMax, newMin, newMax)

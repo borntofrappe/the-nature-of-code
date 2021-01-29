@@ -1,14 +1,14 @@
 Turtle = {}
 Turtle.__index = Turtle
 
-function Turtle:new(stepLength, angle, sentence, generation)
+function Turtle:new(x, y, angle, sentence, generation)
   local ruleset = {
     ["F"] = function()
-      love.graphics.line(0, 0, 0, -stepLength)
-      love.graphics.translate(0, -stepLength)
+      love.graphics.line(0, 0, x, y)
+      love.graphics.translate(x, y)
     end,
     ["G"] = function()
-      love.graphics.translate(0, -stepLength)
+      love.graphics.translate(x, y)
     end,
     ["+"] = function()
       love.graphics.rotate(angle)
@@ -26,7 +26,8 @@ function Turtle:new(stepLength, angle, sentence, generation)
 
   local this = {
     ["ruleset"] = ruleset,
-    ["stepLength"] = stepLength,
+    ["x"] = x,
+    ["y"] = y,
     ["angle"] = angle,
     ["sentence"] = sentence,
     ["generation"] = generation or 1
@@ -37,9 +38,6 @@ function Turtle:new(stepLength, angle, sentence, generation)
 end
 
 function Turtle:render()
-  love.graphics.setColor(0.11, 0.11, 0.11, 0.5)
-  love.graphics.setLineWidth(LINE_WIDTH)
-  love.graphics.translate(WINDOW_WIDTH / 2, WINDOW_HEIGHT)
   for i = 1, #self.sentence do
     self.ruleset[self.sentence:sub(i, i)]()
   end

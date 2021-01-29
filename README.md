@@ -1942,14 +1942,16 @@ The folder includes a few demos to illustrate the point:
 
 - with `Cantor rule` the goal is to re-create the visual proposed in the folder bearing the same name, but with an L-system. The production rule is exactly the same as the one proposed earlier, where each character `A` creates a line, and each character `B` creates whitespace between segments
 
-- with `Turtle` the folder contemplates more complex systems, with a more rich alphabet and a prescribed axiom; the idea is to here produce several patterns proposed in the book:
-
-  - `Tree`
-
-  - `Sierpinski triangle`
-
-  - `Fractal pattern`
+- with `Turtle` the folder contemplates more complex systems, where an entity is instructed to move in the window according to a more rich alphabet and a prescribed ruleset. The demos differ in terms of axiom, rules, but also length and angle. The `Turtle` entity and the grammar system, on the other end, are repeated in every folder
 
 _Please note:_
 
 - Lua has no concept of a string buffer, but the table provides a similar benefit. Instead of modifying a string through concatenation and the `..` operator, each character is added to a table and the table is finally joined together through the `concat` function
+
+  ```lua
+  local next = {}
+  for i = 1, #sentence do
+    next[#next + 1] = RULE[sentence:sub(i, i)]
+  end
+  sentence = table.concat(next)
+  ```
