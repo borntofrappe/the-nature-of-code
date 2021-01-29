@@ -1955,3 +1955,45 @@ _Please note:_
   end
   sentence = table.concat(next)
   ```
+
+## 09 - Genetic Algorithms
+
+Genetic algorithms are useful to solve problems which do not have a feasible solution with traditional methods. For instance, in order to print the string `"to be or not to be that is the question"`, the brute approach of choosing letters at random requires an insurmountable number of attemps before finding the right pattern.
+
+### Traditional genetic algorithm
+
+Inspired by actual biological evolution and specifically darwinian natural selection, the algorithm considers three key principles:
+
+- _heredity_, a way to pass data from generation to generation
+
+- _variation_, a way to change the properties between generations
+
+- _selection_, a way to pick and choose property over another
+
+The principles are put into practice in a series of steps, which can be immediately split in two categories: setup, for the operations occurring once at the beginning of the problem, and draw, for the logic considering to the environment and variables continuously until a solution is found.
+
+_Please note:_ the steps are detailed in the context of a specific problem, writing a desired sentence, but the logic is applied to a more varied type of problems.
+
+#### Setup
+
+At the start of the algorithm, the goal is to create a population of `N` elements with random genetic material. For instance, and for the problem at hand, the population is a collection of words as long as the desired sentence, and with random letters from the alphabet.
+
+The larger, the more varied a population is, the easier it is to find a solution. In the instance of the sentence, the more words, and the more characters are represented in the population, the more rapidly the algorithm will find a match. The size of the population, however, affects the algorithm negatively as well, as the algorithm needs to process a large set of input values.
+
+#### Draw
+
+Continuously, the algorithm goes through a series of steps with the idea of constantly improving a fitness value.
+
+1. selection: calculate the fitness for the elements of the population, in order to decide which element to pick; for instance, consider the number of matching characters between sentence and word
+
+2. reproduction: pick two elements, two parents on the basis of a criterium; for instance, pick elements with a probability directly poportional to the fitness value
+
+Starting from two elements, the idea is to produce a new value in the population. This is where _heredity_ comes into play, as the new value depends on the genetic material (the characters) of the parents (the two words). The genetic material is influenced by:
+
+a. crossover, where the element is created directly from the parents' material; for instance a word picks the first half of a parent, and the second half of the remaining
+
+b. mutation, where the element has a chance to produce a different trait; for instance, a certain probability to use a character at random
+
+Mutation allows to cope with a population that doesn't have the traits desired in the solution; for instance, a set of words without a character used in the sentence.
+
+Similarly to the size of the population in the setup phase, there are many variables affecting the efficiency and efficacy of the algorithm. Among these values, the probability to introduce a different trait contributes to find a solution, but if excessive makes it harder to improve the fitness score. The more random the number of characters, the more the algorithm will try to find a solution in the insurmountable way described earlier, purely at random.
