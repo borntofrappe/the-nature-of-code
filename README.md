@@ -2026,3 +2026,9 @@ The demo works to illustrate the brute force approach of finding a match for a f
   This is in line with a consideration made for the `L-system` demos, which argued for tables as a substitude for string buffers. It is more efficient for lua to add items to a table that it is to concatenate characters to a string.
 
 With a four letter word and twenty-six possible characters, the odds of finding a match are already a measly `1` in `456 976`, motivating a different approach.
+
+### Traditional genetic algorithm
+
+The demo implements the steps included at the beginning of the chapter.
+
+<!-- TODO: rename Shakesperian Monkey to use lowercase m in monkey -->
