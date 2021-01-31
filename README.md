@@ -1956,49 +1956,53 @@ _Please note:_
   sentence = table.concat(next)
   ```
 
-## 09 - Genetic Algorithms
+## 09 - The Evolution of Code
 
-The chapter introduces genetic algorithms to first produce a series of characters matching an input string, a problem which cannot be feasibly solved with a brute force approach. From this starting point, the usefulness of the algorithm is expanded to consider additional scenarios, like having particles find the most efficient route from point to point.
+The idea of the chapter is to have information passed from object to object in order to have the simulation evolve over time. The principles of biological evolution, and specifically darwinian evolution, are taken as inspiration to create a series of genetic algorithms and solve specific problems.
 
-### Theory
+### Genetic algorithms
+
+The first type of algorithm is useful to solve problems where the solution space is so vast to make a brute-force approach feasible. For instance, having a computer produce a certain sequence of letters matching an input string. The problem is trivial, but helps to demonstrate how a genetic algorithm works.
 
 Inspired by actual biological evolution and specifically darwinian natural selection, genetic algorithms consider three key principles:
 
 - _heredity_, a way to pass data from generation to generation
 
-- _variation_, a way to change the properties between generations
+- _variation_, a way to provide different traits, be it in the initial population or as the simulation evolves
 
-- _selection_, a way to pick and choose property over another
+- _selection_, a way to pick and choose a trait over another
 
-The principles are put into practice in a series of steps, which can be immediately split in two categories: setup and draw.
+The principles are put into practice in a series of steps, and are detailed in the context of a specific problem.
 
-_Please note:_ the steps are detailed in the context of a specific problem, writing a desired sentence, but the logic is applied to a more varied type of problems.
+- population
 
-#### Setup
+  At the start of the algorithm, the goal is to create a population of elements with random genetic material. For instance, and for the problem at hand, the population is a collection of words as long as the desired sentence, and with random letters from the alphabet.
 
-At the start of the algorithm, the goal is to create a population of `N` elements with random genetic material. For instance, and for the problem at hand, the population is a collection of words as long as the desired sentence, and with random letters from the alphabet.
+  The larger, the more varied a population is, the easier it is to find a solution. In the instance of the sentence, the more words, and the more characters are represented in the population, the more rapidly the algorithm will find a match. The size of the population, however, affects the algorithm negatively as well, as the program needs to process a large set of values.
 
-The larger, the more varied a population is, the easier it is to find a solution. In the instance of the sentence, the more words, and the more characters are represented in the population, the more rapidly the algorithm will find a match. The size of the population, however, affects the algorithm negatively as well, as the program needs to process a large set of values.
+  It is here important to distinguish between _genotype_, the genetic code making up the elements in the population, and _phenotype_, the expression of the code. In the particular example, the two happen to be one and the same, as the sequence of characters represents both the data and how the data is visualized.
 
-#### Draw
+- selection
 
-Continuously, the algorithm goes through a series of steps with the idea of constantly improving a fitness value.
+  The idea is to evaluate the population to describe a fitness value for each and every element. On the basis of this value, the algorithm produces a selection, a mating pool of candidates from which the program can later pick.
 
-1. selection: calculate the fitness for the elements of the population in order to decide which element to pick; for instance, consider the number of matching characters between the words in the population and the desired sentence
+  The fitness function is one of the key ingredients of the algorithm, as it allows to dictate the manner in which a trait is preferred over another. For instance, in the specific problem, the fitness function evaluates the number of characters matching the desired string.
 
-2. reproduction: pick two elements, two parents, on the basis of a criterium; for instance, pick elements with a probability directly poportional to the fitness value
+  How the collection is then created is another crucial step. There are different approaches to this problem, but a first solution is to pick an element proportional to its fitness value. The probability is estimated by creating a bucket of options, and including multiple copies of the elements according to the mentioned metrics.
 
-Starting from two elements, the idea is to produce a new value in the population. This is where heredity comes into play, as the new value depends on the genetic material (the characters) of the parents (the two words). The genetic material is influenced by:
+- reproduction
 
-    a. crossover, where the element is created directly from the parents' material; for instance a word picks the first half of one parent, and the second half of the other
+  Considering darwinian selection, the algorithm picks two elements from the mating pool and produces a new generation. This is where heredity comes into play, as the new value depends on the genetic material (the characters) of the parents (the two words). There are again different approaches, but in the traditional implementation the genetic material is influenced by:
 
-    b. mutation, where the element has a chance to produce a different trait; for instance, a certain probability to use a character at random
+  - crossover, where the element inherits directly from the parents; for instance a word picks the first half of one parent, and the second half of the other
 
-Mutation allows to cope with a population that doesn't have the traits desired in the solution; for instance, a set of words without a character used in the sentence.
+  - mutation, where the element has a chance to produce a different trait; for instance, a certain probability to use a character at random
 
-Similarly to the size of the population in the setup phase, there are many variables affecting the efficiency and efficacy of the algorithm. Among these values, the probability to introduce a different trait contributes to find a solution, but if excessive makes it harder to improve the fitness score. For instance, the more random the number of characters, the more the algorithm will try to find a solution in the insurmountable way described earlier, picking characters at random.
+  Mutation allows to cope with a population that doesn't have the traits desired in the solution; for instance, a set of words without a character used in the sentence.
 
-### Shakesperian monkey
+  Similarly to the size of the population in the setup phase, there are many variables affecting the efficiency and efficacy of the algorithm. Among these values, the probability to introduce a different trait contributes to find a solution, but if excessive makes it harder to improve the fitness score. For instance, the more random the number of characters, the more the algorithm will try to find a solution in the insurmountable way described earlier, picking characters at random.
+
+#### Shakesperian monkey
 
 The demo works to illustrate the brute force approach of finding a match for a four letter word. While ineffective, it also works to introduce the building blocks for the genetic algorithm:
 
@@ -2027,88 +2031,84 @@ The demo works to illustrate the brute force approach of finding a match for a f
 
 With a four letter word and twenty-six possible characters, the odds of finding a match are already a measly `1` in `456 976`, motivating a different approach.
 
-### Simplified algorithm
+#### Simplified algorithm
 
-_Please note:_ the demo differs from the logic discussed in the book in that the logic is described in functions instead of dedicated entities, like `Population` or `DNA`. This is on purpose to have the project comparable with `Shakesperian monkey`. The next demo implements the object-oriented version.
+_Please note:_ the demo differs from the logic discussed in the book in that the logic is described in functions instead of dedicated entities, like `Population` or `DNA`. This is on purpose to have the project comparable with `Shakesperian monkey`.
 
-Building on top of the previous demo, the program introduces the steps of the traditional genetic algorithm in the `love.load` and `love.update` functions (setup and draw).
+The steps of the traditional genetic algorithm are included in the `love.load` and `love.update` functions.
 
-#### Setup
+- in `love.load`, the population is initialized with a series of random words. The functions mentioned in the previous demo are useful to create the sequence of random characters
 
-In `love.load` the script initializes a population of random words, benefiting from the functions introduced in the previous demo, `getRandomWord` and `getRandomCharacter`.
+- in `love.update`, and as long as a match is not found, the script repeats a series of steps in order to modify the original population with values associated with a greater fit
 
-#### Draw
-
-In `love.update`, and as long as a match is not found, the script repeats a series of steps in order to modify the original population with values associated with a greater fit.
-
-`selection` works here as the mating pool described in the book. A collection where the words of the population are included in a number proportional to their fitness value.
-
-```lua
-local selection = getSelection(population, sentence)
-```
-
-`getSelection` loops through the population and computes the fitness for each and every word, before including a comparable number of copies in the colleciton.
-
-```lua
-function getSelection(population, sentence)
-  local selection = {}
-
-  for i, word in ipairs(population) do
-    local fitness = getFitness(word, sentence)
-    for j = 1, fitness do
-      table.insert(selection, word)
-    end
-
-  return selection
-end
-```
-
-`getFitness` counts the number of matches between word and sentence.
-
-```lua
-function getFitness(word, sentence)
-  local fitness = 0
-  for i = 1, #sentence do
-    if word:sub(i, i) == sentence:sub(i, i) then
-      fitness = fitness + 1
-    end
-  end
-
-  return fitness
-end
-```
-
-With a given `selection`, the idea is to essentially replace the old population with new values, children created from parents picked from the mating pool.
-
-```lua
--- in love.update
-for i = 1, #population do
-  local child = getChild(selection)
-  population[i] = child
-end
-```
-
-`getChild` implements the reproduction discussed earlier considering two parents, picked at random from the selection. Here you find both a crossover and a mutation:
-
-- crossover: the child inherits letters from the parents alternating between the two
+  `selection` works here as the mating pool described in the book. A collection where the words of the population are included in a number proportional to their fitness value.
 
   ```lua
-  for i = 1, #sentence do
-    child[#child + 1] = i % 2 == 1 and p1:sub(i, i) or p2:sub(i, i)
+  local selection = getSelection(population, sentence)
+  ```
+
+  `getSelection` loops through the population and computes the fitness for each and every word, before including a comparable number of copies in the colleciton.
+
+  ```lua
+  function getSelection(population, sentence)
+    local selection = {}
+
+    for i, word in ipairs(population) do
+      local fitness = getFitness(word, sentence)
+      for j = 1, fitness do
+        table.insert(selection, word)
+      end
+
+    return selection
   end
   ```
 
-- mutation: with given odds, the child picks a character at random
+  `getFitness` counts the number of matches between word and sentence.
 
   ```lua
-  for i = 1, #sentence do
-    if math.random(MUTATION_ODDS) == 1 then
-      child[#child + 1] = getRandomCharacter()
-    else
-      -- inherit
+  function getFitness(word, sentence)
+    local fitness = 0
+    for i = 1, #sentence do
+      if word:sub(i, i) == sentence:sub(i, i) then
+        fitness = fitness + 1
+      end
     end
+
+    return fitness
   end
   ```
+
+  With a given `selection`, the idea is to essentially replace the old population with new values, children created from parents picked from the mating pool.
+
+  ```lua
+  -- in love.update
+  for i = 1, #population do
+    local child = getChild(selection)
+    population[i] = child
+  end
+  ```
+
+  `getChild` implements the reproduction discussed earlier considering two parents, picked at random from the selection. Here you find both a crossover and a mutation:
+
+  - crossover: the child inherits letters from the parents alternating between the two
+
+    ```lua
+    for i = 1, #sentence do
+      child[#child + 1] = i % 2 == 1 and p1:sub(i, i) or p2:sub(i, i)
+    end
+    ```
+
+  - mutation: with given odds, the child picks a character at random
+
+    ```lua
+    for i = 1, #sentence do
+      if math.random(MUTATION_ODDS) == 1 then
+        child[#child + 1] = getRandomCharacter()
+      else
+        -- inherit
+      end
+    end
+    ```
 
 And that is essentially it for the genetic algorithm. With each iteration, `population` includes fitter and fitter values, until a children is able to reproduce the input sentence.
 
@@ -2120,12 +2120,12 @@ The rest of the logic described in `love.update` is useful to:
 
 3. store the best fit in a `words` collection, used to show the result in the window
 
-### Traditional algorithm
-
-The exercise doesn't introduce concepts, but works to re-model the logic of the simplified algorithm in a more structured fashion.
+#### Traditional algorithm
 
 The idea is to store the logic of the words in a `DNA` entity, and the logic of the population in a `Population` entity. This allows the script to have a more general structure, one in which `love.load` initializes a population and `love.update` modifies the population with a series of functions. _How_ the population is initialized, _how_ the mating pool, children, parents, fitness value are calculated is then a matter of modifying the specific files.
 
-<!--
-Update name for Simplified algorithm
- -->
+The exercise doesn't introduce concepts, but there are a couple of notable differences with respect to the previous demo:
+
+- the number of copies included in the mating pool is proportional to the fitness of each word, but the value is compared to the maximum fitness in the current generation
+
+- the fitness is squared to increase how likely it is to pick a sentence with a higher value

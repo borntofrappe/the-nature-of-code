@@ -10,7 +10,7 @@ POPULATION = 200
 MUTATION_ODDS = 100
 
 function love.load()
-  love.window.setTitle("Genetic algorithms - Traditional genetic algorithm")
+  love.window.setTitle("Genetic algorithms - Simplified algorithm")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
