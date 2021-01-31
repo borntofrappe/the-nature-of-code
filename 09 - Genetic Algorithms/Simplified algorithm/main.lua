@@ -1,6 +1,6 @@
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 500
-UPDATE_TIMER = 0.01
+-- maximum number of words stored in the _words_ collection
 WORDS = 40
 
 START = "a"
@@ -19,7 +19,7 @@ function love.load()
   sentence = SENTENCE
   population = getPopulation(POPULATION)
   generations = 0
-  averageFitness = 0
+  fitnessRatio = 0
   words = {}
 
   foundIt = false
@@ -28,6 +28,7 @@ end
 function getRandomCharacter()
   local start = string.byte(START)
   local finish = string.byte(FINISH)
+
   return string.char(math.random(start, finish))
 end
 
@@ -71,6 +72,7 @@ function getSelection(population, sentence)
     end
   end
 
+  -- ensure that the collection has at least two elements
   while #selection < 1 do
     table.insert(selection, population[math.random(#population)])
   end
@@ -96,7 +98,7 @@ function getChild(selection)
     if math.random(MUTATION_ODDS) == 1 then
       child[#child + 1] = getRandomCharacter()
     else
-      child[#child + 1] = i < math.floor(#sentence / 2) and p1:sub(i, i) or p2:sub(i, i)
+      child[#child + 1] = i % 2 == 1 and p1:sub(i, i) or p2:sub(i, i)
     end
   end
 
@@ -115,7 +117,7 @@ function love.update(dt)
       ["value"] = 0,
       ["index"] = 0
     }
-    local word = ""
+
     for i = 1, #population do
       local fitness = getFitness(population[i], sentence)
       if fitness > bestFit.value then
@@ -129,7 +131,7 @@ function love.update(dt)
     end
 
     generations = generations + 1
-    averageFitness = string.format("%.2f", bestFit.value / #sentence)
+    fitnessRatio = string.format("%.2f", bestFit.value / #sentence)
 
     table.insert(words, population[bestFit.index])
     if #words > WORDS then
@@ -140,15 +142,13 @@ end
 
 function love.draw()
   love.graphics.setColor(0.11, 0.11, 0.11, 1)
-  love.graphics.printf("Sentence: " .. sentence, 0, 8, WINDOW_WIDTH - 8, "right")
-  love.graphics.printf("Population size: " .. #population, 0, 24, WINDOW_WIDTH - 8, "right")
-  love.graphics.printf("Generation: " .. generations, 0, 40, WINDOW_WIDTH - 8, "right")
-  love.graphics.printf("Average fitness: " .. averageFitness, 0, 56, WINDOW_WIDTH - 8, "right")
-  for i = 1, #words do
-    love.graphics.print(words[#words - i + 1], 8, 8 + 12 * (i - 1))
-  end
-end
+  love.graphics.print("Sentence: " .. sentence, 8, 8)
+  love.graphics.print("Generation: " .. generations, 8, 24)
+  love.graphics.print("Population size: " .. #population, 8, 40)
+  love.graphics.print("Mutation odds: 1 in " .. MUTATION_ODDS, 8, 56)
+  love.graphics.print("Fitness ratio: " .. fitnessRatio, 8, 72)
 
-function map(value, currentMin, currentMax, newMin, newMax)
-  return (value - currentMin) / (currentMax - currentMin) * (newMax - newMin) + newMin
+  for i = 1, #words do
+    love.graphics.printf(words[#words - i + 1], 0, 8 + 12 * (i - 1), WINDOW_WIDTH - 8, "right")
+  end
 end

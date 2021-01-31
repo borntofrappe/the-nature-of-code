@@ -2029,9 +2029,97 @@ With a four letter word and twenty-six possible characters, the odds of finding 
 
 ### Simplified algorithm
 
-<!-- TODO:
+_Please note:_ the demo differs from the logic discussed in the book in that the logic is described in functions instead of dedicated entities, like `Population` or `DNA`. This is on purpose to have the project comparable with `Shakesperian monkey`. The next demo implements the object-oriented version.
 
-- rename Shakesperian Monkey to use lowercase m in monkey
-- document Simplified algorithm (functions instead of entities)
+Building on top of the previous demo, the program introduces the steps of the traditional genetic algorithm in the `love.load` and `love.update` functions (setup and draw).
+
+#### Setup
+
+In `love.load` the script initializes a population of random words, benefiting from the functions introduced in the previous demo, `getRandomWord` and `getRandomCharacter`.
+
+#### Draw
+
+In `love.update`, and as long as a match is not found, the script repeats a series of steps in order to modify the original population with values associated with a greater fit.
+
+`selection` works here as the mating pool described in the book. A collection where the words of the population are included in a number proportional to their fitness value.
+
+```lua
+local selection = getSelection(population, sentence)
+```
+
+`getSelection` loops through the population and computes the fitness for each and every word, before including a comparable number of copies in the colleciton.
+
+```lua
+function getSelection(population, sentence)
+  local selection = {}
+
+  for i, word in ipairs(population) do
+    local fitness = getFitness(word, sentence)
+    for j = 1, fitness do
+      table.insert(selection, word)
+    end
+
+  return selection
+end
+```
+
+`getFitness` counts the number of matches between word and sentence.
+
+```lua
+function getFitness(word, sentence)
+  local fitness = 0
+  for i = 1, #sentence do
+    if word:sub(i, i) == sentence:sub(i, i) then
+      fitness = fitness + 1
+    end
+  end
+
+  return fitness
+end
+```
+
+With a given `selection`, the idea is to essentially replace the old population with new values, children created from parents picked from the mating pool.
+
+```lua
+-- in love.update
+for i = 1, #population do
+  local child = getChild(selection)
+  population[i] = child
+end
+```
+
+`getChild` implements the reproduction discussed earlier considering two parents, picked at random from the selection. Here you find both a crossover and a mutation:
+
+- crossover: the child inherits letters from the parents alternating between the two
+
+  ```lua
+  for i = 1, #sentence do
+    child[#child + 1] = i % 2 == 1 and p1:sub(i, i) or p2:sub(i, i)
+  end
+  ```
+
+- mutation: with given odds, the child picks a character at random
+
+  ```lua
+  for i = 1, #sentence do
+    if math.random(MUTATION_ODDS) == 1 then
+      child[#child + 1] = getRandomCharacter()
+    else
+      -- inherit
+    end
+  end
+  ```
+
+And that is essentially it for the genetic algorithm. With each iteration, `population` includes fitter and fitter values, until a children is able to reproduce the input sentence.
+
+The rest of the logic described in `love.update` is useful to:
+
+1. identify the word in the population with the best fit
+
+2. stop the iterative process when the input is reproduced
+
+3. store the best fit in a `words` collection, used to show the result in the window
+
+<!-- TODO:
 - create traditional algorithm (Population, entity, mapping function)
 -->
