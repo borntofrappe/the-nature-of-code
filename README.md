@@ -2120,6 +2120,12 @@ The rest of the logic described in `love.update` is useful to:
 
 3. store the best fit in a `words` collection, used to show the result in the window
 
-<!-- TODO:
-- create traditional algorithm (Population, entity, mapping function)
--->
+### Traditional algorithm
+
+The exercise doesn't introduce concepts, but works to re-model the logic of the simplified algorithm in a more structured fashion.
+
+The idea is to store the logic of the words in a `DNA` entity, and the logic of the population in a `Population` entity. This allows the script to have a more general structure, one in which `love.load` initializes a population and `love.update` modifies the population with a series of functions. _How_ the population is initialized, _how_ the mating pool, children, parents, fitness value are calculated is then a matter of modifying the specific files.
+
+<!--
+Update name for Simplified algorithm
+ -->
