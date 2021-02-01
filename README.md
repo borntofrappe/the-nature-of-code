@@ -2128,13 +2128,21 @@ The exercise doesn't introduce concepts, but there are a couple of notable diffe
 
 - the fitness is squared to increase how likely it is to pick a sentence with a higher value
 
+### Pool selection
+
+The project updates the traditional genetic algorithm in the way it selects two parents elements. Instead of populating a `selection` table with a number of copies proportional to the fitness ratio, the script picks a dna at random and accepts or rejects the element according to a probability. The probability is mapped to the maximum fitness ratio, so that the greater the ratio, the more likely it will be for the element to be picked.
+
+<!-- ### Evolutionary flow field
+
+With this demo I intend to apply the logic of the genetic algorithm to the demo created in chapter 6 which moves vehicles according to a random flow field (`the-nature-of-code\06 Autonomous Agents\Flow field\Random`).
+
+- instead of having multiple vehicles subject to a single flow field, each vehicle has its own field -->
+
 <!--
-### Evolutionary flow field
 
 - vehicle
 
 Todos:
-- pool selection, monte carlo simulation; whereby you accept or reject a value according to a probability
 - flow field: initialize an array of flow fields and vehicles, evolve the flow field to move the vehicles toward a target (position, velocity, acceleration, distance from target, lifetime)
 
 - iterative selection where the genes are mapped to different features of a design and the fitness value is weighed by the amount of time devoted to each dna (mouseover)
