@@ -1960,8 +1960,6 @@ _Please note:_
 
 The idea of the chapter is to have information passed from object to object in order to have the simulation evolve over time. The principles of biological evolution, and specifically darwinian evolution, are taken as inspiration to create a series of genetic algorithms and solve specific problems.
 
-### Genetic algorithms
-
 The first type of algorithm is useful to solve problems where the solution space is so vast to make a brute-force approach feasible. For instance, having a computer produce a certain sequence of letters matching an input string. The problem is trivial, but helps to demonstrate how a genetic algorithm works.
 
 Inspired by actual biological evolution and specifically darwinian natural selection, genetic algorithms consider three key principles:
@@ -2002,7 +2000,7 @@ The principles are put into practice in a series of steps, and are detailed in t
 
   Similarly to the size of the population in the setup phase, there are many variables affecting the efficiency and efficacy of the algorithm. Among these values, the probability to introduce a different trait contributes to find a solution, but if excessive makes it harder to improve the fitness score. For instance, the more random the number of characters, the more the algorithm will try to find a solution in the insurmountable way described earlier, picking characters at random.
 
-#### Shakesperian monkey
+### Shakesperian monkey
 
 The demo works to illustrate the brute force approach of finding a match for a four letter word. While ineffective, it also works to introduce the building blocks for the genetic algorithm:
 
@@ -2031,7 +2029,7 @@ The demo works to illustrate the brute force approach of finding a match for a f
 
 With a four letter word and twenty-six possible characters, the odds of finding a match are already a measly `1` in `456 976`, motivating a different approach.
 
-#### Simplified algorithm
+### Simplified genetic algorithm
 
 _Please note:_ the demo differs from the logic discussed in the book in that the logic is described in functions instead of dedicated entities, like `Population` or `DNA`. This is on purpose to have the project comparable with `Shakesperian monkey`.
 
@@ -2120,7 +2118,7 @@ The rest of the logic described in `love.update` is useful to:
 
 3. store the best fit in a `words` collection, used to show the result in the window
 
-#### Traditional algorithm
+### Traditional genetic algorithm
 
 The idea is to store the logic of the words in a `DNA` entity, and the logic of the population in a `Population` entity. This allows the script to have a more general structure, one in which `love.load` initializes a population and `love.update` modifies the population with a series of functions. _How_ the population is initialized, _how_ the mating pool, children, parents, fitness value are calculated is then a matter of modifying the specific files.
 
@@ -2129,3 +2127,16 @@ The exercise doesn't introduce concepts, but there are a couple of notable diffe
 - the number of copies included in the mating pool is proportional to the fitness of each word, but the value is compared to the maximum fitness in the current generation
 
 - the fitness is squared to increase how likely it is to pick a sentence with a higher value
+
+<!--
+### Evolutionary flow field
+
+- vehicle
+
+Todos:
+- pool selection, monte carlo simulation; whereby you accept or reject a value according to a probability
+- flow field: initialize an array of flow fields and vehicles, evolve the flow field to move the vehicles toward a target (position, velocity, acceleration, distance from target, lifetime)
+
+- iterative selection where the genes are mapped to different features of a design and the fitness value is weighed by the amount of time devoted to each dna (mouseover)
+- continuous evolutionary sytem
+ -->

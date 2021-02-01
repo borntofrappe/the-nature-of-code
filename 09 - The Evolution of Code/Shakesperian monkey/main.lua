@@ -8,7 +8,7 @@ FINISH = "z"
 SENTENCE = "hello"
 
 function love.load()
-  love.window.setTitle("Genetic algorithms - Shakesperian monkey")
+  love.window.setTitle("The evolution of code - Shakesperian monkey")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
