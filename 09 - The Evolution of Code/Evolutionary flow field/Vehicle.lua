@@ -28,22 +28,14 @@ function Vehicle:update(dt)
   self.acceleration:multiply(0)
   self.angle = math.atan2(self.velocity.y, self.velocity.x)
 
-  if self.position.x > WINDOW_WIDTH then
-    self.position.x = 0
-  elseif self.position.x < 0 then
-    self.position.x = WINDOW_WIDTH
+  if self.position.x > WINDOW_WIDTH or self.position.x < 0 or self.position.y > WINDOW_HEIGHT or self.position.y < 0 then
+    self.velocity:multiply(0)
+  else
+    self:navigateField()
   end
-  if self.position.y > WINDOW_HEIGHT then
-    self.position.y = 0
-  elseif self.position.y < 0 then
-    self.position.y = WINDOW_HEIGHT
-  end
-
-  self:navigateField()
 end
 
 function Vehicle:render()
-  -- self.field:render()
   love.graphics.setColor(0.11, 0.11, 0.11, 1)
   love.graphics.push()
   love.graphics.translate(self.position.x, self.position.y)
@@ -60,4 +52,14 @@ function Vehicle:navigateField()
   local force = self.field:lookup(self.position.x, self.position.y).force
   force:limit(self.maxForce)
   self:applyForce(force)
+end
+
+function Vehicle:getFitness(target)
+  local fitness = 0
+  local dir = LVector:subtract(target.position, self.position)
+  local distance = math.min(MAX_DISTANCE_VEHICLE, dir:getMagnitude())
+
+  local fitness = map(distance, 0, MAX_DISTANCE_VEHICLE, MAX_FITNESS, 0.1)
+
+  return fitness
 end

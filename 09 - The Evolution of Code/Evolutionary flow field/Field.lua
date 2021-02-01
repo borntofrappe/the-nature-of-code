@@ -1,8 +1,9 @@
 Field = {}
 Field.__index = Field
 
-function Field:new(grid)
+function Field:new()
   local grid = {}
+
   local columns = math.floor(WINDOW_WIDTH / RESOLUTION_FLOW_FIELD)
   local rows = math.floor(WINDOW_HEIGHT / RESOLUTION_FLOW_FIELD)
   local cellWidth = (WINDOW_WIDTH / columns)
@@ -38,7 +39,7 @@ function Field:new(grid)
 end
 
 function Field:render()
-  love.graphics.setColor(0.11, 0.11, 0.11, 0.5)
+  love.graphics.setColor(0.11, 0.11, 0.11, 0.25)
   love.graphics.setLineWidth(LINE_WIDTH_FLOW_FIELD)
   for r = 1, self.rows do
     for c = 1, self.columns do

@@ -4,38 +4,41 @@ require "Field"
 require "Vehicle"
 require "Population"
 
-WINDOW_WIDTH = 640
-WINDOW_HEIGHT = 500
+WINDOW_WIDTH = 705
+WINDOW_HEIGHT = 480
 
-SIZE_VEHICLE = 8
+SIZE_VEHICLE = 5
 MAX_SPEED_VEHICLE = 10
 MAX_FORCE_VEHICLE = 1
 X_VEHICLE = WINDOW_WIDTH / 4
 Y_VEHICLE = WINDOW_HEIGHT / 2
 
-RESOLUTION_FLOW_FIELD = 20
-LINE_WIDTH_FLOW_FIELD = 0.5
+RESOLUTION_FLOW_FIELD = 15
+LINE_WIDTH_FLOW_FIELD = 0.2
 
-RADIUS_TARGET = 10
+RADIUS_TARGET = 7
 X_TARGET = WINDOW_WIDTH * 3 / 4
 Y_TARGET = WINDOW_HEIGHT / 2
 
-UPDATE_SPEED = 15
+UPDATE_SPEED = 30
 
-SIZE = 5
+SIZE_POPULATION = 20
 MUTATION_ODDS = 100
-LIFESPAN = 100
+LIFESPAN = 50
+MAX_DISTANCE_VEHICLE = 500
+MAX_FITNESS = 1
 
 function love.load()
-  love.window.setTitle("The evolution of code - Not so random flow field")
+  love.window.setTitle("The evolution of code - Evolutionary flow field")
   love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
   love.graphics.setBackgroundColor(1, 1, 1)
 
   math.randomseed(os.time())
 
   local position = LVector:new(X_TARGET, Y_TARGET)
+  local bestField = nil
   target = Target:new(position)
-  population = Population:new(SIZE, target, MUTATION_ODDS)
+  population = Population:new(SIZE_POPULATION, target, MUTATION_ODDS)
 end
 
 function love.mousepressed(x, y, button)
@@ -50,6 +53,10 @@ function love.update(dt)
 end
 
 function love.draw()
-  target:render()
   population:render()
+  target:render()
+end
+
+function map(value, currentMin, currentMax, newMin, newMax)
+  return (value - currentMin) / (currentMax - currentMin) * (newMax - newMin) + newMin
 end
