@@ -3,8 +3,8 @@ Field.__index = Field
 
 function Field:new(position)
   local grid = {}
-  local columns = math.floor(WINDOW_WIDTH / RESOLUTION)
-  local rows = math.floor(WINDOW_HEIGHT / RESOLUTION)
+  local columns = math.floor(WINDOW_WIDTH / RESOLUTION_FLOW_FIELD)
+  local rows = math.floor(WINDOW_HEIGHT / RESOLUTION_FLOW_FIELD)
   local cellWidth = (WINDOW_WIDTH / columns)
   local cellHeight = (WINDOW_HEIGHT / rows)
   for row = 1, rows do
@@ -41,7 +41,7 @@ end
 function Field:render()
   if self.isVisible then
     love.graphics.setColor(0.11, 0.11, 0.11, 0.5)
-    love.graphics.setLineWidth(LINE_WIDTH_FIELD)
+    love.graphics.setLineWidth(LINE_WIDTH_FLOW_FIELD)
     for r = 1, self.rows do
       for c = 1, self.columns do
         love.graphics.line(self.grid[r][c].x1, self.grid[r][c].y1, self.grid[r][c].x2, self.grid[r][c].y2)

@@ -2136,9 +2136,11 @@ The project updates the traditional genetic algorithm in the way it selects two 
 
 With this demo I intend to apply the logic of the traditional genetic algorithm to the demo created in chapter 6 which moves vehicles according to a random flow field (`the-nature-of-code\06 Autonomous Agents\Flow field\Random`).
 
-<!-- The demo is modified incrementally and as follows:
+- instead of having multiple vehicles subject to a single flow field, each vehicle has its own field
 
-- instead of having multiple vehicles subject to a single flow field, each vehicle has its own field -->
+- the environment is initialized with a target, with the goal of having the field evolve to point toward the entity; the position of the target can be modified with mouse input
+
+- the vehicles are updated to have a lifespan, so that the simulation can eventually evaluate the distance achieved by the vehicles and create a new generation
 
 <!--
 
