@@ -2134,25 +2134,23 @@ The project updates the traditional genetic algorithm in the way it selects two 
 
 ### Evolutionary flow field
 
-With this demo I intend to apply the logic of the traditional genetic algorithm to the demo created in chapter 6 which moves vehicles according to a random flow field (`the-nature-of-code\06 Autonomous Agents\Flow field\Random`).
+With this demo I intend to apply the logic of the traditional genetic algorithm to the demo created in chapter 6 to moves vehicles according to a random flow field (`the-nature-of-code\06 Autonomous Agents\Flow field\Random`).
 
-- instead of having multiple vehicles subject to a single flow field, each vehicle has its own field
+The demo is modified in increments and as follows:
 
-- the environment is initialized with a target, with the goal of having the field evolve to point toward the entity; the position of the target can be modified with mouse input
+- each vehicle is attributed its own field; the grid of forces described by the field is ultimately the genetic information passed from generation to generation;
 
-- the vehicles are updated to have a lifespan, so that the simulation can eventually evaluate the distance achieved by the vehicles and create a new generation
+- the movement of the vehicle is constrained to the edges of the window. Unlike the previous demo, where the vehicle would spawn on the opposite side, the entity stops by multiplying the velocity vector by `0`
 
-- the population describes a collection of vehicles. The lifespan is for the generation instead of the individual entities, with the idea of using the entire set
+- the environment includes a target, whose position is most relevant in terms of fitness function; the position is set to have the vehicles and target at opposite ends, but it is possible to reposition the target with the mouse cursor
+
+- the fitness function computes a value in the `[0, 1]` range mapping the distance between vehicle and target; `MAX_DISTANCE_VEHICLE` is helpful to provide an upper threshold, while `MIN_FITNESS` is helpful to avoid having a population whose fitness value is equal to `0`. In this last instance, the program would encounter an infinite loop as the `select` function would be stuck to find an impossible value
+
+- the population includes a variable `lifespan` to terminate the current generation after a brief amount of time; the idea is to have a new generation spawn when the timer reaches this variable, after evaluating the current generation for the most fit flow field
+
+- the logic of the `DNA` is included directly in the `Vehicle` entity; this is where the program computes the fitness value and where a child inherits from the two parent instances
 
 <!--
-
-
-- vehicle
-
-Todos:
-
-- flow field: initialize an array of flow fields and vehicles, evolve the flow field to move the vehicles toward a target (position, velocity, acceleration, distance from target, lifetime)
-
 - iterative selection where the genes are mapped to different features of a design and the fitness value is weighed by the amount of time devoted to each dna (mouseover)
 - continuous evolutionary sytem
   -->

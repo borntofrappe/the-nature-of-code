@@ -9,8 +9,17 @@ function Population:new(size, target, mutationOdds)
   end
 
   local generation = 0
+
   local lifespan = LIFESPAN
   local timer = 0
+
+  local bestVehicle = nil
+  for i, vehicle in ipairs(population) do
+    if not bestVehicle or vehicle:getFitness(target) > bestVehicle:getFitness(target) then
+      bestVehicle = vehicle
+    end
+  end
+  local field = bestVehicle.field
 
   local this = {
     ["size"] = size,
@@ -20,7 +29,7 @@ function Population:new(size, target, mutationOdds)
     ["generation"] = generation,
     ["lifespan"] = lifespan,
     ["timer"] = timer,
-    ["field"] = population[math.random(#population)].field
+    ["field"] = field
   }
 
   setmetatable(this, self)
@@ -62,23 +71,6 @@ function Population:select(maxFitness)
   end
 end
 
-function Population:reproduce(parent1, parent2)
-  local vehicle = Vehicle:new()
-  local grid = {}
-  for r = 1, vehicle.field.rows do
-    for c = 1, vehicle.field.columns do
-      if math.random(self.mutationOdds) ~= 1 then
-        if (c + r) % 2 == 0 then
-          vehicle.field.grid[r][c] = parent1.field.grid[r][c]
-        else
-          vehicle.field.grid[r][c] = parent2.field.grid[r][c]
-        end
-      end
-    end
-  end
-  return vehicle
-end
-
 function Population:generate()
   local maxFitness = 0
 
@@ -94,7 +86,8 @@ function Population:generate()
     local parent1 = self:select(maxFitness)
     local parent2 = self:select(maxFitness)
 
-    local vehicle = self:reproduce(parent1, parent2)
+    local vehicle = Vehicle:new()
+    vehicle:inherit(parent1, parent2, self.mutationOdds)
     table.insert(population, vehicle)
   end
 

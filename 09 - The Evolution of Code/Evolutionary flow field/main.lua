@@ -8,7 +8,7 @@ WINDOW_WIDTH = 705
 WINDOW_HEIGHT = 480
 
 SIZE_VEHICLE = 5
-MAX_SPEED_VEHICLE = 10
+MAX_SPEED_VEHICLE = 8
 MAX_FORCE_VEHICLE = 1
 X_VEHICLE = WINDOW_WIDTH / 4
 Y_VEHICLE = WINDOW_HEIGHT / 2
@@ -20,13 +20,14 @@ RADIUS_TARGET = 7
 X_TARGET = WINDOW_WIDTH * 3 / 4
 Y_TARGET = WINDOW_HEIGHT / 2
 
-UPDATE_SPEED = 30
+UPDATE_SPEED = 20
 
 SIZE_POPULATION = 20
 MUTATION_ODDS = 100
 LIFESPAN = 50
 MAX_DISTANCE_VEHICLE = 500
 MAX_FITNESS = 1
+MIN_FITNESS = 0.1
 
 function love.load()
   love.window.setTitle("The evolution of code - Evolutionary flow field")
@@ -36,7 +37,6 @@ function love.load()
   math.randomseed(os.time())
 
   local position = LVector:new(X_TARGET, Y_TARGET)
-  local bestField = nil
   target = Target:new(position)
   population = Population:new(SIZE_POPULATION, target, MUTATION_ODDS)
 end
@@ -45,6 +45,7 @@ function love.mousepressed(x, y, button)
   if button == 1 then
     local position = LVector:new(x, y)
     target.position = position
+  -- population.target = target -- unnecessary as the population doesn't receive a copy, but a reference to the target itself
   end
 end
 

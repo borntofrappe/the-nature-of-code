@@ -59,7 +59,21 @@ function Vehicle:getFitness(target)
   local dir = LVector:subtract(target.position, self.position)
   local distance = math.min(MAX_DISTANCE_VEHICLE, dir:getMagnitude())
 
-  local fitness = map(distance, 0, MAX_DISTANCE_VEHICLE, MAX_FITNESS, 0.1)
+  local fitness = map(distance, 0, MAX_DISTANCE_VEHICLE, MAX_FITNESS, MIN_FITNESS)
 
   return fitness
+end
+
+function Vehicle:inherit(parent1, parent2, mutationOdds)
+  for r = 1, self.field.rows do
+    for c = 1, self.field.columns do
+      if math.random(mutationOdds) ~= 1 then
+        if (c + r) % 2 == 0 then
+          self.field.grid[r][c] = parent1.field.grid[r][c]
+        else
+          self.field.grid[r][c] = parent2.field.grid[r][c]
+        end
+      end
+    end
+  end
 end
