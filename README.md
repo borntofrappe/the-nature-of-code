@@ -2132,9 +2132,11 @@ The exercise doesn't introduce concepts, but there are a couple of notable diffe
 
 The project updates the traditional genetic algorithm in the way it selects two parents elements. Instead of populating a `selection` table with a number of copies proportional to the fitness ratio, the script picks a dna at random and accepts or rejects the element according to a probability. The probability is mapped to the maximum fitness ratio, so that the greater the ratio, the more likely it will be for the element to be picked.
 
-<!-- ### Evolutionary flow field
+### Evolutionary flow field
 
-With this demo I intend to apply the logic of the genetic algorithm to the demo created in chapter 6 which moves vehicles according to a random flow field (`the-nature-of-code\06 Autonomous Agents\Flow field\Random`).
+With this demo I intend to apply the logic of the traditional genetic algorithm to the demo created in chapter 6 which moves vehicles according to a random flow field (`the-nature-of-code\06 Autonomous Agents\Flow field\Random`).
+
+<!-- The demo is modified incrementally and as follows:
 
 - instead of having multiple vehicles subject to a single flow field, each vehicle has its own field -->
 
