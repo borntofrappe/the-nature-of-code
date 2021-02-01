@@ -1,22 +1,30 @@
 LVector = require "LVector"
-require "Vehicle"
 require "Target"
+require "Field"
+require "Vehicle"
+require "Population"
 
 WINDOW_WIDTH = 640
 WINDOW_HEIGHT = 500
 
-VEHICLES = 1
 SIZE_VEHICLE = 8
-LIFESPAN_VEHICLE = 100
-MAX_SPEED_VEHICLE = 15
-MAX_FORCE_VEHICLE = 2
+MAX_SPEED_VEHICLE = 10
+MAX_FORCE_VEHICLE = 1
+X_VEHICLE = WINDOW_WIDTH / 4
+Y_VEHICLE = WINDOW_HEIGHT / 2
 
 RESOLUTION_FLOW_FIELD = 20
 LINE_WIDTH_FLOW_FIELD = 0.5
 
 RADIUS_TARGET = 10
+X_TARGET = WINDOW_WIDTH * 3 / 4
+Y_TARGET = WINDOW_HEIGHT / 2
 
 UPDATE_SPEED = 15
+
+SIZE = 5
+MUTATION_ODDS = 100
+LIFESPAN = 100
 
 function love.load()
   love.window.setTitle("The evolution of code - Not so random flow field")
@@ -25,12 +33,9 @@ function love.load()
 
   math.randomseed(os.time())
 
-  target = Target:new()
-
-  vehicles = {}
-  for i = 1, VEHICLES do
-    table.insert(vehicles, Vehicle:new())
-  end
+  local position = LVector:new(X_TARGET, Y_TARGET)
+  target = Target:new(position)
+  population = Population:new(SIZE, target, MUTATION_ODDS)
 end
 
 function love.mousepressed(x, y, button)
@@ -41,14 +46,10 @@ function love.mousepressed(x, y, button)
 end
 
 function love.update(dt)
-  for i, vehicle in ipairs(vehicles) do
-    vehicle:update(dt)
-  end
+  population:update(dt)
 end
 
 function love.draw()
   target:render()
-  for i, vehicle in ipairs(vehicles) do
-    vehicle:render()
-  end
+  population:render()
 end

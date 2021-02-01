@@ -2142,13 +2142,17 @@ With this demo I intend to apply the logic of the traditional genetic algorithm 
 
 - the vehicles are updated to have a lifespan, so that the simulation can eventually evaluate the distance achieved by the vehicles and create a new generation
 
+- the population describes a collection of vehicles. The lifespan is for the generation instead of the individual entities, with the idea of using the entire set
+
 <!--
+
 
 - vehicle
 
 Todos:
+
 - flow field: initialize an array of flow fields and vehicles, evolve the flow field to move the vehicles toward a target (position, velocity, acceleration, distance from target, lifetime)
 
 - iterative selection where the genes are mapped to different features of a design and the fitness value is weighed by the amount of time devoted to each dna (mouseover)
 - continuous evolutionary sytem
- -->
+  -->
