@@ -2138,7 +2138,7 @@ With this demo I intend to apply the logic of the traditional genetic algorithm 
 
 The demo is modified in increments and as follows:
 
-- each vehicle is attributed its own field; the grid of forces described by the field is ultimately the genetic information passed from generation to generation;
+- each vehicle is attributed its own field; the grid of forces described by the field is ultimately the genetic information passed from generation to generation
 
 - the movement of the vehicle is constrained to the edges of the window. Unlike the previous demo, where the vehicle would spawn on the opposite side, the entity stops by multiplying the velocity vector by `0`
 
@@ -2148,7 +2148,7 @@ The demo is modified in increments and as follows:
 
 - the population includes a variable `lifespan` to terminate the current generation after a brief amount of time; the idea is to have a new generation spawn when the timer reaches this variable, after evaluating the current generation for the most fit flow field
 
-- the logic of the `DNA` is included directly in the `Vehicle` entity; this is where the program computes the fitness value and where a child inherits from the two parent instances
+- the logic of the `DNA` is included directly in the `Vehicle` entity; this is where the program computes the fitness value and where a child inherits from the two parent instances. The DNA is essentially represented by information stored in the field property
 
 <!--
 - iterative selection where the genes are mapped to different features of a design and the fitness value is weighed by the amount of time devoted to each dna (mouseover)
