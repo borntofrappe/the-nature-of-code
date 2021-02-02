@@ -2150,7 +2150,10 @@ The demo is modified in increments and as follows:
 
 - the logic of the `DNA` is included directly in the `Vehicle` entity; this is where the program computes the fitness value and where a child inherits from the two parent instances. The DNA is essentially represented by information stored in the field property
 
+### Interactive selection
+
+The logic of the genetic algorithm is tailored to have a population evolve as a result of user input. The demo shows a collection of faces, customized in several key features connected to the size, eyes and mouth. When the mouse hovers upon a specific face, the fitness value is increased by an arbitrary amount. When a new generation is created, the population consider the elements with higher fitness values so that the face becomes a mixture of the preferred patterns.
+
 <!--
-- iterative selection where the genes are mapped to different features of a design and the fitness value is weighed by the amount of time devoted to each dna (mouseover)
 - continuous evolutionary sytem
   -->
