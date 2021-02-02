@@ -2154,6 +2154,10 @@ The demo is modified in increments and as follows:
 
 The logic of the genetic algorithm is tailored to have a population evolve as a result of user input. The demo shows a collection of faces, customized in several key features connected to the size, eyes and mouth. When the mouse hovers upon a specific face, the fitness value is increased by an arbitrary amount. When a new generation is created, the population consider the elements with higher fitness values so that the face becomes a mixture of the preferred patterns.
 
+### Ecosystem simulation
+
+The project sets up a genetic algorithm to simulate a ecosystem where a series of particles, or vehicles move in the window randomly while seeking pellets of food. Each entity has a lifespan, counting down to `0`, at which point the entity dies. This lifespan is mapped to the opacity of the figure, so that the members of the population slowly fade out, but the value can be restored by colliding with the aforementioned food. Randomly and while still alive, each entity has also a possibility to spawn a new particle, to which it passes its own genetic material. Variety is included in form of the size of the entity. The size is inversely proportional, so that larger particles move slower than smaller ones. Eventually, the simulation shows a preference for medium-size elements.
+
 <!--
 - continuous evolutionary sytem
   -->
