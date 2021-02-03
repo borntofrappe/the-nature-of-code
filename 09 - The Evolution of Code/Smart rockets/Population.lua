@@ -1,7 +1,7 @@
 Population = {}
 Population.__index = Population
 
-function Population:new(size, mutationOdds, target)
+function Population:new(size, mutationOdds, target, obstacles)
   local generation = 0
   local frame = 1
   local frames = FRAMES
@@ -18,6 +18,7 @@ function Population:new(size, mutationOdds, target)
     ["mutationOdds"] = mutationOdds,
     ["population"] = population,
     ["target"] = target,
+    ["obstacles"] = obstacles,
     ["frame"] = frame,
     ["frames"] = frames,
     ["generation"] = generation
@@ -37,6 +38,12 @@ function Population:update(dt)
   if self.frame <= self.frames then
     for i, rocket in ipairs(self.population) do
       rocket:update(dt, self.frame)
+
+      for j, obstacle in ipairs(obstacles) do
+        if rocket:collides(obstacle) then
+          rocket.hasCollided = true
+        end
+      end
     end
     self.frame = self.frame + 1
   else

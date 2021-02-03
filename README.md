@@ -2206,8 +2206,12 @@ _Please note:_
 
 ### Smart rocket
 
-_Please note_: the project is proposed as the last example in the chapter devoted to genetic algorithms, but in the book and conceptually, it follows the lessons learned with the flow field demo
-
 The goal is to have a population of rockets navigate the environment toward an arbitrary target. The movement is influenced by a series of vectors describing the acceleration of the rocket at different frames. As the generation comes to an end, the fitness is computed on the basis of the distance between rocket and target, so that eventually, the population learns to follow a similar, efficient trajectory.
 
-From this starting point, the demo is updated to have a more complex simulation, with one or more obstacles interrupting the movement of the entities.
+From this starting point, the demo is updated to have a more complex simulation, with one or more obstacles interrupting the movement of the entities. By default, the simulation includes a single obstacle, in the right half of the window, but following mouse input, it is possible to complicate the environment with additional platforms.
+
+_Please note_: 
+
+- the project is proposed as the last example in the chapter devoted to genetic algorithms, but in the book and conceptually, it follows the lessons learned with the flow field demo
+
+- the code considering mouse input is taken directly from a previous demo in the chapter devoted to physics libraries and Box2D (and specifically the `Fixed` folder)
