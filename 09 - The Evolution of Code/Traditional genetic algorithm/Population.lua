@@ -100,5 +100,5 @@ function Population:getBestMatch()
     end
   end
 
-  return self.population[1]
+  return bestMatch
 end
