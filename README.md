@@ -2156,8 +2156,4 @@ The logic of the genetic algorithm is tailored to have a population evolve as a 
 
 ### Ecosystem simulation
 
-The project sets up a genetic algorithm to simulate a ecosystem where a series of particles, or vehicles move in the window randomly while seeking pellets of food. Each entity has a lifespan, counting down to `0`, at which point the entity dies. This lifespan is mapped to the opacity of the figure, so that the members of the population slowly fade out, but the value can be restored by colliding with the aforementioned food. Randomly and while still alive, each entity has also a possibility to spawn a new particle, to which it passes its own genetic material. Variety is included in form of the size of the entity. The size is inversely proportional, so that larger particles move slower than smaller ones. Eventually, the simulation shows a preference for medium-size elements.
-
-<!--
-- continuous evolutionary sytem
-  -->
+The project sets up a genetic algorithm to simulate a ecosystem where a series of particles move in the window randomly. Each entity has a lifespan, counting down to `0`, at which point the particle dies. The lifespan is mapped to the opacity of the figure, so that the members of the population slowly fade out, but the value can be restored by colliding with a pellet of food. Randomly and while still alive, each entity has also a possibility to spawn a new particle, to which it passes its own genetic material in terms of size. Variety is included in form of the size of the entity. The size is inversely proportional to the speed, so that larger particles move slower than smaller ones. Eventually, the simulation shows a preference for a particular type of particle, preferring a smaller, faster entity than a larger, slower one.
