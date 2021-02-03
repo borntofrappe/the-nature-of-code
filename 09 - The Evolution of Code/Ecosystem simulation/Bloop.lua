@@ -1,10 +1,13 @@
 Bloop = {}
 Bloop.__index = Bloop
 
-function Bloop:new(x, y, r)
+function Bloop:new(x, y, dna)
   local x = x or math.random(0, WINDOW_WIDTH)
   local y = y or math.random(0, WINDOW_HEIGHT)
-  local r = r or math.random(BLOOP_RADIUS_MIN, BLOOP_RADIUS_MAX)
+
+  local dna = dna or DNA:new()
+  local r = map(dna.genes[1], 0, 1, BLOOP_RADIUS_MIN, BLOOP_RADIUS_MAX)
+  r = math.min(BLOOP_RADIUS_MAX, math.max(r, BLOOP_RADIUS_MIN))
 
   local position = LVector:new(x, y)
   local velocity = LVector:new(0, 0)
@@ -19,6 +22,7 @@ function Bloop:new(x, y, r)
 
   local lifespanUpdateSpeed = BLOOP_LIFESPAN_UPDATE_SPEED
   local this = {
+    ["dna"] = dna,
     ["position"] = position,
     ["velocity"] = velocity,
     ["r"] = r,

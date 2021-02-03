@@ -1,5 +1,3 @@
-require "DNA"
-
 Population = {}
 Population.__index = Population
 
@@ -40,8 +38,7 @@ end
 
 function Population:select(maxFitnessRatio)
   while true do
-    local index = math.random(#self.population)
-    local dna = self.population[index]
+    local dna = self.population[math.random(#self.population)]
     local fitnessRatio = dna:getFitnessRatio(self.target)
     fitnessRatio = fitnessRatio ^ 2
     local probability = math.random() * maxFitnessRatio

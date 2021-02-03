@@ -37,9 +37,9 @@ function Population:update(dt)
     end
 
     if math.random(BLOOP_ODDS) == 1 then
-      local r = bloop.r
-      r = r * (math.random() * 0.2 + 0.9)
-      table.insert(self.bloops, Bloop:new(bloop.position.x, bloop.position.y, r))
+      local dna = DNA:new()
+      dna:inherit(bloop)
+      table.insert(self.bloops, Bloop:new(bloop.position.x, bloop.position.y, dna))
     end
 
     if bloop.lifespan == 0 then

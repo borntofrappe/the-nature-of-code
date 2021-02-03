@@ -1,12 +1,18 @@
 Vehicle = {}
 Vehicle.__index = Vehicle
 
-function Vehicle:new()
+function Vehicle:new(dna)
+  local dna =
+    dna or DNA:new(math.floor(WINDOW_WIDTH / RESOLUTION_FLOW_FIELD) * math.floor(WINDOW_HEIGHT / RESOLUTION_FLOW_FIELD))
+
+  local field = dna:getField()
+
   local position = LVector:new(X_VEHICLE, Y_VEHICLE)
   local velocity = LVector:new(0, 0)
   local acceleration = LVector:new(0, 0)
-  local field = Field:new()
+
   local this = {
+    ["dna"] = dna,
     ["position"] = position,
     ["velocity"] = velocity,
     ["acceleration"] = acceleration,
@@ -60,7 +66,6 @@ function Vehicle:getFitness(target)
   local distance = math.min(MAX_DISTANCE_VEHICLE, dir:getMagnitude())
 
   local fitness = map(distance, 0, MAX_DISTANCE_VEHICLE, MAX_FITNESS, MIN_FITNESS)
-
   return fitness
 end
 

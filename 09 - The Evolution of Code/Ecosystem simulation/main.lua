@@ -1,5 +1,6 @@
 LVector = require "LVector"
 require "Pellet"
+require "DNA"
 require "Bloop"
 require "Population"
 
@@ -8,6 +9,7 @@ WINDOW_HEIGHT = 450
 
 BLOOP_RADIUS_MIN = 3
 BLOOP_RADIUS_MAX = 21
+BLOOP_RADIUS_VARIATION_PERCENTAGE = 0.1
 BLOOP_LIFESPAN = 1
 BLOOP_LIFESPAN_INCREMENT = 0.5
 BLOOP_LIFESPAN_UPDATE_SPEED = 0.15

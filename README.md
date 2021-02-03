@@ -2031,7 +2031,7 @@ With a four letter word and twenty-six possible characters, the odds of finding 
 
 ### Simplified genetic algorithm
 
-_Please note:_ the demo differs from the logic discussed in the book in that the logic is described in functions instead of dedicated entities, like `Population` or `DNA`. This is on purpose to have the project comparable with `Shakesperian monkey`.
+_Please note:_ the demo differs from the logic discussed in the book in that the program works through functions instead of dedicated entities, like `Population` or `DNA` classes. This is on purpose to have the project comparable with `Shakesperian monkey`.
 
 The steps of the traditional genetic algorithm are included in the `love.load` and `love.update` functions.
 
@@ -2120,17 +2120,51 @@ The rest of the logic described in `love.update` is useful to:
 
 ### Traditional genetic algorithm
 
-The idea is to store the logic of the words in a `DNA` entity, and the logic of the population in a `Population` entity. This allows the script to have a more general structure, one in which `love.load` initializes a population and `love.update` modifies the population with a series of functions. _How_ the population is initialized, _how_ the mating pool, children, parents, fitness value are calculated is then a matter of modifying the specific files.
+The idea is to refactor the previous demo to implement the algorithm with `DNA` and `Population` entities. This allows the script to have a more general structure, one in which `love.load` initializes a population and `love.update` modifies the population with a series of functions.
+
+```lua
+population:select()
+population:reproduce()
+```
+
+_How_ the population is initialized, _how_ the mating pool, children, parents, fitness value are calculated is then a matter delegated to the specific entities.
 
 The exercise doesn't introduce concepts, but there are a couple of notable differences with respect to the previous demo:
 
-- the number of copies included in the mating pool is proportional to the fitness of each word, but the value is compared to the maximum fitness in the current generation
+- the set of characters is described in the function initializing the population to have a table of lowercase and uppercase letters (`[A-z]`), plus the space, comma and period characters
+
+- the number of copies included in the mating pool is proportional to the fitness of each word, but instead of adding a copy for each match, the fitness is compared to the maximum fitness value in the current generation
 
 - the fitness is squared to increase how likely it is to pick a sentence with a higher value
 
 ### Pool selection
 
 The project updates the traditional genetic algorithm in the way it selects two parents elements. Instead of populating a `selection` table with a number of copies proportional to the fitness ratio, the script picks a dna at random and accepts or rejects the element according to a probability. The probability is mapped to the maximum fitness ratio, so that the greater the ratio, the more likely it will be for the element to be picked.
+
+```lua
+local parent1 = self:select(maxFitnessRatio)
+local parent2 = self:select(maxFitnessRatio)
+```
+
+The `select` function continues to pick a dna until a suitable parent is found.
+
+```lua
+while true do
+  local dna = self.population[math.random(#self.population)]
+  local fitnessRatio = dna:getFitnessRatio(self.target)
+  local probability = math.random() * maxFitnessRatio
+  if probability < fitnessRatio then
+    return dna
+  end
+end
+```
+
+The fitness ratio is also squared to preserve the intention of the previous demo, that is increase the importance of higher values.
+
+```lua
+local fitnessRatio = dna:getFitnessRatio(self.target)
+fitnessRatio = fitnessRatio ^ 2
+```
 
 ### Evolutionary flow field
 
@@ -2140,20 +2174,32 @@ The demo is modified in increments and as follows:
 
 - each vehicle is attributed its own field; the grid of forces described by the field is ultimately the genetic information passed from generation to generation
 
-- the movement of the vehicle is constrained to the edges of the window. Unlike the previous demo, where the vehicle would spawn on the opposite side, the entity stops by multiplying the velocity vector by `0`
+- the movement of the vehicle is constrained to the edges of the window. Unlike the previous demo, where the vehicle would appear on the opposite side of the window, the entity stops by multiplying the velocity vector by `0`
 
-- the environment includes a target, whose position is most relevant in terms of fitness function; the position is set to have the vehicles and target at opposite ends, but it is possible to reposition the target with the mouse cursor
+- the simulation includes a target, whose position is most relevant in terms of fitness function; the position is set to have the population and target at opposite ends, but it is possible to reposition the target with the mouse cursor
 
 - the fitness function computes a value in the `[0, 1]` range mapping the distance between vehicle and target; `MAX_DISTANCE_VEHICLE` is helpful to provide an upper threshold, while `MIN_FITNESS` is helpful to avoid having a population whose fitness value is equal to `0`. In this last instance, the program would encounter an infinite loop as the `select` function would be stuck to find an impossible value
 
 - the population includes a variable `lifespan` to terminate the current generation after a brief amount of time; the idea is to have a new generation spawn when the timer reaches this variable, after evaluating the current generation for the most fit flow field
 
-- the logic of the `DNA` is included directly in the `Vehicle` entity; this is where the program computes the fitness value and where a child inherits from the two parent instances. The DNA is essentially represented by information stored in the field property
+The project is useful to stress the difference between genotype (genetic material, `DNA`) and phenotype (visual representation, `Vehicle`) as introduced in the beginning of the chapter. In future demos the distinction is reiterated showing the genetic material with faces or again particles.
 
 ### Interactive selection
 
-The logic of the genetic algorithm is tailored to have a population evolve as a result of user input. The demo shows a collection of faces, customized in several key features connected to the size, eyes and mouth. When the mouse hovers upon a specific face, the fitness value is increased by an arbitrary amount. When a new generation is created, the population consider the elements with higher fitness values so that the face becomes a mixture of the preferred patterns.
+In the exercise the genetic algorithm is tailored to have a population evolve as a result of user input. The demo shows a collection of faces, changing the size, color and position of a few prominent features. When the mouse hovers upon a specific face, the fitness value is increased by an arbitrary amount. When a new generation is created, the population consider the elements with higher fitness values so that the face becomes a mixture of the preferred patterns.
+
+_Please note:_
+
+- the mutation is increased to introduce more variety in how the population evolves
 
 ### Ecosystem simulation
 
-The project sets up a genetic algorithm to simulate a ecosystem where a series of particles move in the window randomly. Each entity has a lifespan, counting down to `0`, at which point the particle dies. The lifespan is mapped to the opacity of the figure, so that the members of the population slowly fade out, but the value can be restored by colliding with a pellet of food. Randomly and while still alive, each entity has also a possibility to spawn a new particle, to which it passes its own genetic material in terms of size. Variety is included in form of the size of the entity. The size is inversely proportional to the speed, so that larger particles move slower than smaller ones. Eventually, the simulation shows a preference for a particular type of particle, preferring a smaller, faster entity than a larger, slower one.
+The project sets up a genetic algorithm to simulate an ecosystem evolving over time. Instead of having a clear stopping point, where the population evolves abruptly from generation to generation, the goal is to have a series of entities live on their own.
+
+Each entity, or bloop, has a lifespan, counting down to `0`, at which point the particle dies. The lifespan is mapped to the opacity of the figure, so that the members of the population slowly fade out, but the value is increased when an entity collides with a pellet of food. Randomly and while still alive, each bloop has also a possibility to spawn a new particle, to which it passes its own genetic material in terms of size.
+
+Variety is included in form of the size of the bloop. The size is inversely proportional to the speed, so that larger particles move slower than smaller ones. Eventually, the simulation shows a preference for a particular type of particle, preferring a smaller, faster entity than a larger, slower one.
+
+_Please note:_
+
+- the focus of the exercise is on the evolution of an ecosystem, where entities have their own lifecycle. There is no fitness value as in previous algorithms

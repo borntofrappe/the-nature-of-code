@@ -1,5 +1,3 @@
-require "DNA"
-
 Population = {}
 Population.__index = Population
 

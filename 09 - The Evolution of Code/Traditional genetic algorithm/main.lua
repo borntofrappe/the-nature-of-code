@@ -1,3 +1,4 @@
+require "DNA"
 require "Population"
 
 WINDOW_WIDTH = 500

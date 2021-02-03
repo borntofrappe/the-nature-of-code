@@ -6,7 +6,7 @@ WORDS = 40
 START = "a"
 FINISH = "z"
 SENTENCE = "fabulous"
-POPULATION = 200
+POPULATION = 300
 MUTATION_ODDS = 100
 
 function love.load()

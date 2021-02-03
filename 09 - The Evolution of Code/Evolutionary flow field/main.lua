@@ -1,6 +1,7 @@
 LVector = require "LVector"
 require "Target"
 require "Field"
+require "DNA"
 require "Vehicle"
 require "Population"
 

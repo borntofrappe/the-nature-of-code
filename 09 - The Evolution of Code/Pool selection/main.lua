@@ -1,3 +1,4 @@
+require "DNA"
 require "Population"
 
 WINDOW_WIDTH = 500
@@ -5,7 +6,7 @@ WINDOW_HEIGHT = 500
 -- maximum number of words stored in the _words_ collection
 WORDS = 40
 
-SIZE = 400
+SIZE = 300
 TARGET = "To be or not to be"
 MUTATION_ODDS = 100
 
