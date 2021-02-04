@@ -2210,8 +2210,32 @@ The goal is to have a population of rockets navigate the environment toward an a
 
 From this starting point, the demo is updated to have a more complex simulation, with one or more obstacles interrupting the movement of the entities. By default, the simulation includes a single obstacle, in the right half of the window, but following mouse input, it is possible to complicate the environment with additional platforms.
 
-_Please note_: 
+The fitness value takes account of the distance, but also the obstacles and target. In this light, hitting an obstacle, or the edges of the window, results in a greatly diminished fitness.
 
-- the project is proposed as the last example in the chapter devoted to genetic algorithms, but in the book and conceptually, it follows the lessons learned with the flow field demo
+```lua
+if self.hasCollided then
+  return fitness * 0.1
+end
+```
+
+Hitting the target, on the other hand, increases the fitness considering the number of frames it takes the rocket to reach the target.
+
+```lua
+if self.hasReached then
+  return fitness * FRAMES / self.frames
+end
+```
+
+`self.frames` is a counter variable for each rocket, incrementing each time the rocket moves. Dividing by this value means the program has a preference for entities reaching the target in less frames. Multiplying for this value, however, the preference is set for slower rockets. This could be preferable in a scenario where the goal is to get closer to the target, without crashing in it.
+
+```lua
+if self.hasReached then
+  return fitness * self.frames / FRAMES
+end
+```
+
+_Please note_:
+
+- the project is proposed as the last example in the chapter devoted to genetic algorithms, but in the book and conceptually, it follows the lessons learned with the evolutionary flow field
 
 - the code considering mouse input is taken directly from a previous demo in the chapter devoted to physics libraries and Box2D (and specifically the `Fixed` folder)

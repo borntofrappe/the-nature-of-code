@@ -37,11 +37,18 @@ end
 function Population:update(dt)
   if self.frame <= self.frames then
     for i, rocket in ipairs(self.population) do
-      rocket:update(dt, self.frame)
+      if not rocket.hasReached and not rocket.hasCollided then
+        rocket:update(dt, self.frame)
 
-      for j, obstacle in ipairs(obstacles) do
-        if rocket:collides(obstacle) then
-          rocket.hasCollided = true
+        if rocket:reaches(self.target) then
+          rocket.hasReached = true
+        else
+          for j, obstacle in ipairs(self.obstacles) do
+            if rocket:collides(obstacle) then
+              rocket.hasCollided = true
+              break
+            end
+          end
         end
       end
     end

@@ -7,7 +7,7 @@ require "Obstacle"
 
 WINDOW_WIDTH = 640
 WINDOW_HEIGHT = 480
-WINDOW_PADDING = 5
+WINDOW_PADDING = 10
 
 ROCKET_SIZE = 5
 ROCKET_MAX_SPEED = 8
@@ -24,10 +24,8 @@ UPDATE_SPEED_ACCELERATION = 100
 
 POPULATION_SIZE = 20
 MUTATION_ODDS = 100
-FRAMES = 400
-ROCKET_MAX_DISTANCE = 500
-FITNESS_MAX = 1
-FITNESS_MIN = 0.1
+FRAMES = 300
+FITNESS_COLLISION_MULTIPLIER = 0.1
 
 OBSTACLE_WIDTH = 200
 OBSTACLE_HEIGHT = 20
@@ -61,6 +59,11 @@ function love.mousepressed(x, y, button)
   if button == 1 then
     mouse.x1 = x
     mouse.y1 = y
+  end
+
+  if button == 2 then
+    local position = LVector:new(x, y)
+    target.position = position
   end
 end
 
