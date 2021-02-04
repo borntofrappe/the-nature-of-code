@@ -2239,3 +2239,102 @@ _Please note_:
 - the project is proposed as the last example in the chapter devoted to genetic algorithms, but in the book and conceptually, it follows the lessons learned with the evolutionary flow field
 
 - the code considering mouse input is taken directly from a previous demo in the chapter devoted to physics libraries and Box2D (and specifically the `Fixed` folder)
+
+## 10 - Neural Networks
+
+In this chapter, a neural network is a complex system which learns and improves over time, an adaptive system. A first example is devoted to a network using _supervised learning_; in this instance the answer is known ahead of time, and the system is trained to provide an acceptable answer on the basis of training data. The network is also a _feed forward_ network, meaning that learning happens by feeding the system a series of input values and measuring the output against the known result.
+
+```txt
+input1
+      -> process -> output
+input2
+```
+
+The network receives a series of inputs, each with its own weight.
+
+```txt
+input1 x weight1
+                  -> process -> output
+input2 x weight2
+```
+
+As it evaluates the output and finds an error, then, the weights are modified to avoid a similar mistake.
+
+### Perceptron
+
+A perceptron works as a model for a single neuron, it considers one of more inputs, a way to process said inputs and then a single output value. The concept is firsst used in the context of a classification problem, where the window is divided in two areas and the network is asked to determine if a point belongs to one or another area.
+
+```txt
+1 1/
+1 / -1
+ / -1
+/
+```
+
+The neural network receives as input an `x` and `y` coordinate and returns `1` or `-1`, according to whether the point is above or below a diagonal. Instead of providing an answer with linear algebra, however, the perceptron is trained with a series of points (supervised learning). The perceptron guesses the output starting from on a set of weights, initialized at random, and tunes these parameters to respect the training data.
+
+A guess works considering the inputs, weights, and an _activation function_. This function conforms the guess so that the perceptron is able to produce a desired output (in this instance `1` or `-1`). In the specific demo, the network computes a weighted sum of the input values, and considers the sign of the total.
+
+```lua
+local weightedSum = 0
+for i = 1, #self.weights do
+  weightedSum = weightedSum + inputs[i] * self.weights[i]
+end
+
+if weightedSum >= 0 then
+  return 1
+else
+  return -1
+end
+```
+
+The activation function is ultimately split into a dedicated demo.
+
+```lua
+function Perceptron:activate(n)
+  return n >= 0 and 1 or -1
+end
+
+```
+
+However, it is important to note that evaluating the sign is but one of the possible activation functions. It is useful here since it provides a binary, clear way to return one of the two options.
+
+Training is performed with a series of points which are already assigned the correct output value.
+
+```lua
+function Point:new()
+  local this = {
+    ["label"] = x > y and 1 or -1
+  }
+end
+```
+
+Looping through a collection of points, the perceptron evaluates the difference between guess and answer.
+
+```lua
+local guess = self:guess(inputs)
+local error = target - guess
+```
+
+The combinations are described by this short table.
+
+| Answer | Guess | Error (answer - guess) |
+| -----: | ----: | ---------------------: |
+|      1 |     1 |                      0 |
+|      1 |    -1 |                      2 |
+|     -1 |    -1 |                      0 |
+|     -1 |     1 |                     -2 |
+
+From this error, the weights are adjusted by multiplying the error for the input value.
+
+```lua
+for i = 1, #self.weights do
+  self.weights[i] = self.weights[i] + error * inputs[i]
+end
+```
+
+_Please note:_
+
+- the weights are modified using a technique is known as _gradient descent_, and is a topic of a future section. Currently, consider the snippet as-is
+
+- in the demo the points are described with a fill or stroke according to the label `1` and `-1`. The perceptron makes a series of guesses and highlights them with a green or red outline. At first the guesses are wrong, but with each mouse click the perceptron is trained with more and more points, improving the decision
