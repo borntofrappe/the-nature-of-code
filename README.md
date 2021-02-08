@@ -2324,3 +2324,25 @@ self.weights[i] = self.weights[i] + error * inputs[i] * LEARNING_RATE
 This is again similar to the steering example. How much the error modifies the velocity describes how rapidly the vehicle changes its direction, and if it approaches the desired trajectory or overshoots the same value.
 
 In the demo, the perceptron is highlighted with a series of points, colored with a fill or stroke according to the label `1` and `-1`. The perceptron makes a series of guesses and highlights them with a green or red outline. At first the guesses are wrong, but by pressing the mouse cursor, the perceptron is trained with more and more points, improving the decision with each additional datum.
+
+### Perceptron line
+
+The first demo implementing the perceptron is modified to have the network consider a more general classification problem, where a point is assigned `-1` or `1` on the basis of the equation of a line
+
+```lua
+y = slope * x + coefficient
+```
+
+The demo is updated to also consider a cartesian coordinate system, where the inputs are in the `[-1, 1]` range and the values are mapped to the pixel coordinates with a `map` function.
+
+Given the new coordinate system, it is finally necessary to introduce a third input in a bias
+
+```lua
+function Point:new()
+  local this = {
+    ["inputs"] = {x, y, 1},
+  }
+end
+```
+
+The value is necessary to consider a valid guess for the `(0, 0)` origin.
