@@ -66,12 +66,12 @@ function love.update(dt)
 end
 
 function love.draw()
-  love.graphics.setColor(0.11, 0.11, 0.11, 0.5)
+  love.graphics.setColor(0.11, 0.11, 0.11, 1)
+  love.graphics.print("Points: " .. #points, 8, 8)
+  love.graphics.print("Points trained: " .. indexPoints - 1, 8, 24)
+
   love.graphics.setLineWidth(LINE_WIDTH)
   love.graphics.line(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
-  love.graphics.setColor(0.11, 0.11, 0.11, 1)
-  love.graphics.print("Points " .. #points, 8, 8)
-  love.graphics.print("Points trained " .. indexPoints - 1, 8, 24)
 
   for i, point in ipairs(points) do
     point:render()
