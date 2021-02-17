@@ -2346,3 +2346,9 @@ end
 ```
 
 The value is necessary to consider a valid guess for the `(0, 0)` origin.
+
+### Matrix
+
+In order to develop a _multilayer_ neural network, it is helpful to have a small library to manage data in matrix format, that is data in rows and columns.
+
+The folder is devoted to such an endeavor. Starting with scalar operations, the math involved doesn't differ from that introduced for vectors. The difference becomes apparent as matrices are compared with each other.
