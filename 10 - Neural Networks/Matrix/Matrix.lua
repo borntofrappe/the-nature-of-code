@@ -20,18 +20,34 @@ function Matrix:new(rows, columns)
   return this
 end
 
-function Matrix:add(value)
-  for r = 1, self.rows do
-    for c = 1, self.columns do
-      self.values[r][c] = self.values[r][c] + value
+function Matrix:add(input)
+  if isInstance(input, self) then
+    for r = 1, self.rows do
+      for c = 1, self.columns do
+        self.values[r][c] = self.values[r][c] + input.values[r][c]
+      end
+    end
+  else
+    for r = 1, self.rows do
+      for c = 1, self.columns do
+        self.values[r][c] = self.values[r][c] + input
+      end
     end
   end
 end
 
-function Matrix:multiply(value)
-  for r = 1, self.rows do
-    for c = 1, self.columns do
-      self.values[r][c] = self.values[r][c] * value
+function Matrix:multiply(input)
+  if isInstance(input, self) then
+    for r = 1, self.rows do
+      for c = 1, self.columns do
+        self.values[r][c] = self.values[r][c] * input.values[r][c]
+      end
+    end
+  else
+    for r = 1, self.rows do
+      for c = 1, self.columns do
+        self.values[r][c] = self.values[r][c] * input
+      end
     end
   end
 end
