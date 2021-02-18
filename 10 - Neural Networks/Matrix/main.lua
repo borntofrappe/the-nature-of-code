@@ -14,35 +14,24 @@ function love.load()
 
   math.randomseed(os.time())
 
-  m1 = Matrix:new(ROWS, COLUMNS)
-  m1.values = {
-    {6, 7, 0},
-    {7, 2, 6}
-  }
-  m2 = Matrix:new(COLUMNS, ROWS)
-  m2.values = {
-    {5, 3},
-    {1, 1},
-    {5, 1}
-  }
+  m = Matrix:new(ROWS, COLUMNS)
 end
 
 function love.mousepressed(x, y, button)
   if button == 1 then
-    m1:multiply(m2)
+    m:transpose()
   end
 end
 
 function love.keypressed(key)
-  if key == "m" then
-    m1:multiply(m2)
+  if key == "t" then
+    m:transpose()
   end
 end
 
 function love.draw()
   love.graphics.setColor(0.11, 0.11, 0.11, 1)
-  love.graphics.print(m1:getString(), 8, 8)
-  love.graphics.print(m2:getString(), 18, WINDOW_HEIGHT / 2)
+  love.graphics.print(m:getString(), 8, 8)
 end
 
 function isInstance(instance, class)

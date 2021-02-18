@@ -81,6 +81,23 @@ function Matrix:multiply(input)
   end
 end
 
+function Matrix:transpose()
+  local values = {}
+  local rows = self.columns
+  local columns = self.rows
+
+  for r = 1, rows do
+    values[r] = {}
+    for c = 1, columns do
+      values[r][c] = self.values[c][r]
+    end
+  end
+
+  self.values = values
+  self.rows = rows
+  self.columns = columns
+end
+
 function Matrix:getString()
   local v = {}
 
