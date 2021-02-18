@@ -6,7 +6,7 @@ function Matrix:new(rows, columns)
   for r = 1, rows do
     values[r] = {}
     for c = 1, columns do
-      values[r][c] = math.random(MAX_VALUE)
+      values[r][c] = 0
     end
   end
 
@@ -18,6 +18,58 @@ function Matrix:new(rows, columns)
 
   setmetatable(this, self)
   return this
+end
+
+-- functions returning a new matrix
+function Matrix.Add(m1, m2)
+  if m1.rows == m2.rows and m1.columns == m2.columns then
+    local m = Matrix:new(m1.rows, m1.columns)
+
+    for r = 1, m.rows do
+      for c = 1, m.columns do
+        m.values[r][c] = m1.values[r][c] + m2.values[r][c]
+      end
+    end
+
+    return m
+  end
+end
+
+function Matrix.Multiply(m1, m2)
+  if m2.rows == m1.columns and m2.columns == m1.rows then
+    local m = Matrix:new(m1.rows, m2.columns)
+
+    for r = 1, m.rows do
+      for c = 1, m.columns do
+        local value = 0
+        for i = 1, m.columns do
+          value = value + (m1.values[r][i] * m2.values[i][c])
+        end
+        m.values[r][c] = value
+      end
+    end
+
+    return m
+  elseif m1.rows == m2.rows and m1.columns == m2.columns then
+    local m = Matrix:new(m1.rows, m1.columns)
+
+    for r = 1, m.rows do
+      for c = 1, m.columns do
+        m.values[r][c] = m1.values[r][c] * m2.values[r][c]
+      end
+    end
+
+    return m
+  end
+end
+
+-- functions modifying the input matrix
+function Matrix:randomize(max)
+  for r = 1, self.rows do
+    for c = 1, self.columns do
+      self.values[r][c] = math.random(max)
+    end
+  end
 end
 
 function Matrix:add(input)
@@ -77,6 +129,14 @@ function Matrix:multiply(input)
       for c = 1, self.columns do
         self.values[r][c] = self.values[r][c] * input
       end
+    end
+  end
+end
+
+function Matrix:map(callback)
+  for r = 1, self.rows do
+    for c = 1, self.columns do
+      self.values[r][c] = callback(self.values[r][c])
     end
   end
 end

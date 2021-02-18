@@ -2349,9 +2349,21 @@ The value is necessary to consider a valid guess for the `(0, 0)` origin.
 
 ### Matrix
 
-In order to develop a _multilayer_ neural network, it is helpful to have a small library to manage data in matrix format, that is data in rows and columns. The folder is devoted to such an endeavor.
+In order to develop a _multilayer_ neural network, it is helpful to have a small library to manage data in matrix format, that is data in rows and columns. `Matrix.lua` implements matrix and matrix math through a series of functions. 
 
-Starting with scalar operations, the math involved doesn't differ from that introduced for vectors. The difference becomes apparent as matrices are compared with each other. It is here necessary to check if the input argument is itself a matrix, and with lua lua, this check is performed by considering the metatable of the input.
+The functions can be split in two main categories: those which modify the instance matrix, and those which return a new instance altogether. In the first category, it is possible to modify the instance with:
+
+- `add`; the elements of the matrix are increased by a scalar or the respective elements of another matrix
+
+- `multiply`; the elements are multiplied by a scalar, or again the respective elements of another matrix. This last operation is known as [Hadamard product](), but is not the only way with which two matrices are multiplied. If the number of rows of the first matrix matches the number of columns of the second entity, the function proceeds with the matrix product
+
+- `transpose`; the configuration of the matrix is modified to have the rows as columns and viceversa
+
+- `map`; the elements are modified with the logic described by the input function. This logic extends the way it is possible to alter the matrix's own values to any function accepting an input 
+
+In the second category, it is possible to add and multiply matrices. What changes is that the input matrixes are not modified.
+
+In terms of object oriented programming, it is necessary to decipher if the input of the `add` or `multiply` function is a matrix, since the logic is different from when the input is a scalar. To achieve this with lua lua, it would be enough to check the metatable of the input.
 
 ```lua
 if getmetatable(input) == self
@@ -2359,7 +2371,7 @@ if getmetatable(input) == self
 end
 ```
 
-The `isInstance` function slightly refines this check-up operation by returning a boolean, and considering the metatables of the input table in a loop.
+The `isInstance` function slightly refines this approach by returning a boolean, and considering the metatables of the input table in a loop.
 
 ```lua
 function isInstance(instance, class)
